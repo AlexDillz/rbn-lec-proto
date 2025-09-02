@@ -1,0 +1,13 @@
+:root { --pad:16px; --border:#e5e7eb; }
+*{box-sizing:border-box}
+body{font-family:system-ui,Arial,sans-serif;max-width:900px;margin:0 auto;
+     padding:var(--pad);line-height:1.55}
+header{margin:8px 0 20px}
+h1{margin:0 0 6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.card{border:1px solid var(--border);border-radius:12px;padding:14px}
+.card h2{margin:0 0 8px;font-size:18px}
+.card p{margin:0 0 12px;color:#374151}
+.btn{display:inline-block;padding:8px 12px;border:1px solid var(--border);
+     border-radius:10px;text-decoration:none}
+footer{margin-top:24px;color:#6b7280}

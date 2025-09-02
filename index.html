@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>НИИ 6.0 — Лекции</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header>
+    <h1>Лекции НИИ 6.0</h1>
+    <p>Сканируй QR на вкладке блокнота — попадёшь сюда.</p>
+  </header>
+
+  <main id="list" class="grid"></main>
+
+  <footer>
+    <small>v0.1 • прототипчик</small>
+  </footer>
+
+  <script>
+    async function load() {
+      try {
+        const r = await fetch('lectures.json');
+        const data = await r.json();
+        const root = document.getElementById('list');
+        root.innerHTML = '';
+        data.lectures.forEach(L => {
+          const el = document.createElement('article');
+          el.className = 'card';
+          el.innerHTML = `
+            <h2>${L.title}</h2>
+            <p>${L.summary}</p>
+            <a class="btn" href="${L.url}">Открыть</a>
+          `;
+          root.appendChild(el);
+        });
+      } catch (e) {
+        document.getElementById('list').innerHTML =
+          '<p>Не удалось загрузить список. Проверь, что запущен локальный сервер.</p>';
+      }
+    }
+    load();
+  </script>
+</body>
+</html>
