@@ -9,6 +9,12 @@
       "title": "Название",
       "summary": "Инфа о лекции",
       "url": "lectures/cg.html"
+    },
+    {
+    "title": "Этическая защита",
+    "summary": "Кратко о выборе",
+    "url": "lectures/ethical protection.html"
     }
+
   ]
 }

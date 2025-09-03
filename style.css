@@ -12,7 +12,30 @@ h1{margin:0 0 6px}
      border-radius:10px;text-decoration:none}
 footer{margin-top:24px;color:#6b7280}
 
-/* --- Dark mode --- */
+/* Кнопка темы: фиксируем в правом верхнем углу, делаем круглой */
+#theme-toggle{
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 1000;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  background: #fff;
+  color: #111;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+body.dark #theme-toggle{
+  background: #111;
+  color: #f3f4f6;
+  border-color: #4b5563;
+}
+
+/* Ссылки-кнопки не должны «сереть» как visited */
+a.btn:link, a.btn:visited { color: inherit; }
+
+/* Тёмная тема — расширенные правила (включая текст в карточках) */
 body.dark {
   background: #111;
   color: #f3f4f6;
@@ -21,6 +44,9 @@ body.dark .card {
   background: #1f2937;
   border-color: #374151;
 }
+body.dark .card p { 
+  color: #cbd5e1;  /* чтобы «Инфа о лекции» тоже светлела */
+}
 body.dark a.btn {
   border-color: #4b5563;
   color: #f3f4f6;
@@ -28,3 +54,4 @@ body.dark a.btn {
 body.dark footer {
   color: #9ca3af;
 }
+
