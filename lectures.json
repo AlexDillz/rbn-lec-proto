@@ -1,20 +1,19 @@
 {
   "lectures": [
     {
-      "title": "Название",
-      "summary": "Инфа о лекции",
+      "title": "Подъёмная сила простыми словами",
+      "summary": "Поднимаемся",
       "url": "lectures/lift.html"
     },
     {
-      "title": "Название",
-      "summary": "Инфа о лекции",
+      "title": "Центр масс и посадка планера",
+      "summary": "Центрируемся",
       "url": "lectures/cg.html"
     },
     {
-    "title": "Этическая защита",
-    "summary": "Кратко о выборе",
-    "url": "lectures/ethical protection.html"
+      "title": "Этическая защита",
+      "summary": "Выбор, ответственность, границы допустимого.",
+      "url": "lectures/ethical-protection.html"
     }
-
   ]
 }

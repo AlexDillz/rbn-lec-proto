@@ -1,18 +1,37 @@
 :root { --pad:16px; --border:#e5e7eb; }
 *{box-sizing:border-box}
-body{font-family:system-ui,Arial,sans-serif;max-width:900px;margin:0 auto;
-     padding:var(--pad);line-height:1.55}
+
+body{
+  font-family:system-ui,Arial,sans-serif;
+  max-width:900px;
+  margin:0 auto;
+  padding:var(--pad);
+  line-height:1.55;
+  color:#111;
+  background:#fff; /* однотонный светлый фон */
+}
+
 header{margin:8px 0 20px}
 h1{margin:0 0 6px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.card{border:1px solid var(--border);border-radius:12px;padding:14px}
+.card{
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+  background: rgba(255,255,255,0.66); /* чтобы текст читался на фоне */
+}
 .card h2{margin:0 0 8px;font-size:18px}
 .card p{margin:0 0 12px;color:#374151}
-.btn{display:inline-block;padding:8px 12px;border:1px solid var(--border);
-     border-radius:10px;text-decoration:none}
+.btn{
+  display:inline-block;
+  padding:8px 12px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  text-decoration:none
+}
 footer{margin-top:24px;color:#6b7280}
 
-/* Кнопка темы: фиксируем в правом верхнем углу, делаем круглой */
+/* КНОПКА ТЕМЫ: фиксированная и круглая */
 #theme-toggle{
   position: fixed;
   top: 12px;
@@ -32,26 +51,19 @@ body.dark #theme-toggle{
   border-color: #4b5563;
 }
 
-/* Ссылки-кнопки не должны «сереть» как visited */
+/* «Открыть» не меняет цвет после клика */
 a.btn:link, a.btn:visited { color: inherit; }
 
-/* Тёмная тема — расширенные правила (включая текст в карточках) */
-body.dark {
-  background: #111;
-  color: #f3f4f6;
-}
-body.dark .card {
-  background: #1f2937;
-  border-color: #374151;
-}
-body.dark .card p { 
-  color: #cbd5e1;  /* чтобы «Инфа о лекции» тоже светлела */
-}
-body.dark a.btn {
-  border-color: #4b5563;
-  color: #f3f4f6;
-}
-body.dark footer {
-  color: #9ca3af;
+/* ТЁМНАЯ ТЕМА — меняем только цвета, фон html оставляем */
+body.dark{
+  background:#111;
+  color:#f3f4f6;
 }
 
+body.dark .card{
+  background: rgba(31,41,55,0.74);
+  border-color:#374151;
+}
+body.dark .card p{ color:#cbd5e1; }
+body.dark a.btn{ border-color:#4b5563; color:#f3f4f6; }
+body.dark footer{ color:#9ca3af; }

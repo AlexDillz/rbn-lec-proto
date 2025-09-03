@@ -9,17 +9,14 @@
 <body>
   <header>
     <h1>Лекции Рубин</h1>
-    <p>Сосканировали QR на вкладке блокнота — и вот вы здесь</p>
-    <button id="theme-toggle">🌙 Dark mode</button>
+    <p>Сканируй QR на вкладке блокнота — и читай материалы лекций</p>
   </header>
 
-  <script src="theme.js" defer></script>
-  
+  <button id="theme-toggle">🌙 Dark mode</button>
+
   <main id="list" class="grid"></main>
 
-  <footer>
-    <small>v0.1 • прототипчик</small>
-  </footer>
+  <footer><small>v0.3</small></footer>
 
   <script>
     async function load() {
@@ -40,31 +37,11 @@
         });
       } catch (e) {
         document.getElementById('list').innerHTML =
-          '<p>Не удалось загрузить список. Проверь, что запущен локальный сервер.</p>';
+          '<p>Не удалось загрузить список. Проверь lectures.json.</p>';
       }
-      
     }
     load();
-
-    // --- Dark mode toggle ---
-    const toggleBtn = document.getElementById('theme-toggle');
-    if (toggleBtn) {
-    // загружаем сохранённую тему
-        if (localStorage.getItem('theme') === 'dark') {
-          document.body.classList.add('dark');
-          toggleBtn.textContent = "☀️ Light mode";
-        }
-        toggleBtn.addEventListener('click', () => {
-        document.body.classList.toggle('dark');
-        if (document.body.classList.contains('dark')) {
-        toggleBtn.textContent = "☀️ Light mode";
-        localStorage.setItem('theme', 'dark');
-        } else {
-          toggleBtn.textContent = "🌙 Dark mode";
-          localStorage.setItem('theme', 'light');
-        }
-      });
-    }
   </script>
+  <script src="theme.js" defer></script>
 </body>
 </html>

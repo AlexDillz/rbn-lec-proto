@@ -1,41 +1,25 @@
-// Применяем сохранённую тему сразу после загрузки
-function applySavedTheme() {
-  const saved = localStorage.getItem('theme');
-  if (saved === 'dark') document.body.classList.add('dark');
-  else document.body.classList.remove('dark');
+// theme.js — единая логика темы
+function currentTheme() {
+  const s = localStorage.getItem('theme');
+  if (s === 'dark' || s === 'light') return s;
+  return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
 }
-
-// Обновляем текст на кнопке
-function updateToggleLabel(btn) {
-  if (!btn) return;
-  const dark = document.body.classList.contains('dark');
-  btn.textContent = dark ? '☀️ Light mode' : '🌙 Dark mode';
-}
-
-// Вешаем обработчик на кнопку
-function initThemeToggle() {
+function applyTheme(t){ document.body.classList.toggle('dark', t==='dark'); }
+function updateToggleLabel(btn){ if(btn) btn.textContent = document.body.classList.contains('dark') ? '☀️ Light mode' : '🌙 Dark mode'; }
+function initTheme(){
+  applyTheme(currentTheme());
   const btn = document.getElementById('theme-toggle');
-  if (!btn) return;
   updateToggleLabel(btn);
-  btn.addEventListener('click', () => {
-    document.body.classList.toggle('dark');
-    const dark = document.body.classList.contains('dark');
-    localStorage.setItem('theme', dark ? 'dark' : 'light');
-    updateToggleLabel(btn);
-  });
-}
-
-// Cинхронизация между вкладками
-window.addEventListener('storage', (e) => {
-  if (e.key === 'theme') {
-    applySavedTheme();
-    updateToggleLabel(document.getElementById('theme-toggle'));
+  if(btn){
+    btn.addEventListener('click', ()=>{
+      const t = document.body.classList.contains('dark') ? 'light' : 'dark';
+      applyTheme(t); localStorage.setItem('theme', t); updateToggleLabel(btn);
+    });
   }
-});
-
-// Инициализация
-document.addEventListener('DOMContentLoaded', () => {
-  applySavedTheme();
-  initThemeToggle();
-});
-
+}
+window.addEventListener('storage', (e)=>{ if(e.key==='theme'){ applyTheme(currentTheme()); updateToggleLabel(document.getElementById('theme-toggle')); }});
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initTheme);
+} else {
+  initTheme();
+}
