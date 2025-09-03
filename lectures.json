@@ -1,13 +1,13 @@
 {
   "lectures": [
     {
-      "title": "Подъёмная сила простыми словами",
-      "summary": "Поднимаемся",
+      "title": "Название лекции",
+      "summary": "что",
       "url": "lectures/lift.html"
     },
     {
-      "title": "Центр масс и посадка планера",
-      "summary": "Центрируемся",
+      "title": "Название лекции",
+      "summary": "что",
       "url": "lectures/cg.html"
     },
     {

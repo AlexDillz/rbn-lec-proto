@@ -8,7 +8,7 @@ body{
   padding:var(--pad);
   line-height:1.55;
   color:#111;
-  background:#fff; /* однотонный светлый фон */
+  background:#fff; 
 }
 
 header{margin:8px 0 20px}
@@ -18,7 +18,7 @@ h1{margin:0 0 6px}
   border:1px solid var(--border);
   border-radius:12px;
   padding:14px;
-  background: rgba(255,255,255,0.66); /* чтобы текст читался на фоне */
+  background: rgba(255,255,255,0.66); 
 }
 .card h2{margin:0 0 8px;font-size:18px}
 .card p{margin:0 0 12px;color:#374151}
@@ -31,7 +31,6 @@ h1{margin:0 0 6px}
 }
 footer{margin-top:24px;color:#6b7280}
 
-/* КНОПКА ТЕМЫ: фиксированная и круглая */
 #theme-toggle{
   position: fixed;
   top: 12px;
@@ -51,10 +50,8 @@ body.dark #theme-toggle{
   border-color: #4b5563;
 }
 
-/* «Открыть» не меняет цвет после клика */
 a.btn:link, a.btn:visited { color: inherit; }
 
-/* ТЁМНАЯ ТЕМА — меняем только цвета, фон html оставляем */
 body.dark{
   background:#111;
   color:#f3f4f6;

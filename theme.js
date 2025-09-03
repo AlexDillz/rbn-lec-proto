@@ -1,4 +1,3 @@
-// theme.js — единая логика темы
 function currentTheme() {
   const s = localStorage.getItem('theme');
   if (s === 'dark' || s === 'light') return s;
