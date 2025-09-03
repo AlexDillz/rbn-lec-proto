@@ -11,3 +11,20 @@ h1{margin:0 0 6px}
 .btn{display:inline-block;padding:8px 12px;border:1px solid var(--border);
      border-radius:10px;text-decoration:none}
 footer{margin-top:24px;color:#6b7280}
+
+/* --- Dark mode --- */
+body.dark {
+  background: #111;
+  color: #f3f4f6;
+}
+body.dark .card {
+  background: #1f2937;
+  border-color: #374151;
+}
+body.dark a.btn {
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
+body.dark footer {
+  color: #9ca3af;
+}
