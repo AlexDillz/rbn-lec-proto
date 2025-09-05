@@ -92,6 +92,12 @@ body.dark #theme-toggle{
   margin:16px auto;
   border-radius:8px;
 }
+.content li {
+  text-align: justify;   
+  text-indent: 0;        
+  margin: 0 0 8px;       
+  line-height: 1.6
+}
 
 /* тёмная тема */
 body.dark{
