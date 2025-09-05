@@ -8,29 +8,37 @@ body{
   padding:var(--pad);
   line-height:1.55;
   color:#111;
-  background:#fff; 
+  background:#fff;
 }
 
 header{margin:8px 0 20px}
 h1{margin:0 0 6px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+
+/* карточки списка */
 .card{
   border:1px solid var(--border);
   border-radius:12px;
   padding:14px;
-  background: rgba(255,255,255,0.66); 
+  background:#fff; /* чисто белая, без синего оттенка */
 }
 .card h2{margin:0 0 8px;font-size:18px}
-.card p{margin:0 0 12px;color:#374151}
+.card p{margin:0 0 12px; color:#111} /* текст чёрный в светлой теме */
+
 .btn{
-  display:inline-block;
+  display:inline-flex;
+  align-items:center;
+  gap:4px;                 /* расстояние между стрелкой и текстом */
   padding:8px 12px;
   border:1px solid var(--border);
   border-radius:10px;
-  text-decoration:none
+  text-decoration:none;
 }
+a.btn:link, a.btn:visited { color: inherit; }
+
 footer{margin-top:24px;color:#6b7280}
 
+/* плавающая кнопка темы */
 #theme-toggle{
   position: fixed;
   top: 12px;
@@ -50,17 +58,50 @@ body.dark #theme-toggle{
   border-color: #4b5563;
 }
 
-a.btn:link, a.btn:visited { color: inherit; }
+/* мобильная адаптация кнопки */
+@media (max-width: 640px){
+  #theme-toggle{
+    top: auto;
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(12px, env(safe-area-inset-bottom));
+    left: auto;
+    padding: 12px 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.18);
+  }
+  body{ padding-bottom: 72px; }
+}
 
+/* стили контента лекции */
+.content p{
+  text-align: justify;
+  text-indent: 25px;         /* отступ первой строки */
+  margin: 0 0 12px;
+}
+.content h1, .content h2, .content h3, .content h4, .content h5{
+  text-align: center;
+  text-indent: 0;
+  margin: 16px 0 12px;
+  font-size: 20px;           /* одинаковый размер для I/II/III… */
+  font-weight: 700;
+}
+.content ol, .content ul{ margin: 0 0 12px 22px; }
+.content img{
+  display:block;
+  max-width:100%;
+  height:auto;
+  margin:16px auto;
+  border-radius:8px;
+}
+
+/* тёмная тема */
 body.dark{
   background:#111;
   color:#f3f4f6;
 }
-
 body.dark .card{
-  background: rgba(31,41,55,0.74);
+  background:#1f2937;
   border-color:#374151;
 }
-body.dark .card p{ color:#cbd5e1; }
+body.dark .card p{ color:#e5e7eb; }  /* светлый текст в карточке */
 body.dark a.btn{ border-color:#4b5563; color:#f3f4f6; }
 body.dark footer{ color:#9ca3af; }

@@ -3,25 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Школа Вожатского Мастерства Областного Лагеря Актива Старшеклассников "Рубин"</title>
+  <title>Школа Вожатского Мастерства ОЛАС «Рубин»</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <header>
-    <h1>Школа Вожатского Мастерства Областного Лагеря Актива Старшеклассников "Рубин"</h1>
-    <p>Отсканировали QR-код и попали сюда? - читайте доступные материалы лекций</p>
+    <h1>Школа Вожатского Мастерства ОЛАС «Рубин»</h1>
+    <p>Отсканировали QR-код? Здесь материалы лекций.</p>
   </header>
 
-  <button id="theme-toggle">🌙 Dark mode</button>
+  <button id="theme-toggle" aria-label="Переключить тему">🌙 Dark mode</button>
 
   <main id="list" class="grid"></main>
 
-  <footer><small>v0.3</small></footer>
+  <footer><small>v0.4</small></footer>
 
   <script>
     async function load() {
       try {
-        const r = await fetch('lectures.json');
+        const r = await fetch('lectures.json?v=' + Date.now(), { cache: 'no-store' });
         const data = await r.json();
         const root = document.getElementById('list');
         root.innerHTML = '';

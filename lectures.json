@@ -1,19 +1,19 @@
 {
   "lectures": [
     {
-      "title": "Название лекции",
-      "summary": "что",
-      "url": "lectures/lift.html"
-    },
-    {
-      "title": "Название лекции",
-      "summary": "что",
-      "url": "lectures/cg.html"
+      "title": "Логика развития смены",
+      "summary": "Структура, ритм, переходы.",
+      "url": "lectures/logic-shift-dev.html"
     },
     {
       "title": "Этическая защита",
       "summary": "Выбор, ответственность, границы допустимого.",
       "url": "lectures/ethical-protection.html"
+    },
+    {
+      "title": "Человеки",
+      "summary": "Как помочь человеку в трудной ситуации.",
+      "url": "lectures/personas.html"
     }
   ]
 }
