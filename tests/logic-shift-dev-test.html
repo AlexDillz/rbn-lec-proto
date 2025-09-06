@@ -8,21 +8,22 @@
   <script src="../theme.js" defer></script>
   <style>
     .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:1000}
-    .modal .card{max-width:440px;width:92%}
+    .modal .card{max-width:460px;width:92%}
     .hidden{display:none}
 
-    /* починить внешний вид кнопок и disabled */
+    /* унифицируем вид кнопок и их disabled */
     .btn{
       background: transparent;
       color: inherit;
       cursor: pointer;
       user-select: none;
+      display:inline-flex;align-items:center;gap:6px;
+      padding:8px 12px;border:1px solid var(--border);border-radius:10px;text-decoration:none;
     }
-    .btn:disabled{
-      opacity:.6;
-      cursor: not-allowed;
-    }
+    .btn:disabled{ opacity:.6; cursor:not-allowed; }
 
+    .q{margin:14px 0}
+    .q h3{margin:0 0 8px;font-size:16px}
     .ok{
       padding:16px;border:1px solid var(--border);border-radius:12px;
       background:#eaffea;margin-top:12px;color:#064e3b;font-weight:600
@@ -52,7 +53,7 @@
       <p id="scoreLine" style="margin-top:8px">Ваши ответы записаны.</p>
       <p style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
         <a class="btn" href="../index.html">↩ На начальную страницу</a>
-        <button id="closeThanks" class="btn" type="button">Остаться здесь</button>
+        <button id="retake" class="btn" type="button">Пройти ещё раз</button>
       </p>
     </article>
   </div>
@@ -60,27 +61,27 @@
   <main class="card" style="margin-top:52px">
     <h1>Тест по лекции</h1>
     <div id="quiz">
-      <div class="q" style="margin:12px 0">
-        <h3 style="margin:0 0 8px">1) К какому периоду относятся первые 1–3 дня?</h3>
+      <div class="q">
+        <h3>1) К какому периоду относятся первые 1–3 дня?</h3>
         <label><input type="radio" name="q1" value="a"> Основной</label><br>
         <label><input type="radio" name="q1" value="b"> Заключительный</label><br>
         <label><input type="radio" name="q1" value="c"> Организационный</label>
       </div>
-      <div class="q" style="margin:12px 0">
-        <h3 style="margin:0 0 8px">2) Краткий девиз основного периода:</h3>
+      <div class="q">
+        <h3>2) Краткий девиз основного периода:</h3>
         <label><input type="radio" name="q2" value="a"> Теплота! Доверительность!</label><br>
         <label><input type="radio" name="q2" value="b"> Творчество! Самостоятельность! Мажор! Дружба!</label><br>
         <label><input type="radio" name="q2" value="c"> Удивление! Темп! Разнообразие!</label>
       </div>
-      <div class="q" style="margin:12px 0">
-        <h3 style="margin:0 0 8px">3) Что делать за 2–3 дня до конца?</h3>
+      <div class="q">
+        <h3>3) Что делать за 2–3 дня до конца?</h3>
         <label><input type="radio" name="q3" value="a"> Планировать сюрпризы, готовить тёплое расставание</label><br>
         <label><input type="radio" name="q3" value="b"> Назначать органов самоуправления</label><br>
         <label><input type="radio" name="q3" value="c"> Проводить разведку интересных дел</label>
       </div>
 
       <button id="submitBtn" class="btn" type="button">Отправить</button>
-      <div id="done" class="ok hidden">Спасибо за прохождение! Результат отправлен.</div>
+      <div id="done" class="ok hidden">Ответы отправлены.</div>
     </div>
 
     <p style="margin-top:12px"><a class="btn" href="../index.html">← Назад</a></p>
@@ -88,14 +89,14 @@
 
   <script>
     // === Настройки ===
-    const SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyIGDD-60B3bTrXorGrwV9Td4B3dRFqgGUN1WmnF9AaCWBj9mmlkJkIkkU5dNGQuyDz/exec';
+    const SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz5fUH5QPufzNv6fH3lBQGe_4lZ0SQckSEyKAV8nSDMFP8G35xmaEx9cyq9SR_ZXN9c/exec';
     const TEST_ID = 'logic-shift-dev';
 
-    // Ключи для состояния
+    // Ключи localStorage
     const LS_USER      = `test:${TEST_ID}:user`;
-    const LS_SUBMITTED = `test:${TEST_ID}:submitted`;
     const LS_CLIENT_ID = `test:${TEST_ID}:clientId`;
     const LS_ANSWERS   = `test:${TEST_ID}:answers`;
+    const LS_ATTEMPT   = `test:${TEST_ID}:attempt`;
     const LS_SCORE     = `test:${TEST_ID}:clientScore`;
 
     // clientId
@@ -105,36 +106,32 @@
       localStorage.setItem(LS_CLIENT_ID, clientId);
     }
 
-    // Восстановим пользователя и ответы
+    // попытки
+    let attempt = parseInt(localStorage.getItem(LS_ATTEMPT) || '0', 10);
+
+    // пользователь и ответы
     let user = null;
     try { user = JSON.parse(localStorage.getItem(LS_USER) || 'null'); } catch(_) {}
     let savedAnswers = {};
     try { savedAnswers = JSON.parse(localStorage.getItem(LS_ANSWERS) || '{}'); } catch(_) {}
 
-    // Проставим сохранённые ответы (если есть)
+    // восстановим ответы и регистрацию
     window.addEventListener('DOMContentLoaded', ()=>{
       for (const [name,val] of Object.entries(savedAnswers)) {
         const el = document.querySelector(`input[name="${name}"][value="${val}"]`);
         if (el) el.checked = true;
       }
       if (user) document.getElementById('regModal').classList.add('hidden');
-
-      // если уже сдавали — покажем модалку и заблокируем интерфейс
-      if (localStorage.getItem(LS_SUBMITTED)==='1') {
-        lockQuiz();
-        showThanks(localStorage.getItem(LS_SCORE));
-      }
     });
 
-    // Сохранять выбор «на лету»
+    // сохранять выбор на лету
     document.querySelectorAll('input[type="radio"]').forEach(inp=>{
       inp.addEventListener('change', ()=>{
-        const a = collectAnswers();
-        localStorage.setItem(LS_ANSWERS, JSON.stringify(a));
+        localStorage.setItem(LS_ANSWERS, JSON.stringify(collectAnswers()));
       });
     });
 
-    // Регистрация
+    // регистрация
     document.getElementById('regForm').addEventListener('submit', (e)=>{
       e.preventDefault();
       const fd = new FormData(e.target);
@@ -143,28 +140,26 @@
       document.getElementById('regModal').classList.add('hidden');
     });
 
-    // Кнопка «остаться здесь»
-    document.getElementById('closeThanks').addEventListener('click', ()=>{
-      document.getElementById('doneModal').classList.add('hidden');
-    });
-
-    // Отправка
+    // отправка
     const submitBtn = document.getElementById('submitBtn');
     submitBtn.addEventListener('click', async ()=>{
       if (!user) { alert('Сначала зарегистрируйтесь.'); return; }
-      if (localStorage.getItem(LS_SUBMITTED)==='1') return;
 
       const answers = collectAnswers();
-      const correct = { q1:'c', q2:'b', q3:'a' }; // локально для показа счёта; сервер проверит сам
+      const correct = { q1:'c', q2:'b', q3:'a' }; // только для показа x/y
       const total = Object.keys(answers).length;
       const clientScore = Object.keys(correct).reduce((s,k)=> s + (answers[k]===correct[k] ? 1 : 0), 0);
 
-      // блокировка
       submitBtn.disabled = true;
       submitBtn.textContent = 'Отправляем…';
 
       try {
-        const payload = { ...user, clientId, testId: TEST_ID, score: clientScore, answers };
+        const payload = {
+          ...user, clientId, testId: TEST_ID,
+          attempt: attempt + 1,              // номер следующей попытки
+          score: clientScore,
+          answers
+        };
         await fetch(SCRIPT_ENDPOINT, {
           method: 'POST',
           mode:   'no-cors',
@@ -172,18 +167,32 @@
           body:   JSON.stringify(payload)
         });
 
-        localStorage.setItem(LS_SUBMITTED,'1');
+        // сохраним попытку и счёт
+        attempt += 1;
+        localStorage.setItem(LS_ATTEMPT, String(attempt));
         localStorage.setItem(LS_SCORE, `${clientScore}/${total}`);
 
-        lockQuiz();
+        // покажем модалку со счётом
         showThanks(`${clientScore}/${total}`);
-        document.getElementById('done').classList.remove('hidden'); // можно убрать, если лишнее
+
+        // не стираем ответы — пользователь увидит свои выборы
+        document.getElementById('done').classList.remove('hidden');
       } catch (err) {
         console.error(err);
+        alert('Не удалось отправить результат. Проверь подключение.');
+      } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Отправить';
-        alert('Не удалось отправить результат. Проверь подключение.');
       }
+    });
+
+    // Кнопка «Пройти ещё раз»
+    document.getElementById('retake').addEventListener('click', ()=>{
+      // очистим выбор и форму, оставим регистрацию
+      localStorage.removeItem(LS_ANSWERS);
+      document.querySelectorAll('input[type="radio"]:checked').forEach(inp=> inp.checked = false);
+      document.getElementById('doneModal').classList.add('hidden');
+      // пользователь может отмечать заново и отправлять — это будет попытка № attempt+1
     });
 
     // helpers
@@ -193,12 +202,6 @@
         obj[inp.name] = inp.value;
       });
       return obj;
-    }
-
-    function lockQuiz(){
-      // запретим менять ответы и отправлять повторно
-      document.querySelectorAll('input[type="radio"]').forEach(inp=> inp.disabled = true);
-      submitBtn.disabled = true;
     }
 
     function showThanks(scoreStr){
