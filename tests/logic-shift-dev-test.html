@@ -3,21 +3,29 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Тесты</title>
+  <title>Тест по лекции — Логика смены</title>
   <link rel="stylesheet" href="../style.css"/>
   <script src="../theme.js" defer></script>
   <style>
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
-    .modal .card{max-width:420px;width:92%}
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:1000}
+    .modal .card{max-width:440px;width:92%}
     .hidden{display:none}
-    .q{margin:12px 0}
-    .q h3{margin:0 0 8px;font-size:16px}
-    .ok{padding:16px;border:1px solid var(--border);border-radius:12px;background:#eaffea;margin-top:12px}
+
+    /* починить внешний вид кнопок и disabled */
+    .btn{
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      user-select: none;
+    }
+    .btn:disabled{
+      opacity:.6;
+      cursor: not-allowed;
+    }
+
     .ok{
-    padding:16px;border:1px solid var(--border);border-radius:12px;
-    background:#eaffea;margin-top:12px;
-    color:#064e3b;                /* тёмно-зелёный текст, видно в dark */
-    font-weight:600;
+      padding:16px;border:1px solid var(--border);border-radius:12px;
+      background:#eaffea;margin-top:12px;color:#064e3b;font-weight:600
     }
   </style>
 </head>
@@ -38,131 +46,166 @@
   </div>
 
   <!-- Модалка "спасибо" -->
-<div id="doneModal" class="modal hidden">
-  <article class="card">
-    <h2>Спасибо за прохождение!</h2>
-    <p>Ваши ответы записаны. Возвращаемся к материалам?</p>
-    <p style="display:flex;gap:8px;flex-wrap:wrap">
-      <a class="btn" href="../index.html">↩ На начальную страницу</a>
-      <button id="closeThanks" class="btn" type="button">Остаться здесь</button>
-    </p>
-  </article>
-</div>
+  <div id="doneModal" class="modal hidden">
+    <article class="card">
+      <h2>Спасибо за прохождение!</h2>
+      <p id="scoreLine" style="margin-top:8px">Ваши ответы записаны.</p>
+      <p style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+        <a class="btn" href="../index.html">↩ На начальную страницу</a>
+        <button id="closeThanks" class="btn" type="button">Остаться здесь</button>
+      </p>
+    </article>
+  </div>
 
   <main class="card" style="margin-top:52px">
     <h1>Тест по лекции</h1>
     <div id="quiz">
-      <div class="q">
-        <h3>1) К какому периоду относятся первые 1–3 дня?</h3>
+      <div class="q" style="margin:12px 0">
+        <h3 style="margin:0 0 8px">1) К какому периоду относятся первые 1–3 дня?</h3>
         <label><input type="radio" name="q1" value="a"> Основной</label><br>
         <label><input type="radio" name="q1" value="b"> Заключительный</label><br>
         <label><input type="radio" name="q1" value="c"> Организационный</label>
       </div>
-      <div class="q">
-        <h3>2) Краткий девиз основного периода:</h3>
+      <div class="q" style="margin:12px 0">
+        <h3 style="margin:0 0 8px">2) Краткий девиз основного периода:</h3>
         <label><input type="radio" name="q2" value="a"> Теплота! Доверительность!</label><br>
         <label><input type="radio" name="q2" value="b"> Творчество! Самостоятельность! Мажор! Дружба!</label><br>
         <label><input type="radio" name="q2" value="c"> Удивление! Темп! Разнообразие!</label>
       </div>
-      <div class="q">
-        <h3>3) Что делать за 2–3 дня до конца?</h3>
+      <div class="q" style="margin:12px 0">
+        <h3 style="margin:0 0 8px">3) Что делать за 2–3 дня до конца?</h3>
         <label><input type="radio" name="q3" value="a"> Планировать сюрпризы, готовить тёплое расставание</label><br>
         <label><input type="radio" name="q3" value="b"> Назначать органов самоуправления</label><br>
         <label><input type="radio" name="q3" value="c"> Проводить разведку интересных дел</label>
       </div>
-      <button id="submitBtn" class="btn">Отправить</button>
+
+      <button id="submitBtn" class="btn" type="button">Отправить</button>
       <div id="done" class="ok hidden">Спасибо за прохождение! Результат отправлен.</div>
     </div>
+
     <p style="margin-top:12px"><a class="btn" href="../index.html">← Назад</a></p>
   </main>
 
   <script>
-  const SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyIGDD-60B3bTrXorGrwV9Td4B3dRFqgGUN1WmnF9AaCWBj9mmlkJkIkkU5dNGQuyDz/exec';
-  const TEST_ID = 'logic-shift-dev';
+    // === Настройки ===
+    const SCRIPT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyIGDD-60B3bTrXorGrwV9Td4B3dRFqgGUN1WmnF9AaCWBj9mmlkJkIkkU5dNGQuyDz/exec';
+    const TEST_ID = 'logic-shift-dev';
 
-  // Ключи для локального состояния
-  const LS_KEY_USER = `test:${TEST_ID}:user`;
-  const LS_KEY_SUBMITTED = `test:${TEST_ID}:submitted`;
-  const LS_CLIENT_ID = `test:${TEST_ID}:clientId`;
+    // Ключи для состояния
+    const LS_USER      = `test:${TEST_ID}:user`;
+    const LS_SUBMITTED = `test:${TEST_ID}:submitted`;
+    const LS_CLIENT_ID = `test:${TEST_ID}:clientId`;
+    const LS_ANSWERS   = `test:${TEST_ID}:answers`;
+    const LS_SCORE     = `test:${TEST_ID}:clientScore`;
 
-  // Генерим клиентский id один раз на устройство/тест
-  let clientId = localStorage.getItem(LS_CLIENT_ID);
-  if (!clientId) {
-    clientId = Date.now() + Math.random().toString(36).slice(2);
-    localStorage.setItem(LS_CLIENT_ID, clientId);
-  }
-
-  // Если уже отправляли — сразу блокируем интерфейс
-  const alreadySubmitted = localStorage.getItem(LS_KEY_SUBMITTED) === '1';
-  if (alreadySubmitted) {
-    document.getElementById('regModal')?.classList.add('hidden');
-    // покажем "спасибо" как модалку
-    window.addEventListener('load', ()=> document.getElementById('doneModal').classList.remove('hidden'));
-  }
-
-  // Восстановим имя/email если есть
-  let user = null;
-  try { user = JSON.parse(localStorage.getItem(LS_KEY_USER) || 'null'); } catch(_) {}
-  if (user && !alreadySubmitted) {
-    document.getElementById('regModal').classList.add('hidden');
-  }
-
-  // Регистрация
-  document.getElementById('regForm').addEventListener('submit', (e)=>{
-    e.preventDefault();
-    const fd = new FormData(e.target);
-    user = { name: fd.get('name'), email: fd.get('email') };
-    localStorage.setItem(LS_KEY_USER, JSON.stringify(user));
-    document.getElementById('regModal').classList.add('hidden');
-  });
-
-  // Кнопка «остаться здесь» в модалке спасибо
-  document.getElementById('closeThanks').addEventListener('click', ()=>{
-    document.getElementById('doneModal').classList.add('hidden');
-  });
-
-  // Отправка теста
-  const submitBtn = document.getElementById('submitBtn');
-  submitBtn.addEventListener('click', async ()=>{
-    if (!user) { alert('Сначала зарегистрируйтесь.'); return; }
-    if (localStorage.getItem(LS_KEY_SUBMITTED) === '1') return; // защита от повторов
-
-    // Собираем все отмеченные радиокнопки; ключ = name (q1,q2,...), значение = выбранная буква
-    const answers = {};
-    document.querySelectorAll('input[type="radio"]:checked').forEach(inp => {
-      answers[inp.name] = inp.value;
-    });
-    const correct = { q1:'c', q2:'b', q3:'a' };
-    const score = Object.keys(correct).reduce((s,k)=> s + (answers[k]===correct[k] ? 1 : 0), 0);
-
-    const payload = { ...user, clientId, testId: TEST_ID, score, answers };
-
-    // UI-блокировка
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Отправляем…';
-
-    try {
-      // «Огнеупорная» отправка — без чтения ответа (CORS-safe)
-      await fetch(SCRIPT_ENDPOINT, {
-        method:'POST',
-        mode:'no-cors',
-        headers:{ 'Content-Type':'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
-      });
-
-      // Фиксируем «сессию» как сданную
-      localStorage.setItem(LS_KEY_SUBMITTED, '1');
-
-      // Покажем модалку «спасибо»
-      document.getElementById('doneModal').classList.remove('hidden');
-      document.getElementById('done')?.classList.remove('hidden'); // старый зелёный блок тоже можно оставить/убрать
-    } catch (err) {
-      console.error('send error', err);
-      alert('Не удалось отправить результат. Проверь подключение.');
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Отправить';
+    // clientId
+    let clientId = localStorage.getItem(LS_CLIENT_ID);
+    if (!clientId) {
+      clientId = Date.now() + Math.random().toString(36).slice(2);
+      localStorage.setItem(LS_CLIENT_ID, clientId);
     }
-  });
-</script>
+
+    // Восстановим пользователя и ответы
+    let user = null;
+    try { user = JSON.parse(localStorage.getItem(LS_USER) || 'null'); } catch(_) {}
+    let savedAnswers = {};
+    try { savedAnswers = JSON.parse(localStorage.getItem(LS_ANSWERS) || '{}'); } catch(_) {}
+
+    // Проставим сохранённые ответы (если есть)
+    window.addEventListener('DOMContentLoaded', ()=>{
+      for (const [name,val] of Object.entries(savedAnswers)) {
+        const el = document.querySelector(`input[name="${name}"][value="${val}"]`);
+        if (el) el.checked = true;
+      }
+      if (user) document.getElementById('regModal').classList.add('hidden');
+
+      // если уже сдавали — покажем модалку и заблокируем интерфейс
+      if (localStorage.getItem(LS_SUBMITTED)==='1') {
+        lockQuiz();
+        showThanks(localStorage.getItem(LS_SCORE));
+      }
+    });
+
+    // Сохранять выбор «на лету»
+    document.querySelectorAll('input[type="radio"]').forEach(inp=>{
+      inp.addEventListener('change', ()=>{
+        const a = collectAnswers();
+        localStorage.setItem(LS_ANSWERS, JSON.stringify(a));
+      });
+    });
+
+    // Регистрация
+    document.getElementById('regForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      user = { name: fd.get('name'), email: fd.get('email') };
+      localStorage.setItem(LS_USER, JSON.stringify(user));
+      document.getElementById('regModal').classList.add('hidden');
+    });
+
+    // Кнопка «остаться здесь»
+    document.getElementById('closeThanks').addEventListener('click', ()=>{
+      document.getElementById('doneModal').classList.add('hidden');
+    });
+
+    // Отправка
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.addEventListener('click', async ()=>{
+      if (!user) { alert('Сначала зарегистрируйтесь.'); return; }
+      if (localStorage.getItem(LS_SUBMITTED)==='1') return;
+
+      const answers = collectAnswers();
+      const correct = { q1:'c', q2:'b', q3:'a' }; // локально для показа счёта; сервер проверит сам
+      const total = Object.keys(answers).length;
+      const clientScore = Object.keys(correct).reduce((s,k)=> s + (answers[k]===correct[k] ? 1 : 0), 0);
+
+      // блокировка
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Отправляем…';
+
+      try {
+        const payload = { ...user, clientId, testId: TEST_ID, score: clientScore, answers };
+        await fetch(SCRIPT_ENDPOINT, {
+          method: 'POST',
+          mode:   'no-cors',
+          headers:{ 'Content-Type':'text/plain;charset=utf-8' },
+          body:   JSON.stringify(payload)
+        });
+
+        localStorage.setItem(LS_SUBMITTED,'1');
+        localStorage.setItem(LS_SCORE, `${clientScore}/${total}`);
+
+        lockQuiz();
+        showThanks(`${clientScore}/${total}`);
+        document.getElementById('done').classList.remove('hidden'); // можно убрать, если лишнее
+      } catch (err) {
+        console.error(err);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Отправить';
+        alert('Не удалось отправить результат. Проверь подключение.');
+      }
+    });
+
+    // helpers
+    function collectAnswers(){
+      const obj = {};
+      document.querySelectorAll('input[type="radio"]:checked').forEach(inp=>{
+        obj[inp.name] = inp.value;
+      });
+      return obj;
+    }
+
+    function lockQuiz(){
+      // запретим менять ответы и отправлять повторно
+      document.querySelectorAll('input[type="radio"]').forEach(inp=> inp.disabled = true);
+      submitBtn.disabled = true;
+    }
+
+    function showThanks(scoreStr){
+      const line = document.getElementById('scoreLine');
+      line.textContent = scoreStr ? `Ваши ответы записаны. Результат: ${scoreStr}.` : 'Ваши ответы записаны.';
+      document.getElementById('doneModal').classList.remove('hidden');
+    }
+  </script>
 </body>
 </html>
