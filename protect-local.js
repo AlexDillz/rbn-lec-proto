@@ -16,7 +16,7 @@
   const theme = detectTheme();
   const isDark = theme === 'dark';
 
-  // --- Палитра ---
+  // палитра
   const pageBg    = isDark ? '#020617' : '#f3f4f6';
   const cardBg    = isDark ? '#111827' : '#ffffff';
   const textColor = isDark ? '#e5e7eb' : '#111827';
@@ -42,155 +42,138 @@
     const L = data.lectures.find((x) => x.id === lectureId);
     if (!L) return;
 
-    // ============================
-    // 1) ЛЕКЦИЯ ЗАКРЫТА
-    // ============================
-    if (L.locked) {
-      document.body.style.margin = '0';
-      document.body.style.background = pageBg;
-      document.body.style.color = textColor;
 
-      document.body.innerHTML = `
+// закрытая лекция (экран)
+if (L.locked) {
+  document.body.style.margin = '0';
+  document.body.style.background = pageBg;
+  document.body.style.color = textColor;
+
+  document.body.innerHTML = `
+    <div style="
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      background:${pageBg};
+      color:${textColor};
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    ">
+      <div style="
+        width:min(760px, 95%);
+        background:${cardBg};
+        border-radius:28px;
+        padding:40px 36px 32px;
+        box-shadow:${shadow};
+      ">
+
+        <!-- Заголовок + замок -->
         <div style="
-          min-height:100vh;
           display:flex;
           align-items:center;
-          justify-content:center;
-          background:${pageBg};
-          color:${textColor};
-          font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-          padding:24px;
+          gap:14px;
+          margin-bottom:10px;
         ">
-          <div style="
-            max-width:700px;
-            width:100%;
-            padding:36px 32px 32px;
-            background:${cardBg};
-            border-radius:28px;
-            box-shadow:${shadow};
-          ">
-
-            <div style="
-              display:flex;
-              align-items:center;
-              gap:14px;
-              margin-bottom:18px;
-            ">
-              <span style="font-size:34px;">🔒</span>
-              <h1 style="margin:0;font-size:32px;font-weight:700;">
-                Эта лекция ещё закрыта
-              </h1>
-            </div>
-
-            <p style="margin:0 0 14px;font-size:18px;">Ты явно любопытный человечек</p>
-            <p style="margin:0 0 26px;font-size:18px;">Но сейчас ещё не время</p>
-
-            <p style="margin:0 0 14px;font-size:20px;font-weight:600;">
-              Если хочешь признания — напиши Парфенюку Виктору в личные сообщения:
-            </p>
-
-            <div style="
-              margin:24px 0;
-              padding:24px;
-              background:${isDark ? '#1f2937' : '#f5f5f5'};
-              border-radius:16px;
-              font-size:22px;
-              text-align:center;
-              font-weight:500;
-              line-height:1.45;
-            ">
-              "Я нашёл неопубликованную лекцию"
-            </div>
-
-            <a href="../index.html" style="
-              display:inline-flex;
-              align-items:center;
-              gap:8px;
-              margin-top:12px;
-              padding:10px 18px;
-              border-radius:999px;
-              background:${btnBg};
-              color:${btnText};
-              text-decoration:none;
-              font-weight:500;
-              font-size:16px;
-            ">
-              ← Назад к списку
-            </a>
-          </div>
+          <span style="font-size:32px;">🔒</span>
+          <h1 style="margin:0;font-size:32px;font-weight:700;">
+            Эта лекция ещё закрыта
+          </h1>
         </div>
-      `;
-      return;
-    }
 
-    // ============================
-    // 2) ЛЕКЦИЯ ОТКРЫТА, НО ЛОКАЛЬНО
-    // ============================
-    if (isLocal) {
-      document.body.style.margin = '0';
-      document.body.style.padding = '0';
-      document.body.style.background = pageBg;
-      document.body.style.color = textColor;
+        <p style="margin:18px 0;font-size:20px;">
+          Ты явно любопытный человечек.
+        </p>
 
-      document.body.innerHTML = `
-        <div style="
-          min-height:100vh;
-          display:flex;
+        <p style="margin:18px 0;font-size:20px;">
+          Но сейчас ещё не время.
+        </p>
+
+        <p style="margin:24px 0 32px;font-size:22px;font-weight:600;line-height:1.45;">
+          Если хочешь признания — напиши Парфенюку Виктору в личные сообщения.
+        </p>
+
+        <a href="../index.html" style="
+          display:inline-flex;
           align-items:center;
-          justify-content:center;
-          background:${pageBg};
-          color:${textColor};
-          font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-          padding:24px;
+          gap:8px;
+          padding:12px 20px;
+          border-radius:999px;
+          background:${btnBg};
+          color:${btnText};
+          text-decoration:none;
+          font-weight:500;
+          font-size:17px;
         ">
-          <div style="
-            width: min(700px, 90%);
-            margin:auto;
-            padding:36px 32px 32px;
-            background:${cardBg};
-            border-radius:28px;
-            box-shadow:${shadow};
-          ">
-            <h1 style="margin:0 0 22px;font-size:30px;">
-              Ты открыл лекцию локально ⚠️
-            </h1>
+          ← Назад
+        </a>
+      </div>
+    </div>
+  `;
+  return;
+}
 
-            <p style="margin:0 0 14px;font-size:17px;color:${muted};line-height:1.5;">
-              В таком режиме сайт работает иначе: стили могут поехать, скрипты —
-              вести себя странно, а часть функций вообще отключена.
-            </p>
 
-            <p style="margin:0 0 14px;font-size:17px;line-height:1.5;">
-              Нормальный путь — зайти по QR-коду, который выдаётся на лекции.
-            </p>
+// открытая лекция (экран локалки запуска)
+if (isLocal) {
+  document.body.style = `
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100vh;
+    max-width:none !important;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    background:${pageBg};
+    color:${textColor};
+    font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  `;
 
-            <p style="margin:0 0 26px;font-size:16px;color:${muted};">
-              Если ты просто ковыряешься в репозитории — привет от всех-всех-всех
-              и отдельный привет от кодера 👋
-            </p>
+  document.body.innerHTML = `
+    <div style="
+      width:min(760px, 92%);
+      background:${cardBg};
+      border-radius:28px;
+      padding:42px 34px 32px;
+      box-shadow:${shadow};
+    ">
+      <h1 style="margin:0 0 22px;font-size:30px;">
+        Ты открыл лекцию локально ⚠️
+      </h1>
 
-            <button onclick="location.href='../index.html'"
-              style="
-                display:inline-flex;
-                align-items:center;
-                gap:8px;
-                padding:12px 20px;
-                border-radius:999px;
-                background:${btnBg};
-                color:${btnText};
-                border:none;
-                cursor:pointer;
-                font-weight:500;
-                font-size:16px;
-              "
-            >
-              ← На главную
-            </button>
-          </div>
-        </div>
-      `;
-      return;
-    }
+      <p style="margin:0 0 14px;font-size:17px;color:${muted};line-height:1.55;">
+        В таком режиме сайт работает иначе: стили могут поехать, скрипты —
+        вести себя странно, а часть функций вообще отключена.
+      </p>
+
+      <p style="margin:0 0 14px;font-size:17px;line-height:1.55;">
+        Нормальный путь — зайти по QR-коду, который выдаётся на лекции.
+      </p>
+
+      <p style="margin:0 0 26px;font-size:16px;color:${muted};line-height:1.55;">
+        Если ты просто ковыряешься в репозитории — привет от всех-всех-всех
+        и отдельный привет от кодера 👋
+      </p>
+
+      <a href="../index.html" style="
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        padding:12px 20px;
+        border-radius:999px;
+        background:${btnBg};
+        color:${btnText};
+        text-decoration:none;
+        font-weight:500;
+        font-size:17px;
+      ">← На главную</a>
+    </div>
+  `;
+  return;
+}
+
 
   } catch (err) {
     console.error('protect-local.js error:', err);
