@@ -16,35 +16,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style.css">
   <script src="../theme.js" defer></script>
+
+  <!-- подключаем общий защитный скрипт -->
+  <script
+    src="../js/protect-local.js?v=4"
+    data-lecture-id="lec3"
+    defer
+  ></script>
 </head>
 <body>
   <button id="theme-toggle">🌙 Dark mode</button>
 
-  <article class="card" style="margin-top:52px">
+  <article class="card lecture-card" style="margin-top:52px">
+    <a href="../index.html" class="close-card-btn" aria-label="Закрыть">×</a>
+
     <h1>...</h1>
-    <p><a class="btn" href="../index.html">← К списку лекций</a></p>
+
+    <p>
+      <a class="btn" href="../index.html">← К списку лекций</a>
+    </p>
+
+    <!-- Здесь дальше будет настоящий контент лекции -->
   </article>
 </body>
 </html>
-
-<script>
-  const id = 'lec3'; // id лекции
-  fetch('../lectures.json')
-    .then(r => r.json())
-    .then(data => {
-      const L = data.lectures.find(x => x.id === id);
-      if (L && L.locked) {
-        document.body.innerHTML = `
-          <div style="padding:40px;max-width:600px;margin:0 auto;font-size:20px;">
-            <h1>Эта лекция ещё закрыта 🔒</h1>
-            <p>Ты явно любопытный человечек</p>
-            <p>Но сейчас ещё не время</p>
-            <p><b>Если хочешь признания — напиши Парфенюку Виктору в личные сообщения: </b></p>
-            <pre style="background:#eee;padding:10px;border-radius:8px;">
-              "Я нашёл неопубликованную лекцию"
-            </pre>
-          </div>
-        `;
-      }
-    });
-</script>
