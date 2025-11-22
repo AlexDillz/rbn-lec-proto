@@ -20,7 +20,7 @@
   const theme = detectTheme();
   const isDark = theme === 'dark';
 
-  // ---------- Палитра под две темы ----------
+  // палитра под две темы
   const pageBg    = isDark ? '#020617' : '#f3f4f6';
   const cardBg    = isDark ? '#111827' : '#ffffff';
   const textColor = isDark ? '#e5e7eb' : '#111827';
