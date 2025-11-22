@@ -219,3 +219,8 @@ body.dark .close-card-btn {
 body.dark .close-card-btn:hover {
   background:#020617;
 }
+/* для страниц замка / локального режима */
+body.dark {
+  --locked-bg: #111827;
+  --locked-text: #f3f4f6;
+}
