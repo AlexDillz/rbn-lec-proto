@@ -47,7 +47,9 @@
     if (!L) return;
 
     // лекция ещё ЗАКРЫТА (locked: true) 
-     if (L.locked) {
+     // лекция ещё ЗАКРЫТА (locked: true) 
+    // лекция ещё ЗАКРЫТА (locked: true) 
+    if (L.locked) {
       document.body.style.margin = '0';
       document.body.style.padding = '0';
       document.body.style.maxWidth = 'none';
@@ -75,23 +77,20 @@
             border-radius:28px;
             box-shadow:${shadow};
           ">
-            <div style="
-              font-size:44px;
-              line-height:1;
-              margin-bottom:14px;
-            ">
-              🔒
-            </div>
 
             <h1 style="
-              margin:0 0 12px;
+              margin:0 0 18px;
               font-size:32px;
               font-weight:700;
+              display:flex;
+              align-items:center;
+              gap:10px;
             ">
-              Эта лекция ещё закрыта
+              <span>🔒</span>
+              <span>Эта лекция ещё закрыта</span>
             </h1>
 
-            <p style="margin:0 0 4px;font-size:18px;line-height:1.5;">
+            <p style="margin:0 0 8px;font-size:18px;line-height:1.5;">
               Ты явно любопытный человечек.
             </p>
 
@@ -101,23 +100,11 @@
 
             <p style="margin:0 0 10px;font-size:18px;line-height:1.5;">
               Если хочешь признания — напиши Парфенюку Виктору в личные сообщения
-              и вставь эту фразу:
+              с фразой:
             </p>
 
-            <p style="margin:10px 0 22px;font-size:16px;line-height:1.5;">
-              Фраза для сообщения:
-              <span style="
-                display:inline-block;
-                margin-left:6px;
-                padding:6px 10px;
-                border-radius:999px;
-                background:${isDark ? '#020617' : '#e5e7eb'};
-                border:1px solid ${isDark ? '#4b5563' : '#9ca3af'};
-                font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-                font-size:15px;
-              ">
-                Я нашёл неопубликованную лекцию
-              </span>
+            <p style="margin:0 0 22px;font-size:18px;line-height:1.5;">
+              «Я нашёл неопубликованную лекцию».
             </p>
 
             <a href="../index.html" style="
