@@ -77,7 +77,7 @@ if (L.locked) {
         ">
           <span style="font-size:32px;">🔒</span>
           <h1 style="margin:0;font-size:32px;font-weight:700;">
-            Эта лекция ещё закрыта
+            Эта лекция ещё закрыта 🔒
           </h1>
         </div>
 
@@ -88,11 +88,10 @@ if (L.locked) {
         <p style="margin:18px 0;font-size:20px;">
           Но сейчас ещё не время.
         </p>
-
-        <p style="margin:24px 0 32px;font-size:22px;font-weight:600;line-height:1.45;">
+        <p style="margin:18px 0;font-size:20px;">
           Если хочешь признания — напиши Парфенюку Виктору в личные сообщения.
         </p>
-
+                    
         <a href="../index.html" style="
           display:inline-flex;
           align-items:center;
