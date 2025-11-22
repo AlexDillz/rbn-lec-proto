@@ -1,8 +1,18 @@
+<!--
+Привет, ковёрный взломщик 👋  
+Если ты читаешь это - значит, нашёл путь быстрее всех.
+
+Напиши Парфенюку Виктору в личные сообщения фразу:
+"Код открыт — а сердце ещё нет"
+
+За это ты получишь бонус 😎
+-->
+
 <!doctype html>
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <title>Название лекции</title>
+  <title>...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style.css">
   <script src="../theme.js" defer></script>
@@ -11,15 +21,30 @@
   <button id="theme-toggle">🌙 Dark mode</button>
 
   <article class="card" style="margin-top:52px">
-    <h1>Название лекции</h1>
-    <p><b>Цель:</b> какая цель.</p>
-    <ol>
-      <li>что.</li>
-      <li>что.</li>
-      <li>что.</li>
-    </ol>
-    <p><b>Кейс:</b> какой</p>
+    <h1>...</h1>
     <p><a class="btn" href="../index.html">← Назад к списку</a></p>
   </article>
 </body>
 </html>
+
+<script>
+  const id = 'lec2'; // id лекции
+  fetch('../lectures.json')
+    .then(r => r.json())
+    .then(data => {
+      const L = data.lectures.find(x => x.id === id);
+      if (L && L.locked) {
+        document.body.innerHTML = `
+          <div style="padding:40px;max-width:600px;margin:0 auto;font-size:20px;">
+            <h1>Эта лекция ещё закрыта 🔒</h1>
+            <p>Ты явно любопытный человечек</p>
+            <p>Но сейчас ещё не время</p>
+            <p><b>Если хочешь признания — напиши Парфенюку Виктору в личные сообщения: </b></p>
+            <pre style="background:#eee;padding:10px;border-radius:8px;">
+              "Я нашёл неопубликованную лекцию"
+            </pre>
+          </div>
+        `;
+      }
+    });
+</script>

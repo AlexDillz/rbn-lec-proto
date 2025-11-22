@@ -1,3 +1,13 @@
+/* 
+Привет, ковёрный взломщик 👋  
+Если ты читаешь это - значит, нашёл путь быстрее всех.
+
+Напиши Парфенюку Виктору в личные сообщения фразу:
+"Код открыт — а сердце ещё нет"
+
+За это ты получишь бонус 😎
+*/
+
 :root { --pad:16px; --border:#e5e7eb; }
 *{box-sizing:border-box}
 
@@ -28,7 +38,7 @@ h1{margin:0 0 6px}
 .btn{
   display:inline-flex;
   align-items:center;
-  gap:4px;                 /* расстояние между стрелкой и текстом */
+  gap:4px; /* расстояние между стрелкой и текстом */
   padding:8px 12px;
   border:1px solid var(--border);
   border-radius:10px;
@@ -74,14 +84,14 @@ body.dark #theme-toggle{
 /* стили контента лекции */
 .content p{
   text-align: justify;
-  text-indent: 25px;         /* отступ первой строки */
+  text-indent: 25px; /* отступ */
   margin: 0 0 12px;
 }
 .content h1, .content h2, .content h3, .content h4, .content h5{
   text-align: center;
   text-indent: 0;
   margin: 16px 0 12px;
-  font-size: 20px;           /* одинаковый размер для I/II/III… */
+  font-size: 20px; /* одинаковый размер для глав */
   font-weight: 700;
 }
 .content ol, .content ul{ margin: 0 0 12px 22px; }
@@ -111,3 +121,64 @@ body.dark .card{
 body.dark .card p{ color:#e5e7eb; }  /* светлый текст в карточке */
 body.dark a.btn{ border-color:#4b5563; color:#f3f4f6; }
 body.dark footer{ color:#9ca3af; }
+
+/* кликабельные и локнутые карточки = */
+
+/* открытая карточка: лёгкий ховер и курсор */
+.card-clickable{
+  cursor:pointer;
+  transition: box-shadow .15s ease, transform .15s ease;
+}
+.card-clickable:hover{
+  box-shadow:0 4px 14px rgba(0,0,0,.08);
+  transform:translateY(-1px);
+}
+
+/* заблокированная карточка */
+.card-locked{
+  position:relative;
+  opacity:0.9;
+  overflow:hidden;
+}
+
+/* размытый текст внутри */
+.card-locked .locked-body{
+  filter:blur(3px);
+  pointer-events:none;
+  user-select:none;
+}
+
+/* дымка поверх контента */
+.card-locked::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.45),
+    rgba(255,255,255,0.9)
+  );
+  pointer-events:none;
+}
+
+/* нижняя зона с кнопкой */
+.card-locked .locked-footer{
+  position:relative;
+  margin-top:12px;
+}
+
+/* сама заблокированная кнопка */
+.locked-btn[disabled]{
+  cursor:default;
+  background:#f3f4f6;
+  color:#6b7280;
+  border-color:#e5e7eb;
+}
+body.dark .locked-btn[disabled]{
+  background:#1f2937;
+  color:#9ca3af;
+  border-color:#374151;
+}
+body.dark .card-locked{
+  background:#111827;
+}
