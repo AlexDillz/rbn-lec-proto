@@ -47,13 +47,15 @@
     if (!L) return;
 
     // лекция ещё ЗАКРЫТА (locked: true) 
-    if (L.locked) {
+     if (L.locked) {
       document.body.style.margin = '0';
       document.body.style.padding = '0';
       document.body.style.maxWidth = 'none';
       document.body.style.width = '100%';
       document.body.style.background = pageBg;
       document.body.style.color = textColor;
+      document.body.style.fontFamily =
+        "system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif";
 
       document.body.innerHTML = `
         <div style="
@@ -63,28 +65,59 @@
           justify-content:center;
           background:${pageBg};
           color:${textColor};
-          font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
           padding:24px;
         ">
           <div style="
-            max-width:700px;
+            max-width:720px;
             width:100%;
-            padding:36px 32px 32px;
+            padding:32px 28px 28px;
             background:${cardBg};
             border-radius:28px;
             box-shadow:${shadow};
           ">
-            <h1 style="margin:0 0 18px;font-size:30px;font-weight:700;">
-              Эта лекция ещё не открыта :)
+            <div style="
+              font-size:44px;
+              line-height:1;
+              margin-bottom:14px;
+            ">
+              🔒
+            </div>
+
+            <h1 style="
+              margin:0 0 12px;
+              font-size:32px;
+              font-weight:700;
+            ">
+              Эта лекция ещё закрыта
             </h1>
 
-            <p style="margin:0 0 10px;font-size:18px;">
-              Любопытства тебе не занимать.
+            <p style="margin:0 0 4px;font-size:18px;line-height:1.5;">
+              Ты явно любопытный человечек.
             </p>
 
-            <p style="margin:0 0 26px;font-size:18px;">
-              Хочешь бонуса и признания? — пиши в личные сообщения Парфенюку Виктору.
+            <p style="margin:0 0 18px;font-size:18px;line-height:1.5;">
+              Но сейчас ещё не время.
             </p>
+
+            <p style="margin:0 0 10px;font-size:18px;line-height:1.5;">
+              Если хочешь признания — напиши Парфенюку Виктору в личные сообщения
+              и вставь эту фразу:
+            </p>
+
+            <div style="margin:10px 0 22px;">
+              <div style="font-size:14px;color:${muted};margin-bottom:6px;">
+                Скопируй и отправь:
+              </div>
+              <div style="
+                padding:12px 14px;
+                border-radius:14px;
+                background:${isDark ? '#020617' : '#f9fafb'};
+                border:1px solid ${isDark ? '#1f2937' : '#e5e7eb'};
+                font-size:16px;
+              ">
+                "Я нашёл неопубликованную лекцию"
+              </div>
+            </div>
 
             <a href="../index.html" style="
               display:inline-flex;
@@ -106,7 +139,7 @@
       `;
       return;
     }
-
+    
     // лекция ОТКРЫТА, но файл запущен ЛОКАЛЬНО 
     if (isLocal) {
       document.body.style.margin = '0';
