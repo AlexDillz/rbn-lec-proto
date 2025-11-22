@@ -47,8 +47,6 @@
     if (!L) return;
 
     // лекция ещё ЗАКРЫТА (locked: true) 
-     // лекция ещё ЗАКРЫТА (locked: true) 
-    // лекция ещё ЗАКРЫТА (locked: true) 
     if (L.locked) {
       document.body.style.margin = '0';
       document.body.style.padding = '0';
@@ -99,12 +97,11 @@
             </p>
 
             <p style="margin:0 0 10px;font-size:18px;line-height:1.5;">
-              Если хочешь признания — напиши Парфенюку Виктору в личные сообщения
-              с фразой:
+              Если хочешь признания — напиши Парфенюку Виктору в личные сообщения:
             </p>
 
             <p style="margin:0 0 22px;font-size:18px;line-height:1.5;">
-              «Я нашёл неопубликованную лекцию».
+              «Я нашёл неопубликованную лекцию)))»
             </p>
 
             <a href="../index.html" style="
