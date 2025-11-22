@@ -30,15 +30,15 @@ h1{margin:0 0 6px}
   border:1px solid var(--border);
   border-radius:12px;
   padding:14px;
-  background:#fff; /* чисто белая, без синего оттенка */
+  background:#fff; 
 }
 .card h2{margin:0 0 8px;font-size:18px}
-.card p{margin:0 0 12px; color:#111} /* текст чёрный в светлой теме */
+.card p{margin:0 0 12px; color:#111}
 
 .btn{
   display:inline-flex;
   align-items:center;
-  gap:4px; /* расстояние между стрелкой и текстом */
+  gap:4px;
   padding:8px 12px;
   border:1px solid var(--border);
   border-radius:10px;
@@ -68,7 +68,6 @@ body.dark #theme-toggle{
   border-color: #4b5563;
 }
 
-/* мобильная адаптация кнопки */
 @media (max-width: 640px){
   #theme-toggle{
     top: auto;
@@ -84,14 +83,14 @@ body.dark #theme-toggle{
 /* стили контента лекции */
 .content p{
   text-align: justify;
-  text-indent: 25px; /* отступ */
+  text-indent: 25px;
   margin: 0 0 12px;
 }
 .content h1, .content h2, .content h3, .content h4, .content h5{
   text-align: center;
   text-indent: 0;
   margin: 16px 0 12px;
-  font-size: 20px; /* одинаковый размер для глав */
+  font-size: 20px;
   font-weight: 700;
 }
 .content ol, .content ul{ margin: 0 0 12px 22px; }
@@ -118,13 +117,11 @@ body.dark .card{
   background:#1f2937;
   border-color:#374151;
 }
-body.dark .card p{ color:#e5e7eb; }  /* светлый текст в карточке */
+body.dark .card p{ color:#e5e7eb; }
 body.dark a.btn{ border-color:#4b5563; color:#f3f4f6; }
 body.dark footer{ color:#9ca3af; }
 
-/* кликабельные и локнутые карточки = */
-
-/* открытая карточка: лёгкий ховер и курсор */
+/* открытая карточка (на главной) */
 .card-clickable{
   cursor:pointer;
   transition: box-shadow .15s ease, transform .15s ease;
@@ -134,21 +131,17 @@ body.dark footer{ color:#9ca3af; }
   transform:translateY(-1px);
 }
 
-/* заблокированная карточка */
+/* заблокированная карточка (на главной) */
 .card-locked{
   position:relative;
   opacity:0.9;
   overflow:hidden;
 }
-
-/* размытый текст внутри */
 .card-locked .locked-body{
   filter:blur(3px);
   pointer-events:none;
   user-select:none;
 }
-
-/* дымка поверх контента */
 .card-locked::after{
   content:"";
   position:absolute;
@@ -160,14 +153,10 @@ body.dark footer{ color:#9ca3af; }
   );
   pointer-events:none;
 }
-
-/* нижняя зона с кнопкой */
 .card-locked .locked-footer{
   position:relative;
   margin-top:12px;
 }
-
-/* сама заблокированная кнопка */
 .locked-btn[disabled]{
   cursor:default;
   background:#f3f4f6;
@@ -181,4 +170,52 @@ body.dark .locked-btn[disabled]{
 }
 body.dark .card-locked{
   background:#111827;
+}
+
+/* карточка лекции целиком (на отдельной странице) */
+.lecture-card{
+  margin-top:52px;
+  position:relative; /* чтобы крестик привязывался к рамке */
+}
+
+/* кнопка закрытия карточки лекции */
+.close-card-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 9999px;
+  background: #fff;
+  color: #111;
+  border: 1px solid var(--border);
+  font-size: 20px;
+  font-weight: 500;
+  text-decoration: none;
+
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  transition: background .2s, transform .2s, box-shadow .2s;
+}
+
+.close-card-btn:hover {
+  background: #f3f4f6;
+  transform: scale(1.05);
+  box-shadow: 0 4px 14px rgba(0,0,0,.15);
+}
+
+body.dark .close-card-btn {
+  background:#111827;
+  color:#f3f4f6;
+  border-color:#374151;
+}
+body.dark .close-card-btn:hover {
+  background:#020617;
 }

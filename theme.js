@@ -8,7 +8,6 @@
 За это ты получишь бонус 😎
 */
 
-
 // единая логика темы
 function currentTheme() {
   const s = localStorage.getItem('theme');

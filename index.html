@@ -19,14 +19,13 @@
 <body>
   <header>
     <h1>Школа Вожатского Мастерства ОЛАС «Рубин»</h1>
-    <p>Отсканировали QR-код? Здесь материалы лекций.</p>
+    <p>Горячий привет всем, кто перешел по QR-коду. Здесь можно посмотреть материалы лекций.</p>
   </header>
 
   <button id="theme-toggle" aria-label="Переключить тему">🌙 Dark mode</button>
-
   <main id="list" class="grid"></main>
 
-  <footer><small>v0.5</small></footer>
+  <footer><small>v0.8 © PARFENUCHKA, 2025-2026</small></footer>
 
   <script>
     async function load() {
@@ -39,7 +38,7 @@
         data.lectures.forEach(L => {
           const el = document.createElement('article');
 
-          // --- ЗАЛОЧЕННАЯ КАРТОЧКА ---
+          // залоченная карточка
           if (L.locked) {
             el.className = 'card card-locked';
             el.innerHTML = `
