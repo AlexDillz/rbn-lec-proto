@@ -104,20 +104,21 @@
               и вставь эту фразу:
             </p>
 
-            <div style="margin:10px 0 22px;">
-              <div style="font-size:14px;color:${muted};margin-bottom:6px;">
-                Скопируй и отправь:
-              </div>
-              <div style="
-                padding:12px 14px;
-                border-radius:14px;
-                background:${isDark ? '#020617' : '#f9fafb'};
-                border:1px solid ${isDark ? '#1f2937' : '#e5e7eb'};
-                font-size:16px;
+            <p style="margin:10px 0 22px;font-size:16px;line-height:1.5;">
+              Фраза для сообщения:
+              <span style="
+                display:inline-block;
+                margin-left:6px;
+                padding:6px 10px;
+                border-radius:999px;
+                background:${isDark ? '#020617' : '#e5e7eb'};
+                border:1px solid ${isDark ? '#4b5563' : '#9ca3af'};
+                font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+                font-size:15px;
               ">
-                "Я нашёл неопубликованную лекцию"
-              </div>
-            </div>
+                Я нашёл неопубликованную лекцию
+              </span>
+            </p>
 
             <a href="../index.html" style="
               display:inline-flex;
@@ -139,7 +140,8 @@
       `;
       return;
     }
-    
+
+
     // лекция ОТКРЫТА, но файл запущен ЛОКАЛЬНО 
     if (isLocal) {
       document.body.style.margin = '0';
