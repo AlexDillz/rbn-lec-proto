@@ -16,7 +16,7 @@ function currentTheme() {
     ? 'dark' : 'light';
 }
 function applyTheme(t){ document.body.classList.toggle('dark', t==='dark'); }
-function updateToggleLabel(btn){ if(btn) btn.textContent = document.body.classList.contains('dark') ? '☀️ Light mode' : '🌙 Dark mode'; }
+function updateToggleLabel(btn){ if(btn) btn.textContent = document.body.classList.contains('dark') ? '☀️ Светлая тема' : '🌙 Тёмная тема'; }
 function initTheme(){
   applyTheme(currentTheme());
   const btn = document.getElementById('theme-toggle');
