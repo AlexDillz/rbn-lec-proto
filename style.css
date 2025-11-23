@@ -196,13 +196,21 @@ body.dark .card-locked{
   background: #fff;
   color: #111;
   border: 1px solid var(--border);
-  font-size: 20px;
-  font-weight: 500;
   text-decoration: none;
 
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0,0,0,.08);
   transition: background .2s, transform .2s, box-shadow .2s;
+}
+
+/* сам крестик в виде svg */
+.close-card-btn .close-icon {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  pointer-events: none; /* чтобы svg не перехватывал клик */
 }
 
 .close-card-btn:hover {
@@ -219,6 +227,7 @@ body.dark .close-card-btn {
 body.dark .close-card-btn:hover {
   background:#020617;
 }
+
 /* для страниц замка / локального режима */
 body.dark {
   --locked-bg: #111827;
