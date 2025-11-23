@@ -8,9 +8,16 @@
 За это ты получишь бонус 😎
 */
 
-:root { --pad:16px; --border:#e5e7eb; }
-*{box-sizing:border-box}
+:root { 
+  --pad:16px; 
+  --border:#e5e7eb; 
+}
 
+*{
+  box-sizing:border-box;
+}
+
+/* базовая раскладка страницы */
 body{
   font-family:system-ui,Arial,sans-serif;
   max-width:900px;
@@ -21,21 +28,36 @@ body{
   background:#fff;
 }
 
-/* десктопная шапка */
-header{margin:72px 0 20px}
-h1{margin:0 0 6px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+/* шапка (десктоп по умолчанию) */
+header{
+  margin:72px 0 20px; /* сверху побольше, чтобы не конфликтовать с кнопкой темы */
+}
+h1{
+  margin:0 0 6px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:12px;
+}
 
-/* карточки списка */
+/* карточки списка лекций */
 .card{
   border:1px solid var(--border);
   border-radius:12px;
   padding:14px;
   background:#fff; 
 }
-.card h2{margin:0 0 8px;font-size:18px}
-.card p{margin:0 0 12px; color:#111}
+.card h2{
+  margin:0 0 8px;
+  font-size:18px;
+}
+.card p{
+  margin:0 0 12px; 
+  color:#111;
+}
 
+/* кнопка */
 .btn{
   display:inline-flex;
   align-items:center;
@@ -45,11 +67,17 @@ h1{margin:0 0 6px}
   border-radius:10px;
   text-decoration:none;
 }
-a.btn:link, a.btn:visited { color: inherit; }
+a.btn:link, 
+a.btn:visited { 
+  color: inherit; 
+}
 
-footer{margin-top:24px;color:#6b7280}
+footer{
+  margin-top:24px;
+  color:#6b7280;
+}
 
-/* плавающая кнопка темы */
+/* плавающая кнопка темы (десктоп) */
 #theme-toggle{
   position: fixed;
   top: 12px;
@@ -62,11 +90,6 @@ footer{margin-top:24px;color:#6b7280}
   color: #111;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0,0,0,.08);
-}
-body.dark #theme-toggle{
-  background: #111;
-  color: #f3f4f6;
-  border-color: #4b5563;
 }
 
 /* мобилка */
@@ -86,18 +109,18 @@ body.dark #theme-toggle{
     padding-bottom: 72px;
   }
 
-  /* шапка выше, без огромной дыры */
+  /* шапка ближе к верху, без гигантской черной полосы */
   header{
     margin: 32px 0 16px;
   }
 
-  /* карточка лекции ближе к верху, внутри больше воздуха */
+  /* карточка лекции: ближе к верху, внутри больше воздуха */
   .lecture-card{
-    margin-top: 16px;
-    padding-top: 32px;
+    margin-top: 24px;
+    padding-top: 32px; /* запас под заголовок и крестик */
   }
 
-  /* крестик внутри карточки, а не нависающий */
+  /* крестик внутри карточки, сверху чуть отступ */
   .close-card-btn{
     top: 10px;
     right: 10px;
@@ -110,14 +133,21 @@ body.dark #theme-toggle{
   text-indent: 25px;
   margin: 0 0 12px;
 }
-.content h1, .content h2, .content h3, .content h4, .content h5{
+.content h1, 
+.content h2, 
+.content h3, 
+.content h4, 
+.content h5{
   text-align: center;
   text-indent: 0;
   margin: 16px 0 12px;
   font-size: 20px;
   font-weight: 700;
 }
-.content ol, .content ul{ margin: 0 0 12px 22px; }
+.content ol, 
+.content ul{ 
+  margin: 0 0 12px 22px; 
+}
 .content img{
   display:block;
   max-width:100%;
@@ -141,9 +171,21 @@ body.dark .card{
   background:#1f2937;
   border-color:#374151;
 }
-body.dark .card p{ color:#e5e7eb; }
-body.dark a.btn{ border-color:#4b5563; color:#f3f4f6; }
-body.dark footer{ color:#9ca3af; }
+body.dark .card p{ 
+  color:#e5e7eb; 
+}
+body.dark a.btn{ 
+  border-color:#4b5563; 
+  color:#f3f4f6; 
+}
+body.dark footer{ 
+  color:#9ca3af; 
+}
+body.dark #theme-toggle{
+  background: #111;
+  color: #f3f4f6;
+  border-color: #4b5563;
+}
 
 /* открытая карточка (на главной) */
 .card-clickable{
@@ -196,18 +238,18 @@ body.dark .card-locked{
   background:#111827;
 }
 
-/* карточка лекции целиком (на отдельной странице, базовое поведение = десктоп) */
+/* карточка лекции целиком (десктопное базовое поведение) */
 .lecture-card{
   margin-top:52px;
   position:relative;
-  padding-top: 24px;
+  padding-top:32px; /* запас под крестик и заголовок */
 }
 
-/* кнопка закрытия карточки лекции (десктоп) */
+/* кнопка закрытия карточки лекции (кружочек с крестиком) */
 .close-card-btn {
   position: absolute;
-  top: -18px;   /* нависает над карточкой */
-  right: 18px;
+  top: 12px;      /* внутри карточки */
+  right: 12px;
   z-index: 10;
 
   display: flex;
@@ -235,7 +277,7 @@ body.dark .card-locked{
   stroke: currentColor;
   stroke-width: 2;
   stroke-linecap: round;
-  pointer-events: none;
+  pointer-events: none; /* чтобы svg не перехватывал клик */
 }
 
 .close-card-btn:hover {
