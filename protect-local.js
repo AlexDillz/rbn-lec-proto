@@ -34,7 +34,7 @@
   const btnBg     = isDark ? '#f9fafb' : '#111827';
   const btnText   = isDark ? '#111827' : '#f9fafb';
 
-  // Проверка локального запуска
+  // проверка локального запуска
   const isLocal =
     location.protocol === 'file:' || location.hostname === 'localhost';
 

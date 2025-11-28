@@ -82,7 +82,7 @@ a.btn:visited {
   color: inherit; 
 }
 
-/* вторичная кнопка (Команда и лекторы) */
+/* вторичная кнопка (команда и лекторы) */
 .btn-secondary{
   background:#111827;
   color:#f9fafb;
@@ -254,15 +254,20 @@ body.dark .card-locked{
 
 /* карточка лекции целиком (и лекции, и personas) */
 .lecture-card{
-  margin-top:24px;
+  margin-top:56px;      /* стабильный отступ сверху под кнопку темы */
   position:relative;
-  padding-top:32px; /* запас под крестик и заголовок */
+  padding-top:32px;     /* внутри карточки крестик+заголовок */
+}
+
+/* когда карточка висит прямо в body — тот же отступ */
+body > .lecture-card{
+  margin-top:56px;
 }
 
 /* кнопка закрытия карточки лекции (кружочек с крестиком) */
 .close-card-btn {
   position: absolute;
-  top: 12px;      /* внутри карточки */
+  top: 12px;
   right: 12px;
   z-index: 10;
 
@@ -291,7 +296,7 @@ body.dark .card-locked{
   stroke: currentColor;
   stroke-width: 2;
   stroke-linecap: round;
-  pointer-events: none; /* чтобы svg не перехватывал клик */
+  pointer-events: none;
 }
 
 .close-card-btn:hover {
@@ -315,7 +320,7 @@ body.dark {
   --locked-text: #f3f4f6;
 }
 
-/* ====== КАРТОЧКИ ЛЕКТОРОВ (страница personas) ====== */
+/* карточки лекторов */
 
 .person-grid{
   display: flex;
@@ -359,17 +364,36 @@ body.dark {
   margin: 2px 0 4px; 
 }
 
-/* фикс вертикального ритма вкарточке */
+/* фикс вертикального ритма в карточке */
 .person-main{
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-/* чтобы кнопка не растягивалась и шла сразу после роли */
+/* кнопка раскрытия информации о лекторе — единый стиль */
 .person-toggle{
   align-self: flex-start;
+  margin-top: 4px;
+
+  padding: 8px 16px;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+
+  background: transparent;   /* фон совпадает с карточкой */
+  color: inherit;
+  font-size: 15px;
+  line-height: 1.4;
+
+  cursor: pointer;
 }
+
+body.dark .person-toggle{
+  background: transparent;
+  color: #f9fafb;
+  border-color: #4b5563;
+}
+
 /* статусные бейджики */
 .person-status{
   padding: 2px 8px;
@@ -396,7 +420,7 @@ body.dark {
 }
 
 .person-card--open .person-extra{
-  max-height: 400px; /* достаточно, чтобы влезли 2–3 абзаца */
+  max-height: 400px;
   opacity: 1;
   margin-top: 8px;
 }
@@ -405,7 +429,7 @@ body.dark {
 .person-footer-actions{
   display: flex;
   justify-content: flex-start;
-  margin-top: 24px;
+  margin-top: 32px;
 }
 
 /* адаптация под тёмную тему */
@@ -441,10 +465,13 @@ body.dark .person-status--soon{
     margin: 32px 0 16px;
   }
 
-  /* карточка лекции / personas: ближе к верху */
+  /* карточка лекции / personas: ближе к верху на мобилке */
+  body > .lecture-card{
+    margin-top:16px;
+  }
+
   .lecture-card{
-    margin-top: 16px;
-    padding-top: 32px;
+    padding-top:32px;
   }
 
   /* крестик внутри карточки, сверху чуть отступ */
@@ -453,7 +480,7 @@ body.dark .person-status--soon{
     right: 10px;
   }
 
-  /* нижние кнопки в лекции — в столбик */
+  /* нижние кнопки в лекции - в столбик */
   .lecture-footer{
     flex-direction:column;
     align-items:stretch;
@@ -472,6 +499,7 @@ body.dark .person-status--soon{
   }
 }
 
+/* чтобы текст в карточках людей был без абзацного отступа и выровнен влево */
 .person-card p{
   text-indent: 0;
   text-align: left;
