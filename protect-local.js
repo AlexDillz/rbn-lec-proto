@@ -1,4 +1,7 @@
 (async function () {
+
+  const DEV_MODE = false;  // false
+
   // определение темы (тёмная/светлая)
   function detectTheme() {
     try {
@@ -34,6 +37,11 @@
   // Проверка локального запуска
   const isLocal =
     location.protocol === 'file:' || location.hostname === 'localhost';
+
+    if (DEV_MODE) {
+    console.warn("⚠ protect-local.js: DEV_MODE включён — защита отключена");
+    return; // пропускает защитный код
+  }
 
   const tag = document.querySelector('script[data-lecture-id]');
   if (!tag) return;

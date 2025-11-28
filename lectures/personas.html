@@ -12,31 +12,230 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <title>...</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Команда и лекторы</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="../style.css">
   <script src="../theme.js" defer></script>
-
-  <!-- подключаем общий защитный скрипт -->
-  <script
-    src="../protect-local.js?v=4"
-    data-lecture-id="lec4"
-    defer
-  ></script>
 </head>
+
 <body>
-  <button id="theme-toggle">🌙 Тёмная тема</button>
+  <!-- переключатель темы -->
+  <button id="theme-toggle" aria-label="Переключить тему">🌙 Dark mode</button>
 
-  <article class="card lecture-card" style="margin-top:52px">
-    <a href="../index.html" class="close-card-btn" aria-label="Закрыть">×</a>
+  <!-- общая карточка страницы -->
+  <article class="card lecture-card">
+    <!-- крестик-назад -->
+    <a class="close-card-btn" href="../index.html" aria-label="Назад на главную">
+      <svg class="close-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <line x1="6" y1="6"  x2="18" y2="18"></line>
+        <line x1="6" y1="18" x2="18" y2="6"></line>
+      </svg>
+    </a>
 
-    <h1>...</h1>
+    <div class="content">
+      <h1>Команда и лекторы</h1>
+      <p>
+        Здесь можно познакомиться с администрацией и посмотреть, кто уже читал лекции, а кто
+        только скоро появится.
+      </p>
 
-    <p>
-      <a class="btn" href="../index.html">← К списку лекций</a>
-    </p>
+      <!-- ===== Администрация ===== -->
+      <h2>Администрация</h2>
+      <section class="person-grid">
+        <!-- КНН -->
+        <article class="card person-card person-card--done">
+          <img
+            class="person-photo"
+            src="../assets/personas/Nadejda_Kulikova.jpg"
+            alt="Куликова Надежда Николаевна"
+          >
+          <div class="person-main">
+            <div class="person-header-row">
+              <h3 class="person-name">Куликова Надежда Николаевна</h3>
+              <span class="person-status person-status--done">Администрация</span>
+            </div>
+            <p class="person-role">
+              Администрация
+            </p>
 
-    <!-- Здесь дальше будет настоящий контент лекции -->
+            <button class="btn person-toggle" type="button">
+              ℹ️ Информация
+            </button>
+
+            <div class="person-extra">
+              <p>Информация</p>
+              <p>Информация</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- МТН -->
+        <article class="card person-card person-card--done">
+          <img
+            class="person-photo"
+            src="../assets/personas/Tat'yana_Moscow.jpg"
+            alt="Московцева Татьяна Николаевна"
+          >
+          <div class="person-main">
+            <div class="person-header-row">
+              <h3 class="person-name">Московцева Татьяна Николаевна</h3>
+              <span class="person-status person-status--done">Администрация</span>
+            </div>
+            <p class="person-role">
+              Администрация
+            </p>
+
+            <button class="btn person-toggle" type="button">
+              ℹ️ Информация
+            </button>
+
+            <div class="person-extra">
+              <p>Информация</p>
+              <p>Информация</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- организаторы -->
+      <h2>Организаторы</h2>
+      <section class="person-grid">
+        <!-- ГТД -->
+        <article class="card person-card person-card--done">
+          <img
+            class="person-photo"
+            src="../assets/personas/Tanya_Ganina.jpg"
+            alt="Ганина Татьяна Денисовна"
+          >
+          <div class="person-main">
+            <div class="person-header-row">
+              <h3 class="person-name">Ганина Татьяна Денисовна</h3>
+              <span class="person-status person-status--done">Организатор</span>
+            </div>
+            <p class="person-role">
+              Организатор
+            </p>
+
+            <button class="btn person-toggle" type="button">
+              ℹ️ Информация
+            </button>
+
+            <div class="person-extra">
+              <p>Информация</p>
+              <p>Информация</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- ПВА -->
+        <article class="card person-card person-card--done">
+          <img
+            class="person-photo"
+            src="../assets/personas/Victor_Parf.jpg"
+            alt="Парфенюк Виктор Андреевич"
+          >
+          <div class="person-main">
+            <div class="person-header-row">
+              <h3 class="person-name">Парфенюк Виктор Андреевич</h3>
+              <span class="person-status person-status--done">Организатор</span>
+            </div>
+            <p class="person-role">
+              Организатор
+            </p>
+
+            <button class="btn person-toggle" type="button">
+              ℹ️ Информация
+            </button>
+
+            <div class="person-extra">
+              <p>Информация</p>
+              <p>Информация</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- уже читали-->
+      <h2>Уже читали лекции</h2>
+      <section class="person-grid">
+        <article class="card person-card person-card--done">
+          <img
+            class="person-photo"
+            src="../assets/personas/Tanya_Ganina.jpg"
+            alt="Ганина Татьяна Денисовна"
+          >
+          <div class="person-main">
+            <div class="person-header-row">
+              <h3 class="person-name">Ганина Татьяна Денисовна</h3>
+              <span class="person-status person-status--done">Читала в этом цикле</span>
+            </div>
+            <p class="person-role">
+              Тема лекции
+            </p>
+
+            <button class="btn person-toggle" type="button">
+              ℹ️ Информация
+            </button>
+
+            <div class="person-extra">
+              <p>Информация</p>
+              <p>Информация</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- скоро появятся -->
+      <h2>Скоро появятся</h2>
+      <section class="person-grid">
+        <article class="card person-card person-card--soon">
+          <img
+            class="person-photo"
+            src="../assets/personas/Zaglushka.jpg"
+            alt="???"
+          >
+          <div class="person-main">
+            <div class="person-header-row">
+              <h3 class="person-name">???</h3>
+              <span class="person-status person-status--soon">Готовит лекцию...</span>
+            </div>
+            <p class="person-role">
+              ???
+            </p>
+
+            <button class="btn person-toggle" type="button">
+              ℹ️ Информация
+            </button>
+
+            <div class="person-extra">
+              <p>???</p>
+              <p>???</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- низ страницы -->
+      <div class="person-footer-actions">
+        <a class="btn" href="../index.html">← На главную</a>
+      </div>
+    </div>
   </article>
+
+  <!-- защита от локального просмотра -->
+  <script src="../protect-local.js" data-lecture-id="personas"></script>
+
+  <!-- скрипт разворачивания "информация" -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.person-toggle').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const card = btn.closest('.person-card');
+          if (!card) return;
+          const opened = card.classList.toggle('person-card--open');
+          btn.textContent = opened ? '↩︎ Скрыть информацию' : 'ℹ️ Информация';
+        });
+      });
+    });
+  </script>
 </body>
-</html>

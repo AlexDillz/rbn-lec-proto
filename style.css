@@ -28,17 +28,27 @@ body{
   background:#fff;
 }
 
-/* шапка (десктоп по умолчанию) */
+/* шапка (главная страница) */
 header{
-  margin:72px 0 20px; /* сверху побольше, чтобы не конфликтовать с кнопкой темы */
+  margin:48px 0 20px; /* чуть выше, чтобы не конфликтовать с кнопкой темы */
 }
+
 h1{
   margin:0 0 6px;
 }
+
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:12px;
+}
+
+/* блок с кнопкой "Команда и лекторы" в шапке */
+.header-actions{
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 /* карточки списка лекций */
@@ -70,6 +80,18 @@ h1{
 a.btn:link, 
 a.btn:visited { 
   color: inherit; 
+}
+
+/* вторичная кнопка (Команда и лекторы) */
+.btn-secondary{
+  background:#111827;
+  color:#f9fafb;
+  border-color: transparent;
+}
+body.dark .btn-secondary{
+  background:#111827;
+  color:#f9fafb;
+  border-color: transparent;
 }
 
 /* нижняя панель с кнопками в лекции */
@@ -119,52 +141,6 @@ footer{
   box-shadow: 0 2px 8px rgba(0,0,0,.08);
 }
 
-/* мобилка */
-@media (max-width: 640px){
-  /* кнопку темы уводим вниз */
-  #theme-toggle{
-    top: auto;
-    right: max(12px, env(safe-area-inset-right));
-    bottom: max(12px, env(safe-area-inset-bottom));
-    left: auto;
-    padding: 12px 16px;
-    box-shadow: 0 6px 18px rgba(0,0,0,.18);
-  }
-
-  /* запас снизу под кнопку темы */
-  body{
-    padding-bottom: 72px;
-  }
-
-  /* шапка ближе к верху, без гигантской черной полосы */
-  header{
-    margin: 32px 0 16px;
-  }
-
-  /* карточка лекции: ближе к верху, внутри больше воздуха */
-  .lecture-card{
-    margin-top: 24px;
-    padding-top: 32px; /* запас под заголовок и крестик */
-  }
-
-  /* крестик внутри карточки, сверху чуть отступ */
-  .close-card-btn{
-    top: 10px;
-    right: 10px;
-  }
-
-  /* нижние кнопки в лекции — в столбик, на всю ширину */
-  .lecture-footer{
-    flex-direction:column;
-    align-items:stretch;
-  }
-
-  .lecture-footer .btn{
-    justify-content:center;
-    width:100%;
-  }
-}
-
 /* стили контента лекции */
 .content p{
   text-align: justify;
@@ -197,7 +173,7 @@ footer{
   text-align: justify;   
   text-indent: 0;        
   margin: 0 0 8px;       
-  line-height: 1.6
+  line-height: 1.6;
 }
 
 /* тёмная тема */
@@ -276,9 +252,9 @@ body.dark .card-locked{
   background:#111827;
 }
 
-/* карточка лекции целиком (десктопное базовое поведение) */
+/* карточка лекции целиком (и лекции, и personas) */
 .lecture-card{
-  margin-top:52px;
+  margin-top:24px;
   position:relative;
   padding-top:32px; /* запас под крестик и заголовок */
 }
@@ -337,4 +313,166 @@ body.dark .close-card-btn:hover {
 body.dark {
   --locked-bg: #111827;
   --locked-text: #f3f4f6;
+}
+
+/* ====== КАРТОЧКИ ЛЕКТОРОВ (страница personas) ====== */
+
+.person-grid{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.person-card{
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.person-photo{
+  width: 72px;
+  height: 72px;
+  border-radius: 9999px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.person-main{
+  flex: 1;
+}
+
+.person-header-row{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.person-name{
+  margin: 0;
+  font-size: 18px;
+}
+
+.person-role{
+  margin: 2px 0 4px; 
+}
+
+/* фикс вертикального ритма вкарточке */
+.person-main{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* чтобы кнопка не растягивалась и шла сразу после роли */
+.person-toggle{
+  align-self: flex-start;
+}
+/* статусные бейджики */
+.person-status{
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 12px;
+  line-height: 1.4;
+  border: 1px solid var(--border);
+}
+
+.person-status--done{
+  background: rgba(34,197,94,0.08);
+}
+
+.person-status--soon{
+  background: rgba(234,179,8,0.08);
+}
+
+/* разворачиваемый блок с текстом */
+.person-extra{
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height .25s ease, opacity .25s ease, margin-top .25s ease;
+}
+
+.person-card--open .person-extra{
+  max-height: 400px; /* достаточно, чтобы влезли 2–3 абзаца */
+  opacity: 1;
+  margin-top: 8px;
+}
+
+/* выравнивание кнопки "на главную" внизу */
+.person-footer-actions{
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 24px;
+}
+
+/* адаптация под тёмную тему */
+body.dark .person-status{
+  border-color: #4b5563;
+}
+body.dark .person-status--done{
+  background: rgba(34,197,94,0.15);
+}
+body.dark .person-status--soon{
+  background: rgba(234,179,8,0.15);
+}
+
+/* мобилка */
+@media (max-width: 640px){
+  /* кнопку темы уводим вниз */
+  #theme-toggle{
+    top: auto;
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(12px, env(safe-area-inset-bottom));
+    left: auto;
+    padding: 12px 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.18);
+  }
+
+  /* запас снизу под кнопку темы */
+  body{
+    padding-bottom: 72px;
+  }
+
+  /* шапка ближе к верху, без гигантской полосы на главной */
+  header{
+    margin: 32px 0 16px;
+  }
+
+  /* карточка лекции / personas: ближе к верху */
+  .lecture-card{
+    margin-top: 16px;
+    padding-top: 32px;
+  }
+
+  /* крестик внутри карточки, сверху чуть отступ */
+  .close-card-btn{
+    top: 10px;
+    right: 10px;
+  }
+
+  /* нижние кнопки в лекции — в столбик */
+  .lecture-footer{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .lecture-footer .btn{
+    justify-content:center;
+    width:100%;
+  }
+
+  .person-card{
+    align-items: flex-start;
+  }
+  .person-footer-actions{
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+.person-card p{
+  text-indent: 0;
+  text-align: left;
 }
