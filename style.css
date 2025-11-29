@@ -82,15 +82,6 @@ a.btn:visited {
   color: inherit; 
 }
 
-/* вторичная кнопка (команда и лекторы) */
-
-/* светлая тема — светлая кнопка */
-body:not(.dark) .btn-secondary {
-  background:#ffffff;     /* светлый фон */
-  color:#111827;          /* тёмный текст */
-  border-color:#e5e7eb;   /* мягкая рамка */
-}
-
 /* тёмная тема — тёмная кнопка */
 body.dark .btn-secondary {
   background:#111827;
@@ -498,7 +489,7 @@ body.dark .person-status--soon{
     flex-direction:column;
     align-items:stretch;
   }
-  .lecture-footer.btn{
+  .lecture-footer .btn{
     justify-content:center;
     width:100%;
   }
@@ -516,4 +507,39 @@ body.dark .person-status--soon{
 .person-card p{
   text-indent: 0;
   text-align: left;
+}
+
+/* кнопка для перехода к лекции внутри карточки */
+.person-lecture-btn {
+  display: inline-block;
+  align-self: flex-start;
+
+  padding: 6px 14px;
+  border-radius: 9999px;
+
+  font-size: 15px;
+  line-height: 1.4;
+  text-decoration: none;
+
+  background: #ffffff;      /* светлый фон */
+  color: #111827;           /* тёмный текст */
+  border: 1px solid #e5e7eb;
+
+  transition: background .2s, color .2s, border-color .2s;
+  margin-top: 6px;
+}
+
+.person-lecture-btn:hover {
+  background: #e5e7eb;
+}
+
+/* тёмная тема */
+body.dark .person-lecture-btn {
+  background: #1f2937;
+  color: #f9fafb;
+  border-color: #4b5563;
+}
+
+body.dark .person-lecture-btn:hover {
+  background: #374151;
 }
