@@ -83,16 +83,21 @@ a.btn:visited {
 }
 
 /* вторичная кнопка (команда и лекторы) */
-.btn-secondary{
+
+/* светлая тема — светлая кнопка */
+body:not(.dark) .btn-secondary {
+  background:#ffffff;     /* светлый фон */
+  color:#111827;          /* тёмный текст */
+  border-color:#e5e7eb;   /* мягкая рамка */
+}
+
+/* тёмная тема — тёмная кнопка */
+body.dark .btn-secondary {
   background:#111827;
   color:#f9fafb;
-  border-color: transparent;
+  border-color:transparent;
 }
-body.dark .btn-secondary{
-  background:#111827;
-  color:#f9fafb;
-  border-color: transparent;
-}
+
 
 /* нижняя панель с кнопками в лекции */
 .lecture-footer{
@@ -114,6 +119,14 @@ body.dark .btn-secondary{
   color:#f9fafb;
   border-color:#111827;
 }
+
+/* светлая тема — кнопка "Скачать" светлая */
+body:not(.dark) .btn.btn-download {
+  background:#ffffff;      /* светлый фон */
+  color:#111827;           /* тёмный текст */
+  border-color:#e5e7eb;    /* мягкая рамка */
+}
+
 
 body.dark .btn.btn-download{
   background:#f9fafb;
@@ -485,7 +498,7 @@ body.dark .person-status--soon{
     flex-direction:column;
     align-items:stretch;
   }
-  .lecture-footer .btn{
+  .lecture-footer.btn{
     justify-content:center;
     width:100%;
   }
