@@ -52,7 +52,7 @@
           <div class="person-main">
             <div class="person-header-row">
               <h3 class="person-name">Куликова Надежда Николаевна</h3>
-              <span class="person-status person-status--done">Администрация</span>
+              <span class="person-status person-status--done">Руководитель лагеря</span>
             </div>
 
             <button class="person-toggle" type="button">
@@ -60,8 +60,7 @@
             </button>
 
             <div class="person-extra">
-              <p>Информация</p>
-              <p>Информация</p>
+              <p>«РУБИН» – это место силы, атмосфера, наполненная взаимопониманием, сотрудничеством детей и взрослых, творчеством, дружбой и любовью. За смену подростки находят ответы на свои вопросы и прокладывают личную траекторию на годы вперед»</p>
             </div>
           </div>
         </article>
@@ -76,7 +75,7 @@
           <div class="person-main">
             <div class="person-header-row">
               <h3 class="person-name">Московцева Татьяна Николаевна</h3>
-              <span class="person-status person-status--done">Администрация</span>
+              <span class="person-status person-status--done">Заместитель руководителя</span>
             </div>
 
             <button class="person-toggle" type="button">
@@ -84,8 +83,7 @@
             </button>
 
             <div class="person-extra">
-              <p>Информация</p>
-              <p>Информация</p>
+              <p>«Главное, что подарил мне «РУБИН», – это юность! Причем не как воспоминание, а как состояние, которое возвращается ко мне каждый раз, когда я здесь. В лагере я не думаю о возрасте, он просто теряет значение. Я чувствую, что нужна, что занимаюсь важным делом. «РУБИН» стал для меня неотъемлемой частью жизни, источником вдохновения, энергии и, конечно, местом, где у меня появились настоящие, верные друзья»</p>
             </div>
           </div>
         </article>
@@ -104,16 +102,18 @@
           <div class="person-main">
             <div class="person-header-row">
               <h3 class="person-name">Ганина Татьяна Денисовна</h3>
-              <span class="person-status person-status--done">Организатор</span>
+              <span class="person-status person-status--done">Комиссар</span>
             </div>
 
             <button class="person-toggle" type="button">
-              Информация об организаторе
+              Информация
             </button>
 
             <div class="person-extra">
-              <p>Информация</p>
-              <p>Информация</p>
+              <p>22 года</p>              
+              <p>РГУ им. С.А.Есенина</p>
+              <p>Комиссар "РУБИНов" 56-60</p>
+              <p>Вожатая по жизни, педагог по сути, методист для души, гитарист для вайба</p>                            
             </div>
           </div>
         </article>
@@ -128,24 +128,26 @@
           <div class="person-main">
             <div class="person-header-row">
               <h3 class="person-name">Парфенюк Виктор Андреевич</h3>
-              <span class="person-status person-status--done">Организатор</span>
+              <span class="person-status person-status--done">Комиссар</span>
               <span class="person-status person-status--done">Разработчик</span>
             </div>
 
             <button class="person-toggle" type="button">
-              Информация об организаторе
+              Информация
             </button>
 
             <div class="person-extra">
-              <p>Информация</p>
-              <p>Информация</p>
+              <p>21 год</p>    
+              <p>Московский Авиационный Институт</p>                           
+              <p>Комиссар "РУБИНов" 57-60</p>
+              <p>МАИст, программист, гитарист</p>             
             </div>
           </div>
         </article>
       </section>
 
       <!-- уже читали-->
-      <h2>Уже читали лекции</h2>
+      <!-- <h2>Уже читали лекции</h2>
       <section class="person-grid">
         <article class="card person-card person-card--done">
           <img
@@ -161,14 +163,9 @@
             <a class="person-lecture-btn" href="../lectures/logic-shift-dev.html">
               Логика развития смены
             </a>
-
-            <div class="person-extra">
-              <p>Информация</p>
-              <p>Информация</p>
-            </div>
           </div>
         </article>
-      </section>
+      </section> -->
 
       <!-- скоро появятся -->
       <h2>Скоро появятся</h2>
@@ -181,12 +178,12 @@
           >
           <div class="person-main">
             <div class="person-header-row">
-              <h3 class="person-name">???</h3>
-              <span class="person-status person-status--soon">Готовит следующую лекцию...</span>
+              <h3 class="person-name">Инкогнито</h3>
+              <span class="person-status person-status--soon">Готовит что-то для вас...</span>
             </div>
 
             <button class="person-toggle" type="button">
-              Информация о лекторе
+              Информация
             </button>
 
             <div class="person-extra">
@@ -214,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const card = btn.closest('.person-card');
       const opened = card.classList.toggle('person-card--open');
-      btn.textContent = opened ? 'Скрыть информацию' : 'Информация о лекторе';
+      btn.textContent = opened ? 'Скрыть информацию' : 'Информация';
     });
   });
 });

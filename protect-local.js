@@ -1,6 +1,6 @@
 (async function () {
 
-  const DEV_MODE = true;  // false
+  const DEV_MODE = false;  // false
 
   // определение темы (тёмная/светлая)
   function detectTheme() {
