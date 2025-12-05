@@ -267,54 +267,71 @@
   <script src="../protect-local.js" data-lecture-id="personas"></script>
 
   <!-- скрипт: "Информация" + лайтбокс для портретов -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      /* Кнопки "Информация"  */
-      document.querySelectorAll('.person-toggle').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const card = btn.closest('.person-card');
-          const opened = card.classList.toggle('person-card--open');
-          btn.textContent = opened ? 'Скрыть информацию' : 'Информация';
-        });
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    /* Кнопки "Информация"  */
+    document.querySelectorAll('.person-toggle').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.person-card');
+        const opened = card.classList.toggle('person-card--open');
+        btn.textContent = opened ? 'Скрыть информацию' : 'Информация';
       });
+    });
 
-      /* айтбокс для портретов */
-      const zoomables = document.querySelectorAll('[data-lightbox]');
-      if (!zoomables.length) return;
+    /* лайтбокс для портретов (клик по аватарке = открыть/закрыть) */
+    const zoomables = document.querySelectorAll('[data-lightbox]');
+    if (!zoomables.length) return;
 
-      const backdrop = document.createElement('div');
-      backdrop.className = 'lightbox-backdrop';
-      backdrop.innerHTML = '<img class="lightbox-image" alt="">';
-      document.body.appendChild(backdrop);
+    const backdrop = document.createElement('div');
+    backdrop.className = 'lightbox-backdrop';
+    backdrop.innerHTML = '<img class="lightbox-image" alt="">';
+    document.body.appendChild(backdrop);
 
-      const bigImg = backdrop.querySelector('.lightbox-image');
+    const bigImg = backdrop.querySelector('.lightbox-image');
+    let currentSrc = null;
 
-      function openLightbox(src) {
-        bigImg.src = src;
-        backdrop.classList.add('is-visible');
-      }
+    function openLightbox(src) {
+      currentSrc = src;
+      bigImg.src = src;
+      backdrop.classList.add('is-visible');
+      document.body.classList.add('no-scroll');
+    }
 
-      function closeLightbox() {
-        backdrop.classList.remove('is-visible');
-      }
+    function closeLightbox() {
+      currentSrc = null;
+      backdrop.classList.remove('is-visible');
+      document.body.classList.remove('no-scroll');
+    }
 
-      zoomables.forEach((el) => {
-        el.addEventListener('click', () => {
-          const src = el.getAttribute('data-lightbox');
-          if (src) openLightbox(src);
-        });
-      });
+    zoomables.forEach((el) => {
+      el.addEventListener('click', () => {
+        const src = el.getAttribute('data-lightbox');
+        if (!src) return;
 
-      backdrop.addEventListener('click', () => {
-        closeLightbox();
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
+        // если это то же самое фото и лайтбокс уже открыт — закрываем
+        if (backdrop.classList.contains('is-visible') && currentSrc === src) {
           closeLightbox();
+        } else {
+          openLightbox(src);
         }
       });
     });
-  </script>
+
+    // клик по фону или по самой большой картинке — закрывает
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop || e.target === bigImg) {
+        closeLightbox();
+      }
+    });
+
+    // эспейп — тоже закрывает
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeLightbox();
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
