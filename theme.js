@@ -8,7 +8,7 @@
 За это ты получишь бонус 😎
 */
 
-/* темы */
+// ===== Работа с темой (светлая / тёмная) =====
 
 function currentTheme() {
   const s = localStorage.getItem('theme');
@@ -53,76 +53,56 @@ window.addEventListener('storage', (e) => {
   }
 });
 
+// ===== Полноэкранное открытие фотографий =====
 
-/* лайтбокс для картинок */
+function initImageFullscreen() {
+  document.addEventListener('click', (event) => {
+    const img = event.target.closest('img');
+    if (!img) return;
 
-function initImageLightbox() {
-  // какие картинки делаем кликабельными
-  const clickableImages = document.querySelectorAll('.content img, .person-photo');
-  if (!clickableImages.length) return;
-
-  // общая подложка
-  const backdrop = document.createElement('div');
-  backdrop.className = 'lightbox-backdrop';
-
-  // сама картинка
-  const fullImg = document.createElement('img');
-  fullImg.className = 'lightbox-image';
-  backdrop.appendChild(fullImg);
-
-  document.body.appendChild(backdrop);
-
-  function openLightbox(src, alt) {
-    fullImg.src = src;
-    fullImg.alt = alt || '';
-    backdrop.classList.add('is-visible');
-    document.body.classList.add('no-scroll');
-  }
-
-  function closeLightbox() {
-    backdrop.classList.remove('is-visible');
-    document.body.classList.remove('no-scroll');
-    fullImg.removeAttribute('src');
-    fullImg.removeAttribute('alt');
-  }
-
-  // закрытие по клику по фону
-  backdrop.addEventListener('click', () => {
-    closeLightbox();
-  });
-
-  // закрытие по Esc
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closeLightbox();
+    // если клик по уже открытой полноэкранной картинке — просто закрываем
+    if (img.classList.contains('fullscreen-img')) {
+      img.remove();
+      document.body.classList.remove('no-scroll');
+      return;
     }
-  });
 
-  clickableImages.forEach((img) => {
-    // лёгкий зум-курсор (стили уже есть в CSS для .img-zoom)
-    img.classList.add('img-zoom');
+    // оставляем только нормальные картинки (фото людей и картинки в лекции)
+    const isPersonPhoto = img.classList.contains('person-photo');
+    const isLectureImage = img.closest('.content');
 
-    img.addEventListener('click', (e) => {
-      // глушим дефолтное поведение Safari
-      e.preventDefault();
-      e.stopPropagation();
+    if (!isPersonPhoto && !isLectureImage) {
+      return; // не трогаем остальные <img> (иконки и т.п.)
+    }
 
-      const src = img.currentSrc || img.src;
-      openLightbox(src, img.alt);
-    });
+    // если вдруг по какой-то причине уже есть открытая картинка — уберём её
+    const existing = document.querySelector('.fullscreen-img');
+    if (existing) {
+      existing.remove();
+      document.body.classList.remove('no-scroll');
+    }
+
+    // создаём оверлей-картинку
+    const overlay = img.cloneNode(true);
+    overlay.classList.add('fullscreen-img');
+
+    // на всякий случай убираем инлайновые стили с оригинала
+    overlay.removeAttribute('style');
+
+    document.body.appendChild(overlay);
+    document.body.classList.add('no-scroll');
   });
 }
 
+// ===== Инициализация всего вместе =====
 
-/* общий инит страницы */
-
-function initPage() {
+function initAll() {
   initTheme();
-  initImageLightbox();
+  initImageFullscreen();
 }
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initPage);
+  document.addEventListener('DOMContentLoaded', initAll);
 } else {
-  initPage();
+  initAll();
 }
