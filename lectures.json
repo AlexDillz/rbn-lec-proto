@@ -1,29 +1,30 @@
 {
   "lectures": [
+        {
+      "id": "vvod-lec. person's-role",
+      "title": "Вводная лекция. Роль вожатого в лагере",
+      "summary": "Начало пути. Основы и ценности.",
+      "url": "lectures/vvod-lec.html"
+    },
     {
       "id": "logic-shift-dev",
-      "title": "Логика развития смены",
+      "title": "Тема 2",
       "summary": "Структура. Ритм. Переходы.",
-      "url": "lectures/logic-shift-dev.html"
+      "url": "lectures/logic-shift-dev.html",
+      "locked": true
+    },
+    {
+      "id": "security-tech",
+      "title": "Тема 3",
+      "summary": "Почему это важно",
+      "url": "lectures/security-tech.html",
+      "locked": true
     },
     { "id": "lec2", 
-      "title": "Тема 2", 
+      "title": "Тема 4", 
       "summary": "Здесь что-то будет, котики", 
       "url": "lectures/ethical-protection.html", 
       "locked": true
-    },
-    { 
-      "id": "lec3", 
-      "title": "Тема 3", 
-      "summary": "И тут что-то будет, котаны и котанессы", 
-      "url": "lectures/lift.html", 
-      "locked": true 
-    },
-    { "id": "lec4", 
-      "title": "Тема 4", 
-      "summary": "И даже тут что-то будет...", 
-      "url": "lectures/personas.html",
-      "locked": true 
-  }
+    }
   ]
 }
