@@ -287,42 +287,37 @@
     backdrop.innerHTML = '<img class="lightbox-image" alt="">';
     document.body.appendChild(backdrop);
 
-    const bigImg = backdrop.querySelector('.lightbox-image');
-    let currentSrc = null;
+const bigImg = backdrop.querySelector('.lightbox-image');
 
-    function openLightbox(src) {
-      currentSrc = src;
-      bigImg.src = src;
-      backdrop.classList.add('is-visible');
-      document.body.classList.add('no-scroll');
-    }
+function openLightbox(src) {
+  bigImg.src = src;
+  backdrop.classList.add('is-visible');
+}
 
-    function closeLightbox() {
-      currentSrc = null;
-      backdrop.classList.remove('is-visible');
-      document.body.classList.remove('no-scroll');
-    }
+function closeLightbox() {
+  backdrop.classList.remove('is-visible');
+}
 
-    zoomables.forEach((el) => {
-      el.addEventListener('click', () => {
-        const src = el.getAttribute('data-lightbox');
-        if (!src) return;
+zoomables.forEach((el) => {
+  el.addEventListener('click', () => {
+    const src = el.getAttribute('data-lightbox');
+    if (src) openLightbox(src);
+  });
+});
 
-        // если это то же самое фото и лайтбокс уже открыт — закрываем
-        if (backdrop.classList.contains('is-visible') && currentSrc === src) {
-          closeLightbox();
-        } else {
-          openLightbox(src);
-        }
-      });
-    });
+// клик по фону — закрыть
+backdrop.addEventListener('click', (e) => {
+  if (e.target === backdrop) {
+    closeLightbox();
+  }
+});
 
-    // клик по фону или по самой большой картинке — закрывает
-    backdrop.addEventListener('click', (e) => {
-      if (e.target === backdrop || e.target === bigImg) {
-        closeLightbox();
-      }
-    });
+// клик по самой картинке — тоже закрыть
+bigImg.addEventListener('click', (e) => {
+  e.stopPropagation(); // чтобы не улетело в backdrop
+  closeLightbox();
+});
+
 
     // эспейп — тоже закрывает
     document.addEventListener('keydown', (e) => {
