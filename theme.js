@@ -8,17 +8,18 @@
 За это ты получишь бонус 😎
 */
 
-// ================== ТЕМА САЙТА (светлая / тёмная) ==================
+// ===== ТЕМА (светлая / тёмная) =====
 
 function currentTheme() {
-  const s = localStorage.getItem('theme');
-  if (s === 'dark' || s === 'light') return s;
-
-  if (window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    return 'dark';
+  try {
+    const s = localStorage.getItem('theme');
+    if (s === 'dark' || s === 'light') return s;
+  } catch (_) {
+    // localStorage может быть недоступен
   }
-  return 'light';
+  return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ? 'dark'
+    : 'light';
 }
 
 function applyTheme(t) {
@@ -27,8 +28,9 @@ function applyTheme(t) {
 
 function updateToggleLabel(btn) {
   if (!btn) return;
-  const isDark = document.body.classList.contains('dark');
-  btn.textContent = isDark ? '☀️ Светлая тема' : '🌙 Тёмная тема';
+  btn.textContent = document.body.classList.contains('dark')
+    ? '☀️ Светлая тема'
+    : '🌙 Тёмная тема';
 }
 
 function initTheme() {
@@ -39,23 +41,23 @@ function initTheme() {
 
   if (btn) {
     btn.addEventListener('click', () => {
-      const isDark = document.body.classList.contains('dark');
-      const next = isDark ? 'light' : 'dark';
-      applyTheme(next);
-      localStorage.setItem('theme', next);
+      const t = document.body.classList.contains('dark') ? 'light' : 'dark';
+      applyTheme(t);
+      try {
+        localStorage.setItem('theme', t);
+      } catch (_) {}
       updateToggleLabel(btn);
     });
   }
 }
 
-// запуск при загрузке
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initTheme);
 } else {
   initTheme();
 }
 
-// синхронизация темы между вкладками
+// синхронизация между вкладками
 window.addEventListener('storage', (e) => {
   if (e.key === 'theme') {
     applyTheme(currentTheme());
@@ -64,42 +66,71 @@ window.addEventListener('storage', (e) => {
 });
 
 
-// ================== ФУЛЛСКРИН ОТКРЫТИЕ ФОТО ==================
+// ===== ЛАЙТБОКС ДЛЯ КАРТИНОК (ОДИН, БЕЗ ДУБЛЕЙ) =====
 
-// Открываем по клику на fotку лектора или картинку в тексте
-document.addEventListener('click', (e) => {
-  const existingBackdrop = document.querySelector('.fullscreen-backdrop');
+let lightboxInited = false;
 
-  // Если уже есть фуллскрин — любой клик по нему закрывает
-  if (existingBackdrop) {
-    // клики внутри оверлея — тоже закрывают
-    if (e.target.closest('.fullscreen-backdrop')) {
-      existingBackdrop.remove();
-      document.body.classList.remove('no-scroll');
-      e.stopPropagation();
-      e.preventDefault();
-    }
-    return;
+function initImageLightbox() {
+  if (lightboxInited) return;
+  lightboxInited = true;
+
+  // создаём фон один раз
+  const backdrop = document.createElement('div');
+  backdrop.className = 'lightbox-backdrop';
+  backdrop.innerHTML = '<img class="lightbox-image" alt="">';
+  const imgEl = backdrop.querySelector('.lightbox-image');
+
+  function closeLightbox() {
+    backdrop.classList.remove('is-visible');
+    document.body.classList.remove('no-scroll');
+    // чуть позже убираем src, чтобы не мигал
+    setTimeout(() => {
+      imgEl.removeAttribute('src');
+    }, 180);
   }
 
-  // Если оверлея нет — ищем, не кликнули ли по картинке
-  const img = e.target.closest('img.person-photo, .content img');
-  if (!img) return;
+  backdrop.addEventListener('click', () => {
+    closeLightbox();
+  });
 
-  // создаём подложку
-  const backdrop = document.createElement('div');
-  backdrop.className = 'fullscreen-backdrop';
+  imgEl.addEventListener('click', (e) => {
+    // не закрываем по клику строго по картинке
+    e.stopPropagation();
+  });
 
-  // крупная картинка
-  const bigImg = document.createElement('img');
-  bigImg.className = 'fullscreen-img';
-  bigImg.src = img.src;
-  bigImg.alt = img.alt || '';
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (backdrop.classList.contains('is-visible')) {
+        closeLightbox();
+      }
+    }
+  });
 
-  backdrop.appendChild(bigImg);
   document.body.appendChild(backdrop);
-  document.body.classList.add('no-scroll');
 
-  e.stopPropagation();
-  e.preventDefault();
-});
+  // навешиваем поведение на все картинки лекций и портреты
+  const imgs = document.querySelectorAll('.content img, .person-photo');
+  imgs.forEach((img) => {
+    // добавим css-класс для курсора/hover
+    img.classList.add('img-zoom');
+
+    img.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const src = img.currentSrc || img.src;
+      if (!src) return;
+
+      imgEl.src = src;
+      imgEl.alt = img.alt || '';
+
+      document.body.classList.add('no-scroll');
+      backdrop.classList.add('is-visible');
+    });
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initImageLightbox);
+} else {
+  initImageLightbox();
+}
