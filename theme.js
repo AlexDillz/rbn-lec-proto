@@ -8,31 +8,34 @@
 За это ты получишь бонус 😎
 */
 
-// единая логика темы
+/* темы */
+
 function currentTheme() {
   const s = localStorage.getItem('theme');
   if (s === 'dark' || s === 'light') return s;
+
   return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ? 'dark' : 'light';
+    ? 'dark'
+    : 'light';
 }
 
-function applyTheme(t){
+function applyTheme(t) {
   document.body.classList.toggle('dark', t === 'dark');
 }
 
-function updateToggleLabel(btn){
-  if (btn) {
-    btn.textContent = document.body.classList.contains('dark')
-      ? '☀️ Светлая тема'
-      : '🌙 Тёмная тема';
-  }
+function updateToggleLabel(btn) {
+  if (!btn) return;
+  const isDark = document.body.classList.contains('dark');
+  btn.textContent = isDark ? '☀️ Светлая тема' : '🌙 Тёмная тема';
 }
 
-function initTheme(){
+function initTheme() {
   applyTheme(currentTheme());
+
   const btn = document.getElementById('theme-toggle');
   updateToggleLabel(btn);
-  if (btn){
+
+  if (btn) {
     btn.addEventListener('click', () => {
       const t = document.body.classList.contains('dark') ? 'light' : 'dark';
       applyTheme(t);
@@ -42,70 +45,84 @@ function initTheme(){
   }
 }
 
-// если скрипт подключён поздно, запустим сразу
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initTheme);
-} else {
-  initTheme();
-}
-
-// синхронизация между вкладками
+// синхронизация темы между вкладками
 window.addEventListener('storage', (e) => {
-  if (e.key === 'theme'){
+  if (e.key === 'theme') {
     applyTheme(currentTheme());
     updateToggleLabel(document.getElementById('theme-toggle'));
   }
 });
 
 
-// полноэкранный просмотр картинок в лекциях 
+/* лайтбокс для картинок */
 
-function initFullscreenImages() {
-  // берём только картинки внутри контента лекций,
-  // чтобы не трогать аватарки и иконки
-  const imgs = document.querySelectorAll('.content img');
+function initImageLightbox() {
+  // какие картинки делаем кликабельными
+  const clickableImages = document.querySelectorAll('.content img, .person-photo');
+  if (!clickableImages.length) return;
 
-  imgs.forEach((img) => {
-    // чтобы не навешивать обработчики несколько раз
-    if (img.dataset.fullscreenBound === '1') return;
-    img.dataset.fullscreenBound = '1';
+  // общая подложка
+  const backdrop = document.createElement('div');
+  backdrop.className = 'lightbox-backdrop';
 
-    img.style.cursor = 'zoom-in';
+  // сама картинка
+  const fullImg = document.createElement('img');
+  fullImg.className = 'lightbox-image';
+  backdrop.appendChild(fullImg);
 
-    img.addEventListener('click', () => {
-      // создаём клон картинки
-      const full = img.cloneNode(true);
-      full.classList.add('fullscreen-img');
-      full.removeAttribute('width');
-      full.removeAttribute('height');
+  document.body.appendChild(backdrop);
 
-      const close = () => {
-        document.body.classList.remove('no-scroll');
-        full.removeEventListener('click', close);
-        window.removeEventListener('keydown', onKeyDown);
-        if (full.parentNode) full.parentNode.removeChild(full);
-      };
+  function openLightbox(src, alt) {
+    fullImg.src = src;
+    fullImg.alt = alt || '';
+    backdrop.classList.add('is-visible');
+    document.body.classList.add('no-scroll');
+  }
 
-      const onKeyDown = (e) => {
-        if (e.key === 'Escape') {
-          close();
-        }
-      };
+  function closeLightbox() {
+    backdrop.classList.remove('is-visible');
+    document.body.classList.remove('no-scroll');
+    fullImg.removeAttribute('src');
+    fullImg.removeAttribute('alt');
+  }
 
-      // закрывать по клику на картинку
-      full.addEventListener('click', close);
-      // и по Esc
-      window.addEventListener('keydown', onKeyDown);
+  // закрытие по клику по фону
+  backdrop.addEventListener('click', () => {
+    closeLightbox();
+  });
 
-      document.body.appendChild(full);
-      document.body.classList.add('no-scroll');
+  // закрытие по Esc
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeLightbox();
+    }
+  });
+
+  clickableImages.forEach((img) => {
+    // лёгкий зум-курсор (стили уже есть в CSS для .img-zoom)
+    img.classList.add('img-zoom');
+
+    img.addEventListener('click', (e) => {
+      // глушим дефолтное поведение Safari
+      e.preventDefault();
+      e.stopPropagation();
+
+      const src = img.currentSrc || img.src;
+      openLightbox(src, img.alt);
     });
   });
 }
 
-// отдельный запуск для полноэкранных картинок
+
+/* общий инит страницы */
+
+function initPage() {
+  initTheme();
+  initImageLightbox();
+}
+
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initFullscreenImages);
+  document.addEventListener('DOMContentLoaded', initPage);
 } else {
-  initFullscreenImages();
+  initPage();
 }
