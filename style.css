@@ -607,15 +607,27 @@ body.no-scroll {
   overflow: hidden;
   height: 100vh;
 }
-.fullscreen-img {
+/* фуллскрин-просмотр фото */
+.fullscreen-backdrop {
   position: fixed;
   inset: 0;
-  width: 100%;
-  height: auto;
-  max-height: 100%;
-  object-fit: contain;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   background: rgba(0,0,0,0.75);
   backdrop-filter: blur(4px);
-  z-index: 9999;
+}
+
+/* сама большая картинка */
+.fullscreen-img {
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  width: auto;
+
+  border-radius: 8px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.45);
 }

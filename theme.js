@@ -8,15 +8,17 @@
 За это ты получишь бонус 😎
 */
 
-// ===== Работа с темой (светлая / тёмная) =====
+// ================== ТЕМА САЙТА (светлая / тёмная) ==================
 
 function currentTheme() {
   const s = localStorage.getItem('theme');
   if (s === 'dark' || s === 'light') return s;
 
-  return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ? 'dark'
-    : 'light';
+  if (window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    return 'dark';
+  }
+  return 'light';
 }
 
 function applyTheme(t) {
@@ -37,12 +39,20 @@ function initTheme() {
 
   if (btn) {
     btn.addEventListener('click', () => {
-      const t = document.body.classList.contains('dark') ? 'light' : 'dark';
-      applyTheme(t);
-      localStorage.setItem('theme', t);
+      const isDark = document.body.classList.contains('dark');
+      const next = isDark ? 'light' : 'dark';
+      applyTheme(next);
+      localStorage.setItem('theme', next);
       updateToggleLabel(btn);
     });
   }
+}
+
+// запуск при загрузке
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initTheme);
+} else {
+  initTheme();
 }
 
 // синхронизация темы между вкладками
@@ -53,56 +63,43 @@ window.addEventListener('storage', (e) => {
   }
 });
 
-// ===== Полноэкранное открытие фотографий =====
 
-function initImageFullscreen() {
-  document.addEventListener('click', (event) => {
-    const img = event.target.closest('img');
-    if (!img) return;
+// ================== ФУЛЛСКРИН ОТКРЫТИЕ ФОТО ==================
 
-    // если клик по уже открытой полноэкранной картинке — просто закрываем
-    if (img.classList.contains('fullscreen-img')) {
-      img.remove();
+// Открываем по клику на fotку лектора или картинку в тексте
+document.addEventListener('click', (e) => {
+  const existingBackdrop = document.querySelector('.fullscreen-backdrop');
+
+  // Если уже есть фуллскрин — любой клик по нему закрывает
+  if (existingBackdrop) {
+    // клики внутри оверлея — тоже закрывают
+    if (e.target.closest('.fullscreen-backdrop')) {
+      existingBackdrop.remove();
       document.body.classList.remove('no-scroll');
-      return;
+      e.stopPropagation();
+      e.preventDefault();
     }
+    return;
+  }
 
-    // оставляем только нормальные картинки (фото людей и картинки в лекции)
-    const isPersonPhoto = img.classList.contains('person-photo');
-    const isLectureImage = img.closest('.content');
+  // Если оверлея нет — ищем, не кликнули ли по картинке
+  const img = e.target.closest('img.person-photo, .content img');
+  if (!img) return;
 
-    if (!isPersonPhoto && !isLectureImage) {
-      return; // не трогаем остальные <img> (иконки и т.п.)
-    }
+  // создаём подложку
+  const backdrop = document.createElement('div');
+  backdrop.className = 'fullscreen-backdrop';
 
-    // если вдруг по какой-то причине уже есть открытая картинка — уберём её
-    const existing = document.querySelector('.fullscreen-img');
-    if (existing) {
-      existing.remove();
-      document.body.classList.remove('no-scroll');
-    }
+  // крупная картинка
+  const bigImg = document.createElement('img');
+  bigImg.className = 'fullscreen-img';
+  bigImg.src = img.src;
+  bigImg.alt = img.alt || '';
 
-    // создаём оверлей-картинку
-    const overlay = img.cloneNode(true);
-    overlay.classList.add('fullscreen-img');
+  backdrop.appendChild(bigImg);
+  document.body.appendChild(backdrop);
+  document.body.classList.add('no-scroll');
 
-    // на всякий случай убираем инлайновые стили с оригинала
-    overlay.removeAttribute('style');
-
-    document.body.appendChild(overlay);
-    document.body.classList.add('no-scroll');
-  });
-}
-
-// ===== Инициализация всего вместе =====
-
-function initAll() {
-  initTheme();
-  initImageFullscreen();
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initAll);
-} else {
-  initAll();
-}
+  e.stopPropagation();
+  e.preventDefault();
+});
