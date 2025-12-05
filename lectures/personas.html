@@ -44,10 +44,9 @@
         <!-- КНН -->
         <article class="card person-card person-card--done">
           <img
-            class="person-photo img-zoom"
+            class="person-photo"
             src="../assets/personas/Nadejda_Kulikova.jpg"
             alt="Куликова Надежда Николаевна"
-            data-lightbox="../assets/personas/Nadejda_Kulikova.jpg"
           />
 
           <div class="person-main">
@@ -69,10 +68,9 @@
         <!-- МТН -->
         <article class="card person-card person-card--done">
           <img
-            class="person-photo img-zoom"
+            class="person-photo"
             src="../assets/personas/Tat'yana_Moscow.jpg"
             alt="Московцева Татьяна Николаевна"
-            data-lightbox="../assets/personas/Tat'yana_Moscow.jpg"
           />
           <div class="person-main">
             <div class="person-header-row">
@@ -97,10 +95,9 @@
         <!-- ГТД -->
         <article class="card person-card person-card--done">
           <img
-            class="person-photo img-zoom"
+            class="person-photo"
             src="../assets/personas/Tanya_Ganina.jpg"
             alt="Ганина Татьяна Денисовна"
-            data-lightbox="../assets/personas/Tanya_Ganina.jpg"
           >
           <div class="person-main">
             <div class="person-header-row">
@@ -123,10 +120,9 @@
         <!-- ПВА -->
         <article class="card person-card person-card--done">
           <img
-            class="person-photo img-zoom"
+            class="person-photo"
             src="../assets/personas/Victor_Parf.jpg"
             alt="Парфенюк Виктор Андреевич"
-            data-lightbox="../assets/personas/Victor_Parf.jpg"
           >
           <div class="person-main">
             <div class="person-header-row">
@@ -153,10 +149,9 @@
       <section class="person-grid">
         <article class="card person-card person-card--done">
           <img
-            class="person-photo img-zoom"
+            class="person-photo"
             src="../assets/personas/Nadejda_Kulikova.jpg"
             alt="Куликова Надежда Николаевна"
-            data-lightbox="../assets/personas/Nadejda_Kulikova.jpg"
           >
           <div class="person-main">
             <div class="person-header-row">
@@ -173,10 +168,9 @@
       <section class="person-grid">
         <article class="card person-card person-card--done">
           <img
-            class="person-photo img-zoom"
+            class="person-photo"
             src="../assets/personas/Kharlina_Anast.jpg"
             alt="Харлина Анастасия Сергеевна"
-            data-lightbox="../assets/personas/Kharlina_Anast.jpg"
           >
           <div class="person-main">
             <div class="person-header-row">
@@ -227,17 +221,16 @@
             </a>          
           </div>
         </article>
-      </section>            
+      </section>             -->
 
       <!-- скоро появятся -->
       <h2>Скоро появятся</h2>
       <section class="person-grid">
         <article class="card person-card person-card--soon">
           <img
-            class="person-photo img-zoom"
+            class="person-photo"
             src="../assets/personas/Zaglushka.jpg"
             alt="???"
-            data-lightbox="../assets/personas/Zaglushka.jpg"
           >
           <div class="person-main">
             <div class="person-header-row">
@@ -266,67 +259,18 @@
   <!-- защита от локального просмотра -->
   <script src="../protect-local.js" data-lecture-id="personas"></script>
 
-  <!-- скрипт: "Информация" + лайтбокс для портретов -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    /* Кнопки "Информация"  */
-    document.querySelectorAll('.person-toggle').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const card = btn.closest('.person-card');
-        const opened = card.classList.toggle('person-card--open');
-        btn.textContent = opened ? 'Скрыть информацию' : 'Информация';
+  <!-- скрипт: только "Информация" -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.person-toggle').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const card = btn.closest('.person-card');
+          const opened = card.classList.toggle('person-card--open');
+          btn.textContent = opened ? 'Скрыть информацию' : 'Информация';
+        });
       });
     });
-
-    /* лайтбокс для портретов (клик по аватарке = открыть/закрыть) */
-    const zoomables = document.querySelectorAll('[data-lightbox]');
-    if (!zoomables.length) return;
-
-    const backdrop = document.createElement('div');
-    backdrop.className = 'lightbox-backdrop';
-    backdrop.innerHTML = '<img class="lightbox-image" alt="">';
-    document.body.appendChild(backdrop);
-
-const bigImg = backdrop.querySelector('.lightbox-image');
-
-function openLightbox(src) {
-  bigImg.src = src;
-  backdrop.classList.add('is-visible');
-}
-
-function closeLightbox() {
-  backdrop.classList.remove('is-visible');
-}
-
-zoomables.forEach((el) => {
-  el.addEventListener('click', () => {
-    const src = el.getAttribute('data-lightbox');
-    if (src) openLightbox(src);
-  });
-});
-
-// клик по фону — закрыть
-backdrop.addEventListener('click', (e) => {
-  if (e.target === backdrop) {
-    closeLightbox();
-  }
-});
-
-// клик по самой картинке — тоже закрыть
-bigImg.addEventListener('click', (e) => {
-  e.stopPropagation(); // чтобы не улетело в backdrop
-  closeLightbox();
-});
-
-
-    // эспейп — тоже закрывает
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeLightbox();
-      }
-    });
-  });
-</script>
+  </script>
 
 </body>
 </html>
