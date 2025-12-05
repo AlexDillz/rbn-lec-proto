@@ -12,31 +12,112 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <title>...</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Техника безопасности</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="../style.css">
   <script src="../theme.js" defer></script>
-
-  <!-- подключаем общий защитный скрипт -->
-  <script
-    src="../protect-local.js?v=4"
-    data-lecture-id="lec3"
-    defer
-  ></script>
 </head>
+
 <body>
-  <button id="theme-toggle">🌙 Тёмная тема</button>
+  <!-- переключатель темы -->
+  <button id="theme-toggle" aria-label="Переключить тему">🌙 Тёмная тема</button>
 
-  <article class="card lecture-card" style="margin-top:52px">
-    <a href="../index.html" class="close-card-btn" aria-label="Закрыть">×</a>
+  <!-- карточка лекции с крестиком -->
+  <article class="card lecture-card">
+    <a class="close-card-btn js-back-link" href="../index.html" aria-label="Назад к списку">
+      <svg class="close-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <line x1="6" y1="6" x2="18" y2="18" />
+        <line x1="18" y1="6" x2="6" y2="18" />
+      </svg>
+    </a>
 
-    <h1>...</h1>
+    <div class="content">
+      <h1>ТЕХНИКА БЕЗОПАСНОСТИ</h1>
 
-    <p>
-      <a class="btn" href="../index.html">← К списку лекций</a>
-    </p>
+      <img
+      src="../assets/lec's_pics/security-tech.jpg"
+      alt="Техника безопасности"
+      class="img-zoom"
+      data-lightbox="../assets/lec's_pics/security-tech.jpg"
+      />
 
-    <!-- здесь дальше будет настоящий контент лекции -->
+
+      <div class="lecture-footer">
+        <a class="btn js-back-link" href="../index.html">← К списку лекций</a>
+
+        <a
+          class="btn btn-download"
+          href="../assets/lecs/security-tech/security-tech.pdf"
+          download
+        >
+          ⬇ Скачать материалы
+        </a>
+      </div>
+    </div>
   </article>
+
+  <!-- защита от локального просмотра -->
+  <script src="../protect-local.js?v=4" data-lecture-id="security-tech"></script>
+
+   <!-- "назад" + лайтбокс -->
+  <script>
+    (function () {
+      var ref = document.referrer || "";
+      var fromPersonas = ref.indexOf("personas.html") !== -1;
+
+      var backLinks = document.querySelectorAll(".js-back-link");
+      backLinks.forEach(function (link) {
+        if (fromPersonas) {
+          link.href = "personas.html";
+          if (link.classList.contains("btn")) {
+            link.textContent = "← Команда и лекторы";
+          }
+        } else {
+          link.href = "../index.html";
+          if (link.classList.contains("btn")) {
+            link.textContent = "← К списку лекций";
+          }
+        }
+      });
+
+      var zoomables = document.querySelectorAll("[data-lightbox]");
+      if (!zoomables.length) return;
+
+      var backdrop = document.createElement("div");
+      backdrop.className = "lightbox-backdrop";
+      backdrop.innerHTML = '<img class="lightbox-image" alt="">';
+      document.body.appendChild(backdrop);
+
+      var bigImg = backdrop.querySelector(".lightbox-image");
+
+      function openLightbox(src) {
+        bigImg.src = src;
+        backdrop.classList.add("is-visible");
+      }
+
+      function closeLightbox() {
+        backdrop.classList.remove("is-visible");
+      }
+
+      zoomables.forEach(function (el) {
+        el.addEventListener("click", function () {
+          var src = el.getAttribute("data-lightbox");
+          if (src) {
+            openLightbox(src);
+          }
+        });
+      });
+
+      backdrop.addEventListener("click", function () {
+        closeLightbox();
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          closeLightbox();
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

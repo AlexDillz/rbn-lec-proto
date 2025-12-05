@@ -243,13 +243,14 @@ body.dark #theme-toggle{
 }
 .locked-btn[disabled]{
   cursor:default;
-  background:#f3f4f6;
-  color:#6b7280;
-  border-color:#e5e7eb;
+  background:#e5e7eb;
+  color:#111827;
+  border-color:#cbd5e1;
+  font-weight:600
 }
 body.dark .locked-btn[disabled]{
   background:#1f2937;
-  color:#9ca3af;
+  color:#e5e7eb;
   border-color:#374151;
 }
 body.dark .card-locked{
@@ -542,4 +543,63 @@ body.dark .person-lecture-btn {
 
 body.dark .person-lecture-btn:hover {
   background: #374151;
+}
+
+/* ========== Лайтбокс для картинок (лекции + портреты) ========== */
+
+.content img.img-zoom,
+.person-photo.img-zoom {
+  cursor: zoom-in;
+  transition: transform 0.15s ease-out;
+}
+
+.content img.img-zoom:hover,
+.person-photo.img-zoom:hover {
+  transform: scale(1.01);
+}
+
+/* фон поверх всего экрана */
+.lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.96); /* чуть плотнее, чтобы не "дублировалось" визуально */
+  cursor: zoom-out;
+  z-index: 1000;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease-out;
+}
+
+body.dark .lightbox-backdrop {
+  background: rgba(15, 23, 42, 0.98);
+}
+
+.lightbox-backdrop.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* сама картинка в лайтбоксе */
+.lightbox-image {
+  max-width: 100%;
+  max-height: 85vh;
+  border-radius: 12px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7);
+}
+
+/* мелкая адаптация под совсем узкие экраны */
+@media (max-width: 480px) {
+  .lightbox-backdrop {
+    padding: 10px;
+  }
+
+  .lightbox-image {
+    max-height: 80vh;
+    border-radius: 10px;
+  }
 }

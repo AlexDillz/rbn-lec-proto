@@ -1,29 +1,30 @@
 {
   "lectures": [
         {
-      "id": "vvod-lec. person's-role",
+      "id": "vvod-lec",
       "title": "Вводная лекция. Роль вожатого в лагере",
       "summary": "Начало пути. Основы и ценности.",
-      "url": "lectures/vvod-lec.html"
+      "url": "lectures/vvod-lec.html",
+      "locked": true      
     },
     {
       "id": "logic-shift-dev",
-      "title": "Тема 2",
+      "title": "Логика развития лагерной смены",
       "summary": "Структура. Ритм. Переходы.",
       "url": "lectures/logic-shift-dev.html",
       "locked": true
     },
     {
       "id": "security-tech",
-      "title": "Тема 3",
+      "title": "Техника безопасности в лагере",
       "summary": "Почему это важно",
       "url": "lectures/security-tech.html",
       "locked": true
     },
-    { "id": "lec2", 
-      "title": "Тема 4", 
+    { "id": "lec4", 
+      "title": "Скоро будет доступно...", 
       "summary": "Здесь что-то будет, котики", 
-      "url": "lectures/ethical-protection.html", 
+      "url": "lectures/???.html", 
       "locked": true
     }
   ]
