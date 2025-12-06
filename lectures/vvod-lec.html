@@ -1,5 +1,5 @@
 <!--
-Привет, коварный взломщик 👋  
+Привет, ковёрный взломщик 👋  
 Если ты читаешь это - значит, нашёл путь быстрее всех.
 
 Напиши Парфенюку Виктору в личные сообщения фразу:
@@ -12,10 +12,39 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <title>Вводная лекция</title>
+  <title>Вводная лекция. Роль вожатого в лагере</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="../style.css">
   <script src="../theme.js" defer></script>
+
+  <!-- index / personas -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const params = new URLSearchParams(window.location.search);
+      const from = params.get('from');
+
+      // по умолчанию — с главной
+      let targetHref = '../index.html';
+      let backText   = '← Назад к лекциям';
+
+      // если пришли со страницы "Команда и лекторы"
+      if (from === 'personas') {
+        targetHref = 'personas.html';   // т.к. файл в той же папке /lectures
+        backText   = '← Назад';
+      }
+
+      const closeBtn = document.querySelector('.close-card-btn');
+      const backBtn  = document.querySelector('.lecture-footer .btn');
+
+      if (closeBtn) {
+        closeBtn.href = targetHref;
+      }
+      if (backBtn) {
+        backBtn.href = targetHref;
+        backBtn.textContent = backText;
+      }
+    });
+  </script>
 </head>
 
 <body>
@@ -24,7 +53,7 @@
 
   <!-- карточка лекции с крестиком -->
   <article class="card lecture-card">
-    <a class="close-card-btn js-back-link" href="../index.html" aria-label="Назад к списку">
+    <a class="close-card-btn" href="../index.html" aria-label="Назад к списку">
       <svg class="close-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <line x1="6" y1="6" x2="18" y2="18" />
         <line x1="18" y1="6" x2="6" y2="18" />
@@ -32,41 +61,17 @@
     </a>
 
     <div class="content">
-      <h1>ВВОДНАЯ ЛЕКЦИЯ</h1>
-      <h2>Данная лекция неповторима и невоспроизводима, c Вас – внимательно слушать...</h2>
+      <h1>ВВОДНАЯ ЛЕКЦИЯ. РОЛЬ ВОЖАТОГО В ЛАГЕРЕ</h1>
+      <h2>Данная лекция неповторима и невоспроизводима.</h2>
+      <h2>Конспекта здесь нет и не будет. Слушайте очень внимательно.</h2>
 
       <div class="lecture-footer">
-        <a class="btn js-back-link" href="../index.html">← К списку лекций</a>
+        <a class="btn" href="../index.html">← Назад к лекциям</a>
       </div>
     </div>
   </article>
 
   <!-- защита от локального просмотра -->
   <script src="../protect-local.js?v=4" data-lecture-id="vvod-lec"></script>
-
-  <!-- логика "назад": на список лекций или на страницу команды -->
-  <script>
-    (function () {
-      var ref = document.referrer || "";
-      var fromPersonas = ref.indexOf("personas.html") !== -1;
-
-      var links = document.querySelectorAll(".js-back-link");
-      links.forEach(function (link) {
-        if (fromPersonas) {
-          // если лекция открыта со страницы "Команда и лекторы"
-          link.href = "personas.html";
-          if (link.classList.contains("btn")) {
-            link.textContent = "← Команда и лекторы";
-          }
-        } else {
-          // обычное поведение: назад к списку лекций
-          link.href = "../index.html";
-          if (link.classList.contains("btn")) {
-            link.textContent = "← К списку лекций";
-          }
-        }
-      });
-    })();
-  </script>
 </body>
 </html>

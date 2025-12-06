@@ -1,5 +1,6 @@
+<!-- index.html -->
 <!--
-Привет, ковёрный взломщик 👋  
+Привет, ковёрный взломщик 👋
 Если ты читаешь это - значит, нашёл путь быстрее всех.
 
 Напиши Парфенюку Виктору в личные сообщения фразу:
@@ -12,24 +13,23 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Школа Вожатского Мастерства ОЛАС «РУБИН»</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<header>
-  <h1>Школа Вожатского Мастерства ОЛАС «РУБИН»</h1>
-  <p>
-    Горячий привет всем, кто добрался сюда. Здесь можно ознакомиться с материалами лекций и не только.
-  </p>
+  <header>
+    <h1>Школа Вожатского Мастерства ОЛАС «РУБИН»</h1>
+    <p>
+      Горячий привет всем, кто добрался сюда. Здесь можно ознакомиться с материалами лекций и не только.
+    </p>
 
-  <div class="header-actions">
-    <a class="btn btn-secondary" href="lectures/personas.html">
-      👥 Команда и лекторы
-    </a>
-  </div>
-</header>
-
+    <div class="header-actions">
+      <a class="btn btn-secondary" href="lectures/personas.html">
+        👥 Команда и лекторы
+      </a>
+    </div>
+  </header>
 
   <button id="theme-toggle" aria-label="Переключить тему">🌙 Тёмная тема</button>
 
@@ -66,16 +66,18 @@
           // открытая карточка
           else {
             el.className = 'card card-clickable';
+            // параметр from=index
+            const lectureUrlWithParam = L.url + (L.url.includes('?') ? '&' : '?') + 'from=index';
             el.innerHTML = `
               <h2>${L.title}</h2>
               <p>${L.summary}</p>
-              <a class="btn" href="${L.url}">Открыть</a>
+              <a class="btn" href="${lectureUrlWithParam}">Открыть</a>
             `;
 
             // делаем кликабельным весь квадратик (кроме самой кнопки/ссылки)
             el.addEventListener('click', (e) => {
               if (e.target.closest('a,button')) return;
-              if (L.url) window.location.href = L.url;
+              if (L.url) window.location.href = lectureUrlWithParam; // измененный URL
             });
           }
 

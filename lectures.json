@@ -1,11 +1,11 @@
 {
   "lectures": [
         {
-      "id": "vvod-lec",
+      "id": "vvod-lec. person's-role",
       "title": "Вводная лекция. Роль вожатого в лагере",
       "summary": "Начало пути. Основы и ценности.",
       "url": "lectures/vvod-lec.html",
-      "locked": true      
+      "locked": false
     },
     {
       "id": "logic-shift-dev",
@@ -22,7 +22,7 @@
       "locked": true
     },
     { "id": "lec4", 
-      "title": "Скоро будет доступно...", 
+      "title": "Скоро будет доступно", 
       "summary": "Здесь что-то будет, котики", 
       "url": "lectures/???.html", 
       "locked": true
