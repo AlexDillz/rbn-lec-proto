@@ -12,7 +12,7 @@
       "title": "Логика развития лагерной смены",
       "summary": "Структура. Ритм. Переходы.",
       "url": "lectures/logic-shift-dev.html",
-      "locked": true
+      "locked": false
     },
     {
       "id": "security-tech",
