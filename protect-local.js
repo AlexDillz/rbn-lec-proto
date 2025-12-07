@@ -1,6 +1,6 @@
 (async function () {
 
-  const DEV_MODE = false;  // false
+  const DEV_MODE = false;  // true
 
   // определение темы (тёмная/светлая)
   function detectTheme() {
@@ -28,17 +28,23 @@
   const cardBg    = isDark ? '#111827' : '#ffffff';
   const textColor = isDark ? '#e5e7eb' : '#111827';
   const muted     = isDark ? '#9ca3af' : '#475569';
-  const shadow    = isDark
+  const shadow    
+    = isDark
     ? '0 24px 80px rgba(0,0,0,0.85)'
     : '0 24px 80px rgba(15,23,42,0.18)';
   const btnBg     = isDark ? '#f9fafb' : '#111827';
   const btnText   = isDark ? '#111827' : '#f9fafb';
 
   // проверка локального запуска
+  // file://  — открыли HTML двойным кликом
+  // localhost / 127.0.0.1 / ::1 — локальный сервер (python -m http.server и т.п.)
   const isLocal =
-    location.protocol === 'file:' || location.hostname === 'localhost';
+    location.protocol === 'file:' ||
+    location.hostname === 'localhost' ||
+    location.hostname === '127.0.0.1' ||
+    location.hostname === '::1';
 
-    if (DEV_MODE) {
+  if (DEV_MODE) {
     console.warn("⚠ protect-local.js: DEV_MODE включён — защита отключена");
     return; // пропускает защитный код
   }
@@ -72,61 +78,70 @@
           align-items:center;
           justify-content:center;
           background:${pageBg};
-          color:${textColor};
           padding:24px;
         ">
           <div style="
             max-width:720px;
             width:100%;
-            padding:32px 28px 28px;
             background:${cardBg};
-            border-radius:28px;
             box-shadow:${shadow};
+            border-radius:24px;
+            padding:28px 24px 24px;
           ">
-
+            <div style="
+              font-size:12px;
+              letter-spacing:0.08em;
+              text-transform:uppercase;
+              color:${muted};
+              margin-bottom:8px;
+            ">
+              Школа вожатского мастерства ОЛАС «РУБИН»
+            </div>
             <h1 style="
-              margin:0 0 18px;
-              font-size:32px;
-              font-weight:700;
-              display:flex;
-              align-items:center;
-              gap:10px;
+              margin:0 0 12px;
+              font-size:24px;
+              line-height:1.25;
             ">
-              <span>🔒</span>
-              <span>Эта лекция ещё закрыта</span>
+              Эта лекция пока закрыта
             </h1>
-
-            <p style="margin:0 0 8px;font-size:18px;line-height:1.5;">
-              Ты явно любопытный человечек.
-            </p>
-
-            <p style="margin:0 0 18px;font-size:18px;line-height:1.5;">
-              Но сейчас ещё не время.
-            </p>
-
-            <p style="margin:0 0 10px;font-size:18px;line-height:1.5;">
-              Если хочешь признания — напиши Парфенюку Виктору в личные сообщения:
-            </p>
-
-            <p style="margin:0 0 22px;font-size:18px;line-height:1.5;">
-              «Я нашёл неопубликованную лекцию)))»
-            </p>
-
-            <a href="../index.html" style="
-              display:inline-flex;
-              align-items:center;
-              gap:8px;
-              margin-top:4px;
-              padding:10px 18px;
-              border-radius:999px;
-              background:${btnBg};
-              color:${btnText};
-              text-decoration:none;
-              font-weight:500;
+            <p style="
+              margin:0 0 12px;
               font-size:16px;
+              line-height:1.6;
+              color:${muted};
             ">
-              ← Назад к списку
-            </a>
+              Похоже, ты нашёл прямую ссылку или открыл файл из репозитория.
+              Но по плану смены эта лекция ещё не выложена для свободного доступа.
+            </p>
+            <p style="
+              margin:0 0 20px;
+              font-size:15px;
+              line-height:1.6;
+              color:${muted};
+            ">
+              Чтобы всё шло по честной траектории, дождись её выхода на
+              официальной странице школы. Там она появится в нужный момент,
+              с нужным контекстом и пояснениями.
+            </p>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <a
+                href="../index.html"
+                style="
+                  display:inline-flex;
+                  align-items:center;
+                  justify-content:center;
+                  padding:10px 18px;
+                  border-radius:999px;
+                  text-decoration:none;
+                  background:${btnBg};
+                  color:${btnText};
+                  font-weight:500;
+                  font-size:15px;
+                "
+              >
+                ← На главную
+              </a>
+            </div>
           </div>
         </div>
       `;
@@ -150,53 +165,74 @@
           align-items:center;
           justify-content:center;
           background:${pageBg};
-          color:${textColor};
-          font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
           padding:24px;
         ">
           <div style="
-            width:min(700px, 90%);
-            margin:auto;
-            padding:36px 32px 32px;
+            max-width:720px;
+            width:100%;
             background:${cardBg};
-            border-radius:28px;
             box-shadow:${shadow};
+            border-radius:24px;
+            padding:28px 24px 24px;
           ">
-            <h1 style="margin:0 0 22px;font-size:30px;">
-              Ты открыл лекцию локально ⚠️
+            <div style="
+              font-size:12px;
+              letter-spacing:0.08em;
+              text-transform:uppercase;
+              color:${muted};
+              margin-bottom:8px;
+            ">
+              Школа вожатского мастерства ОЛАС «РУБИН»
+            </div>
+            <h1 style="
+              margin:0 0 12px;
+              font-size:24px;
+              line-height:1.25;
+            ">
+              Файл открыт локально
             </h1>
-
-            <p style="margin:0 0 14px;font-size:17px;color:${muted};line-height:1.5;">
-              В таком режиме сайт работает иначе: стили могут поехать, скрипты —
-              вести себя странно, а часть функций вообще отключена.
+            <p style="
+              margin:0 0 12px;
+              font-size:16px;
+              line-height:1.6;
+              color:${muted};
+            ">
+              Ты запускаешь страницу напрямую с компьютера
+              (<code style="font-family:monospace;">file://</code> или
+              <code style="font-family:monospace;">localhost</code>).
             </p>
-
-            <p style="margin:0 0 14px;font-size:17px;line-height:1.5;">
-              Нормальный путь — зайти по QR-коду, который выдаётся на лекции.
+            <p style="
+              margin:0 0 20px;
+              font-size:15px;
+              line-height:1.6;
+              color:${muted};
+            ">
+              Для честного прохождения курса и корректной работы ограничений
+              по доступу лекции нужно открывать через официальный сайт,
+              а не как локальные файлы. Иначе любой желающий сможет пролистать
+              всё без очереди.
             </p>
-
-            <p style="margin:0 0 26px;font-size:16px;color:${muted};">
-              Если ты просто ковыряешься в репозитории — привет от всех-всех-всех
-              и отдельный привет от кодера 👋
-            </p>
-
-            <button onclick="location.href='../index.html'"
-              style="
-                display:inline-flex;
-                align-items:center;
-                gap:8px;
-                padding:12px 20px;
-                border-radius:999px;
-                background:${btnBg};
-                color:${btnText};
-                border:none;
-                cursor:pointer;
-                font-weight:500;
-                font-size:16px;
-              "
-            >
-              ← На главную
-            </button>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <button
+                type="button"
+                onclick="history.back();"
+                style="
+                  display:inline-flex;
+                  align-items:center;
+                  justify-content:center;
+                  padding:10px 18px;
+                  border-radius:999px;
+                  border:none;
+                  cursor:pointer;
+                  background:${btnBg};
+                  color:${btnText};
+                  font-weight:500;
+                  font-size:15px;
+                "
+              >
+                ← Назад
+              </button>
+            </div>
           </div>
         </div>
       `;

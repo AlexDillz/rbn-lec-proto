@@ -1,7 +1,7 @@
 {
   "lectures": [
         {
-      "id": "vvod-lec. person's-role",
+      "id": "vvod-lec",
       "title": "Вводная лекция. Роль вожатого в лагере",
       "summary": "Начало пути. Основы и ценности.",
       "url": "lectures/vvod-lec.html",
@@ -17,13 +17,13 @@
     {
       "id": "security-tech",
       "title": "Техника безопасности в лагере",
-      "summary": "Почему это важно",
+      "summary": "Почему это важно.",
       "url": "lectures/security-tech.html",
-      "locked": true
+      "locked": false
     },
     { "id": "lec4", 
       "title": "Скоро будет доступно", 
-      "summary": "Здесь что-то будет, котики", 
+      "summary": "Здесь что-то будет, котики.", 
       "url": "lectures/???.html", 
       "locked": true
     }
