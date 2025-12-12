@@ -24,7 +24,21 @@
     { "id": "lec4", 
       "title": "Скоро будет доступно", 
       "summary": "Здесь что-то будет, котики.", 
-      "url": "lectures/???.html", 
+      "url": "lectures/lec4.html", 
+      "locked": true
+    },
+    {
+      "id": "lec5",
+      "title": "Скоро будет доступно",
+      "summary": "Здесь что-то будет, котики.",
+      "url": "lectures/lec5.html",
+      "locked": true
+    },
+    {
+      "id": "lec6",
+      "title": "Скоро будет доступно",
+      "summary": "Здесь что-то будет, котики.",
+      "url": "lectures/lec6.html",
       "locked": true
     }
   ]

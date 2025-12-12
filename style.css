@@ -543,3 +543,105 @@ body.dark .person-lecture-btn {
 body.dark .person-lecture-btn:hover {
   background: #374151;
 }
+
+
+/* фикс: кнопка темы не перекрывает крестик на contacts.html */
+body.contacts-page .close-card-btn{
+  top: 18px;
+  right: 110px; /* место под #theme-toggle справа */
+  z-index: 60;
+}
+body.contacts-page #theme-toggle{
+  z-index: 50;
+}
+
+.contacts-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:16px;
+  margin:20px 0;
+}
+
+.contact-card{
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:14px;
+  background:#fff;
+}
+
+body.dark .contact-card{
+  background:#1f2937;
+  border-color:#374151;
+}
+
+.contact-card h3{
+  margin:0 0 10px;
+  font-size:18px;
+  text-align:center;
+}
+
+.contact-card p{
+  margin:8px 0;
+  text-indent:0;     /* убираем «лекционный» абзацный отступ */
+  text-align:left;   /* убираем justify как в .content p */
+}
+
+/* Ссылки — контрастно в обеих темах + фикс :visited */
+.contact-card a,
+.contact-card a:visited{
+  color:#2563eb; /* светлая тема */
+  text-decoration:underline;
+  text-underline-offset:3px;
+  text-decoration-thickness:1.5px;
+  font-weight:600;
+}
+
+.contact-card a:hover{
+  color:#1d4ed8;
+}
+
+body.dark .contact-card a,
+body.dark .contact-card a:visited{
+  color:#7dd3fc; /* тёмная тема: читаемо */
+}
+
+body.dark .contact-card a:hover{
+  color:#bae6fd;
+}
+
+/* Бейджи TG/VK */
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:28px;
+  height:18px;
+  padding:0 6px;
+  margin-right:8px;
+
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:0.02em;
+
+  border-radius:6px;
+  color:#fff;
+}
+
+.badge.tg{ background:#229ED9; }
+.badge.vk{ background:#0077FF; }
+
+/* muted на тёмной теме — чуть светлее */
+body.dark .muted{
+  color:#9ca3af;
+}
+/* contacts: крестик привязываем к карточке, а не к окну */
+body.contacts-page .card{
+  position: relative;
+}
+
+body.contacts-page .close-card-btn{
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: auto;
+}
