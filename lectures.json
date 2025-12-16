@@ -21,24 +21,17 @@
       "url": "lectures/security-tech.html",
       "locked": false
     },
-    { "id": "lec4", 
-      "title": "Скоро будет доступно", 
-      "summary": "Здесь что-то будет, котики.", 
-      "url": "lectures/lec4.html", 
+    { "id": "pravo-work", 
+      "title": "Правовые основы работы вожатого", 
+      "summary": "Чем руководствоваться. Почему. На каком основании.", 
+      "url": "lectures/pravo-work.html", 
       "locked": true
     },
     {
-      "id": "lec5",
-      "title": "Скоро будет доступно",
+      "id": "org-mode",
+      "title": "Организация основных режимных моментов",
       "summary": "Здесь что-то будет, котики.",
-      "url": "lectures/lec5.html",
-      "locked": true
-    },
-    {
-      "id": "lec6",
-      "title": "Скоро будет доступно",
-      "summary": "Здесь что-то будет, котики.",
-      "url": "lectures/lec6.html",
+      "url": "lectures/org-mode.html",
       "locked": true
     }
   ]
