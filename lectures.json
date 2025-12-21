@@ -25,14 +25,14 @@
       "title": "Правовые основы работы вожатого", 
       "summary": "Чем руководствоваться. Почему. На каком основании.", 
       "url": "lectures/pravo-work.html", 
-      "locked": true
+      "locked": false
     },
     {
       "id": "org-mode",
       "title": "Организация основных режимных моментов",
       "summary": "С какой целью. Во сколько. Как правильно.",
       "url": "lectures/org-mode.html",
-      "locked": true
+      "locked": false
     }
   ]
 }
