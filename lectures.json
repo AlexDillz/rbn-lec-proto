@@ -35,25 +35,25 @@
       "locked": false
     },
     {
+      "id": "temporary-group",
+      "title": "Особенности временного детского коллектива",
+      "summary": "Почему так. В чем прикол. А в чем не рофл.",
+      "url": "lectures/temporary-group.html",
+      "locked": false
+    },
+    {
       "id": "first_aid",
-      "title": "Тема 6", 
-      "summary": "Что делать. Что не делать. Как не убить и не убиться",
+      "title": "Оказание первой помощи", 
+      "summary": "Что делать. Что не делать. Как не убить и не убиться.",
       "url": "lectures/first_aid.html",
-      "locked": true
+      "locked": false
     },
     {
       "id": "age_psycho",
-      "title": "Тема 7", 
+      "title": "Возрастная психология. Особенности младшего школьного возраста", 
       "summary": "Как понимать и поддерживать детей разного возраста.",
       "url": "lectures/age_psycho.html",
-      "locked": true
-    },
-    {
-      "id": "8",
-      "title": "Тема 8",
-      "summary": "Мяу-мяу-мяу",
-      "url": "8",
-      "locked": true
+      "locked": false
     }
   ]
 }
