@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Исследователи</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="theme.js" defer></script>
+</head>
+
+<body class="contacts-page">
+
+  <button id="theme-toggle" aria-label="Переключить тему">
+    🌙 Тёмная тема
+  </button>
+
+  <article class="card lecture-card">
+
+    <a href="index.html" class="close-card-btn" aria-label="Закрыть">
+      <svg class="close-icon" viewBox="0 0 24 24">
+        <line x1="6" y1="6" x2="18" y2="18"/>
+        <line x1="18" y1="6" x2="6" y2="18"/>
+      </svg>
+    </a>
+
+    <div class="content">
+      <h1>Исследователи</h1>
+
+      <p>
+        Эти люди нашли то, что не лежало на поверхности.
+        Пасхалки были спрятаны в коде, структуре и деталях сайта.
+      </p>
+
+      <p>
+        Здесь появляются те, кто решил поизучать <b>глубже</b>, а не просто нажимает кнопки.
+      </p>
+
+      <hr>
+
+      <!-- список -->
+      <div class="person-grid">
+
+        <!-- 1 -->
+        <div class="person-card" data-level="1">
+
+          <img
+            src="assets/researchers/Red'kin_Fedor.jpg"
+            alt="Редькин Федор Дмитриевич"
+            class="person-photo"
+          >
+
+          <div class="person-main">
+            <div class="person-header-row">
+              <h3 class="person-name">Редькин Федор Дмитриевич</h3>
+              <span class="person-status">Уровень 1 / 5</span>
+            </div>
+
+            <p class="person-role">
+              Первый, кто нашёл пасхалку №1
+            </p>
+
+            <button class="person-toggle">
+              Комментарий исследователя
+            </button>
+
+            <div class="person-extra">
+              <p>
+                <!-- комментарий -->
+                Что значит комментарий
+              </p>
+            </div>
+
+            <!-- прогресс -->
+            <div class="progress-wrapper">
+              <div class="progress-bar">
+                <div class="progress-fill"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </article>
+
+  <script>
+    // раскрытие комментария — логика идентична personas.html
+    document.querySelectorAll('.person-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.person-card');
+        card.classList.toggle('person-card--open');
+      });
+    });
+
+    // прогресс 1–5 уровней
+    document.querySelectorAll('.person-card').forEach(card => {
+      const level = Math.max(0, Math.min(5, Number(card.dataset.level || 0)));
+      const fill = card.querySelector('.progress-fill');
+      if (fill) fill.style.width = (level / 5 * 100) + '%';
+    });
+  </script>
+
+</body>
+</html>
