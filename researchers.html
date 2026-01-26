@@ -18,7 +18,7 @@
   <article class="card lecture-card">
 
     <a href="index.html" class="close-card-btn" aria-label="Закрыть">
-      <svg class="close-icon" viewBox="0 0 24 24">
+      <svg class="close-icon" viewBox="0 0 24 24" aria-hidden="true">
         <line x1="6" y1="6" x2="18" y2="18"/>
         <line x1="18" y1="6" x2="6" y2="18"/>
       </svg>
@@ -33,7 +33,8 @@
       </p>
 
       <p>
-        Здесь появляются те, кто решил поизучать <b>глубже</b>, а не просто нажимает кнопки.
+        Здесь появляются те, кто решил поизучать <b>глубже</b>,
+        а не просто нажимает кнопки.
       </p>
 
       <hr>
@@ -60,15 +61,12 @@
               Первый, кто нашёл пасхалку №1
             </p>
 
-            <button class="person-toggle">
+            <button class="person-toggle" type="button">
               Комментарий исследователя
             </button>
 
             <div class="person-extra">
-              <p>
-                <!-- комментарий -->
-                Что значит комментарий
-              </p>
+              <p>Что значит комментарий</p>
             </div>
 
             <!-- прогресс -->
@@ -81,13 +79,91 @@
           </div>
         </div>
 
-      </div>
+        <!-- 2 -->
+        <div class="person-card" data-level="1">
 
-    </div>
+          <img
+            src="assets/researchers/Kash'eev_Il'ya.jpg"
+            alt="Кащеев Илья Сергеевич"
+            class="person-photo"
+          >
+
+          <div class="person-main">
+            <div class="person-header-row">
+              <h3 class="person-name">Кащеев</h3>
+              <span class="person-status">Уровень 1 / 5</span>
+            </div>
+
+            <p class="person-role">
+              Второй, кто нашёл пасхалку №1
+            </p>
+
+            <button class="person-toggle" type="button">
+              Комментарий исследователя
+            </button>
+
+            <div class="person-extra">
+              <p>Что значит комментарий</p>
+            </div>
+
+            <div class="progress-wrapper">
+              <div class="progress-bar">
+                <div class="progress-fill"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="person-card" data-level="1">
+
+          <img
+            src="assets/researchers/Parhich_Artem.jpg"
+            alt="Пархимович Артём Эдуардович"
+            class="person-photo"
+          >
+
+          <div class="person-main">
+            <div class="person-header-row">
+              <h3 class="person-name">Пархимович Артём Эдуардович</h3>
+              <span class="person-status">Уровень 1 / 5</span>
+            </div>
+
+            <p class="person-role">
+              Третий, кто нашёл пасхалку №1
+            </p>
+
+            <button class="person-toggle" type="button">
+              Комментарий исследователя
+            </button>
+
+            <div class="person-extra">
+              <p>ого вау</p>
+            </div>
+
+            <div class="progress-wrapper">
+              <div class="progress-bar">
+                <div class="progress-fill"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div> 
+    </div> 
+
+    <a
+      href="contract.html"
+      class="easter-square"
+      aria-label="Скрытая зона"
+    ></a>
+
   </article>
 
   <script>
-    // раскрытие комментария — логика идентична personas.html
+    // раскрытие комментариев
     document.querySelectorAll('.person-toggle').forEach(btn => {
       btn.addEventListener('click', () => {
         const card = btn.closest('.person-card');
@@ -95,11 +171,14 @@
       });
     });
 
-    // прогресс 1–5 уровней
+    // прогресс 
     document.querySelectorAll('.person-card').forEach(card => {
       const level = Math.max(0, Math.min(5, Number(card.dataset.level || 0)));
       const fill = card.querySelector('.progress-fill');
       if (fill) fill.style.width = (level / 5 * 100) + '%';
+
+      const badge = card.querySelector('.person-status');
+      if (badge) badge.textContent = `Уровень ${level} / 5`;
     });
   </script>
 

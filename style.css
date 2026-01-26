@@ -674,3 +674,32 @@ body.dark .progress-bar{
 body.dark .progress-fill{
   background: #f9fafb;
 }
+
+
+.lecture-card{
+  position: relative; 
+}
+
+.easter-square{
+  position: absolute;
+
+  width: 40px;
+  height: 40px;
+
+  top: 16px;
+  right: 16px;
+
+  opacity: 0;
+  z-index: 20;
+
+  cursor: default;
+}
+
+.easter-square:hover{
+  opacity: 0.04;
+  cursor: pointer;
+}
+
+body.dark .easter-square:hover{
+  opacity: 0.07;
+}
