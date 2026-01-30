@@ -54,6 +54,20 @@
       "summary": "Как понимать и поддерживать детей разного возраста.",
       "url": "lectures/age_psycho.html",
       "locked": false
+    },
+    {
+      "id": "communication-skills",
+      "title": "Взаимодействие с детьми, родителями, напарниками, педагогическим составом и не только. Этическая защита", 
+      "summary": "Как эффективно взаимодействовать и не упасть в грязь лицом.",
+      "url": "lectures/communication-skills.html",
+      "locked": true
+    },
+    {
+      "id": "game-teka-theory",
+      "title": "Игротека. 1 Часть. Теория", 
+      "summary": "Как организовать и провести интересную игру для детей.",
+      "url": "lectures/game-teka-theory.html",
+      "locked": true
     }
   ]
 }
