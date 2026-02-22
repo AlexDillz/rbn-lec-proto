@@ -68,7 +68,28 @@
       "summary": "Как организовать и провести интересную игру для детей.",
       "url": "lectures/game-teka-theory.html",
       "locked": false
-    }
+    },
+    {
+      "id": "game-teka-practice",
+      "title": "Игротека. 2 Часть. Практика", 
+      "summary": "Как сыграться и не разыграться.",
+      "url": "lectures/game-teka-practice.html",
+      "locked": true
+    },     
+    {
+      "id": "method_of_campfire",
+      "title": "Методика отрядных огоньков", 
+      "summary": "Методи-ка подойди-ка.",
+      "url": "lectures/method_of_campfire.html",
+      "locked": true
+    },
+    {
+      "id": "KTD_method",
+      "title": "Методика КТД", 
+      "summary": "Как создать, организовать и заняться.",
+      "url": "lectures/KTD_method.html",
+      "locked": true
+    }            
   ]
 }
 
