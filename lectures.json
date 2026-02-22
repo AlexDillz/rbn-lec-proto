@@ -74,21 +74,21 @@
       "title": "Игротека. 2 Часть. Практика", 
       "summary": "Как сыграться и не разыграться.",
       "url": "lectures/game-teka-practice.html",
-      "locked": true
+      "locked": false
     },     
     {
       "id": "method_of_campfire",
       "title": "Методика отрядных огоньков", 
       "summary": "Методи-ка подойди-ка.",
       "url": "lectures/method_of_campfire.html",
-      "locked": true
+      "locked": false
     },
     {
       "id": "KTD_method",
       "title": "Методика КТД", 
       "summary": "Как создать, организовать и заняться.",
       "url": "lectures/KTD_method.html",
-      "locked": true
+      "locked": false
     }            
   ]
 }
