@@ -1,0 +1,125 @@
+<!--
+Привет, ковёрный взломщик 👋
+Если ты читаешь это - значит, нашёл путь быстрее всех.
+
+Напиши Парфенюку Виктору в личные сообщения фразу:
+"Код открыт — а сердце ещё нет"
+
+За это ты получишь бонус 😎
+-->
+
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Оформление отрядного уголка</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="../style.css">
+  <script src="../theme.js" defer></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const params = new URLSearchParams(window.location.search);
+      const from = params.get('from');
+
+      let targetHref = '../index.html';
+      let backText   = '← Назад к лекциям';
+
+      if (from === 'personas') {
+        targetHref = 'personas.html';
+        backText   = '← Назад';
+      }
+
+      const closeBtn = document.querySelector('.close-card-btn');
+      const backBtn  = document.querySelector('.lecture-footer .btn');
+
+      if (closeBtn) {
+        closeBtn.href = targetHref;
+      }
+      if (backBtn) {
+        backBtn.href = targetHref;
+        backBtn.textContent = backText;
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <button id="theme-toggle" aria-label="Переключить тему">🌙 Тёмная тема</button>
+
+  <article class="card lecture-card">
+    <a class="close-card-btn" href="../index.html" aria-label="Назад к списку">
+      <svg class="close-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <line x1="6" y1="6" x2="18" y2="18" />
+        <line x1="18" y1="6" x2="6" y2="18" />
+      </svg>
+    </a>
+
+    <div class="content">
+      <h1>Оформление отрядного уголка</h1>
+
+      <p>
+        Отрядный уголок — презентация отряда, выраженная в графическом виде.
+        Уголок отражает основную информацию об отряде и его деятельность в течение всей смены.
+        Важно, чтобы он был не только красивым, ярким и креативным, но и всегда содержал актуальную информацию о жизни отряда.
+      </p>
+
+      <h2>Общие рекомендации</h2>
+      <ul>
+        <li>Уголок должен быть «говорящим» — содержание и рубрики должны меняться.</li>
+        <li>Уголок должен отражать различные стороны жизни отряда: самообслуживание, спорт, участие в лагерной жизни, награды, дни рождения, перспективы.</li>
+        <li>В оформлении уголка и обновлении содержания рубрик должны принимать участие дети.</li>
+      </ul>
+
+      <h2>Для чего нужен отрядный уголок</h2>
+      <p>Отрядный уголок призван:</p>
+      <ul>
+        <li>развивать активность ребят;</li>
+        <li>разносторонне расширять знания;</li>
+        <li>помогать в воспитании хорошего вкуса;</li>
+        <li>учить культуре оформления;</li>
+        <li>пробуждать интерес к жизни своего коллектива.</li>
+      </ul>
+
+      <h2>4 раздела отрядного уголка</h2>
+      <ul>
+        <li><b>1 стена</b> — лицевая, информационно-официальная;</li>
+        <li><b>2 стена</b> — экологическая;</li>
+        <li><b>3 стена</b> — игровая, развлекательная;</li>
+        <li><b>4 стена</b> — творческая.</li>
+      </ul>
+
+      <h2>Зоны отрядного уголка</h2>
+      <ul>
+        <li><b>Верхняя зона</b> — информационная;</li>
+        <li><b>Центральная зона</b> — плановая;</li>
+        <li><b>Нижняя зона</b> — новостная.</li>
+      </ul>
+
+      <h2>Требования к оформлению</h2>
+      <ul>
+        <li>Читаемость и каллиграфичность оформительского текста.</li>
+        <li>Эстетичность и подчинение общей идее изобразительных элементов.</li>
+        <li>Использование нетрадиционных материалов и технологий в оформлении уголка приветствуется.</li>
+      </ul>
+
+      <h2>Дополнительные акценты</h2>
+      <ul>
+        <li>Шрифты.</li>
+        <li>Практика.</li>
+      </ul>
+
+      <div class="lecture-footer">
+        <a class="btn" href="../index.html">← Назад к лекциям</a>
+        <a
+        class="btn btn-download"
+        href="../assets/lecs/team_angle/team_angle.pptx"
+        download
+      >⬇ Скачать материалы</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="../protect-local.js?v=6" data-lecture-id="squad-corner"></script>
+</body>
+</html>

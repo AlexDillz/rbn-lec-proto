@@ -89,7 +89,28 @@
       "summary": "Как создать, организовать и заняться.",
       "url": "lectures/KTD_method.html",
       "locked": false
-    }            
+    },
+    {
+      "id": "age_special",
+      "title": "Возрастные особенности подростков", 
+      "summary": "Чем старше, тем хуже. Или нет.",
+      "url": "lectures/age_special.html",
+      "locked": false
+    },    
+    {
+      "id": "day_org_method",
+      "title": "Методика организации тематических дней", 
+      "summary": "Как создать. Как соблюсти и протянуть тематику.",
+      "url": "lectures/day_org_method.html",
+      "locked": false
+    },  
+    {
+      "id": "team_angle",
+      "title": "Оформление отрядного уголка", 
+      "summary": "Красиво. Четко. Со смыслом.",
+      "url": "lectures/team_angle.html",
+      "locked": false
+    }              
   ]
 }
 
