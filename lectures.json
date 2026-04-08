@@ -116,7 +116,7 @@
       "title": "Система самоуправления в отряде и в лагере. Деловая игра Выборы", 
       "summary": "Самому управиться...и как ЭТО может работать в отряде и в лагере.",
       "url": "lectures/self-government.html",
-      "locked": true      
+      "locked": false     
     },
     {
       "id": "event_analis",
