@@ -110,7 +110,21 @@
       "summary": "Красиво. Четко. Со смыслом.",
       "url": "lectures/team_angle.html",
       "locked": false
-    }              
+    },
+    {
+      "id": "self-government",
+      "title": "Система самоуправления в отряде и в лагере. Деловая игра Выборы", 
+      "summary": "Самому управиться...и как ЭТО может работать в отряде и в лагере.",
+      "url": "lectures/self-government.html",
+      "locked": true      
+    },
+    {
+      "id": "event_analis",
+      "title": "Методика анализа мероприятий", 
+      "summary": "Как не просто провести, а сделать так, чтобы было круто и полезно.",
+      "url": "lectures/event_analis.html",
+      "locked": false
+    } 
   ]
 }
 
