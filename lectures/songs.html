@@ -1,0 +1,76 @@
+<!--
+Привет, ковёрный взломщик 👋
+Если ты читаешь это - значит, нашёл путь быстрее всех.
+
+Напиши Парфенюку Виктору в личные сообщения фразу:
+"Код открыт — а сердце ещё нет"
+
+За это ты получишь бонус 😎
+-->
+
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Зачем вожатым нужна песня</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="../style.css">
+  <script src="../theme.js" defer></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const params = new URLSearchParams(window.location.search);
+      const from = params.get('from');
+
+      let targetHref = '../index.html';
+      let backText = '← Назад к лекциям';
+
+      if (from === 'personas') {
+        targetHref = 'personas.html';
+        backText = '← Назад';
+      }
+
+      const closeBtn = document.querySelector('.close-card-btn');
+      const backBtn = document.querySelector('.lecture-footer .btn');
+
+      if (closeBtn) {
+        closeBtn.href = targetHref;
+      }
+      if (backBtn) {
+        backBtn.href = targetHref;
+        backBtn.textContent = backText;
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <button id="theme-toggle" aria-label="Переключить тему">🌙 Тёмная тема</button>
+
+  <article class="card lecture-card">
+    <a class="close-card-btn" href="../index.html" aria-label="Назад к списку">
+      <svg class="close-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <line x1="6" y1="6" x2="18" y2="18" />
+        <line x1="18" y1="6" x2="6" y2="18" />
+      </svg>
+    </a>
+
+    <div class="content">
+      <h1>Зачем вожатым нужна песня</h1>
+
+      <p>
+        К этой теме нет отдельных материалов для скачивания, но сама лекция от этого не становится менее важной. Песня для вожатого — это не просто «что-то спеть у костра», а живой инструмент атмосферы, памяти и объединения отряда.
+      </p>
+      <p>
+        Через песню легче собрать круг, задать настроение, поддержать ребят в нужный момент и сделать общие события по-настоящему тёплыми. Иногда одна подходящая песня помогает сказать больше, чем длинная речь.
+      </p>
+
+      <div class="lecture-footer">
+        <a class="btn" href="../index.html">← Назад к лекциям</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="../protect-local.js?v=7" data-lecture-id="songs"></script>
+</body>
+</html>
