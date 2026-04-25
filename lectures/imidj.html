@@ -1,0 +1,912 @@
+<!--
+Привет, ковёрный взломщик 👋
+Если ты читаешь это - значит, нашёл путь быстрее всех.
+
+Напиши Парфенюку Виктору в личные сообщения фразу:
+"Код открыт — а сердце ещё нет"
+
+За это ты получишь бонус 😎
+-->
+
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Имидж Комиссара</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="../style.css">
+  <script src="../theme.js" defer></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const params = new URLSearchParams(window.location.search);
+      const from = params.get('from');
+
+      let targetHref = '../index.html';
+      let backText = '← Назад к лекциям';
+
+      if (from === 'personas') {
+        targetHref = 'personas.html';
+        backText = '← Назад';
+      }
+
+      const closeBtn = document.querySelector('.close-card-btn');
+      const backBtn = document.querySelector('.lecture-footer .btn');
+
+      if (closeBtn) {
+        closeBtn.href = targetHref;
+      }
+      if (backBtn) {
+        backBtn.href = targetHref;
+        backBtn.textContent = backText;
+      }
+    });
+  </script>
+
+  <style>
+    .imidj-section {
+      margin-top: 20px;
+    }
+
+    .imidj-deck {
+      margin-top: 16px;
+    }
+
+    .imidj-deck--single .imidj-deck__controls {
+      display: none;
+    }
+
+    .imidj-deck__viewport {
+      position: relative;
+      min-height: 620px;
+      height: 620px;
+      perspective: 2200px;
+      overflow: visible;
+      transition: height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .imidj-card {
+      --offset: 0;
+      --abs-offset: 0;
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 24px;
+      padding: 24px;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 24px;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      box-shadow: 0 26px 70px rgba(15, 23, 42, 0.14);
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      backface-visibility: hidden;
+      transform-origin: center center;
+      transform:
+        translateX(calc(var(--offset) * 14%))
+        translateY(calc(var(--abs-offset) * 8px))
+        scale(calc(1 - (var(--abs-offset) * 0.06)))
+        rotateY(calc(var(--offset) * -22deg))
+        rotate(calc(var(--offset) * -2deg));
+      transition:
+        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.4s ease,
+        box-shadow 0.4s ease;
+      will-change: transform, opacity;
+    }
+
+    .imidj-card.is-visible {
+      opacity: 0.52;
+    }
+
+    .imidj-card.is-active {
+      opacity: 1;
+      pointer-events: auto;
+      box-shadow: 0 34px 90px rgba(15, 23, 42, 0.18);
+    }
+
+    .imidj-card__media {
+      display: flex;
+      align-items: stretch;
+      min-width: 0;
+    }
+
+    .imidj-card__frame {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      padding: 12px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+
+    .imidj-card__frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      object-fit: cover;
+      object-position: center;
+      background: #dbe4ef;
+    }
+
+    .imidj-card__text {
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: 100%;
+    }
+
+    .imidj-card__label {
+      margin: 0;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #64748b;
+      text-align: left;
+      text-indent: 0;
+    }
+
+    .imidj-card__label--name {
+      font-size: clamp(22px, 2.1vw, 30px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: 0.03em;
+      text-transform: none;
+      color: #0f172a;
+      align-self: flex-start;
+    }
+
+    .imidj-card__title {
+      margin: 0 !important;
+      text-align: left !important;
+      text-indent: 0 !important;
+      font-size: 28px !important;
+      line-height: 1.15;
+    }
+
+    .imidj-card__copy-wrap {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .imidj-card__copy {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-height: 100%;
+      min-height: 0;
+      padding: 18px 20px;
+      border: 1px solid #dbe4ef;
+      border-radius: 18px;
+      background: rgba(248, 250, 252, 0.92);
+      color: #0f172a;
+      text-align: justify;
+      text-indent: 0;
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 1.34;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      word-break: normal;
+      overflow: hidden;
+    }
+
+    .imidj-card__copy,
+    .imidj-card__copy * {
+      color: inherit;
+      font-family: inherit;
+    }
+
+    .imidj-card__copy p,
+    .imidj-card__copy div,
+    .imidj-card__copy span,
+    .imidj-card__copy li {
+      margin: 0 0 0.7em;
+      line-height: inherit;
+    }
+
+    .imidj-card__copy p {
+      text-align: justify !important;
+      text-indent: 1.8em !important;
+    }
+
+    .imidj-card__copy p:last-child,
+    .imidj-card__copy div:last-child,
+    .imidj-card__copy span:last-child,
+    .imidj-card__copy li:last-child {
+      margin-bottom: 0;
+    }
+
+    .imidj-card__copy h1,
+    .imidj-card__copy h2,
+    .imidj-card__copy h3,
+    .imidj-card__copy h4,
+    .imidj-card__copy h5,
+    .imidj-card__copy h6 {
+      margin: 0 0 0.7em !important;
+      font-size: inherit !important;
+      font-weight: 700;
+      line-height: 1.18 !important;
+    }
+
+    .imidj-deck__controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .imidj-nav {
+      min-width: 170px;
+      justify-content: center;
+      cursor: pointer;
+      background: #fff;
+    }
+
+    .imidj-dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .imidj-dot {
+      width: 10px;
+      height: 10px;
+      padding: 0;
+      border: 0;
+      border-radius: 9999px;
+      background: #cbd5e1;
+      cursor: pointer;
+      transition: width 0.25s ease, background 0.25s ease, transform 0.25s ease;
+    }
+
+    .imidj-dot:hover {
+      transform: scale(1.08);
+    }
+
+    .imidj-dot.is-active {
+      width: 28px;
+      background: #111827;
+    }
+
+    body.dark .imidj-card {
+      border-color: #334155;
+      background: linear-gradient(135deg, #111827 0%, #0f172a 100%);
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.44);
+    }
+
+    body.dark .imidj-card.is-active {
+      box-shadow: 0 34px 100px rgba(0, 0, 0, 0.52);
+    }
+
+    body.dark .imidj-card__frame {
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    body.dark .imidj-card__frame img {
+      background: #0f172a;
+    }
+
+    body.dark .imidj-card__label {
+      color: #94a3b8;
+    }
+
+    body.dark .imidj-card__label--name {
+      color: #f8fafc;
+    }
+
+    body.dark .imidj-card__copy {
+      border-color: #334155;
+      background: rgba(15, 23, 42, 0.76);
+      color: #e5e7eb;
+    }
+
+    body.dark .imidj-nav {
+      background: #111827;
+      color: #f8fafc;
+      border-color: #475569;
+    }
+
+    body.dark .imidj-dot {
+      background: #475569;
+    }
+
+    body.dark .imidj-dot.is-active {
+      background: #f8fafc;
+    }
+
+    @media (max-width: 760px) {
+      .imidj-deck__viewport {
+        min-height: 860px;
+        height: 860px;
+      }
+
+      .imidj-card {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 20px;
+        transform:
+          translateX(calc(var(--offset) * 8%))
+          translateY(calc(var(--abs-offset) * 8px))
+          scale(calc(1 - (var(--abs-offset) * 0.04)))
+          rotateY(calc(var(--offset) * -14deg))
+          rotate(calc(var(--offset) * -1deg));
+      }
+
+      .imidj-card__media {
+        width: min(100%, 220px);
+        margin: 0 auto;
+      }
+
+      .imidj-card__title {
+        font-size: 24px !important;
+      }
+
+      .imidj-deck__controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .imidj-nav {
+        width: 100%;
+      }
+
+      .imidj-dots {
+        order: -1;
+        min-height: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <button id="theme-toggle" aria-label="Переключить тему">🌙 Тёмная тема</button>
+
+  <article class="card lecture-card">
+    <a class="close-card-btn" href="../index.html" aria-label="Назад к списку">
+      <svg class="close-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <line x1="6" y1="6" x2="18" y2="18" />
+        <line x1="18" y1="6" x2="6" y2="18" />
+      </svg>
+    </a>
+
+    <div class="content">
+    <h1>ИМИДЖ КОМИССАРА</h1>
+    <p>Имидж – это образ, мнение, представление о человеке, группе людей или организации, которое складывается у окружающих. Важно: имидж – это не только то, каким человек хочет казаться, а то, как его реально воспринимают.</p>
+    <p>Для комиссара или вожатого это особенно важно, потому что он представляет не только себя. Он представляет отряд, лагерь, педагогическую команду и ценности сообщества. Поэтому имидж комиссара – это образ человека и группы, к которой он принадлежит.</p>
+    <p>Иначе говоря, имидж комиссара – это не просто внешний вид или красивая подача. Это система правил, норм и сигналов, которые мы предъявляем к себе и друг к другу, чтобы выглядеть и действовать как единый организм.</p>
+    <h2>1. Почему имидж важен</h2>
+    <p>Вожатый работает не только словами и инструкциями. Он воспитывает собой: поведением, речью, реакциями, внешним видом, отношением к детям и коллегам.</p>
+    <p>Дети и подростки быстро считывают:</p>
+    <ul>
+      <li>можно ли этому человеку доверять;</li>
+      <li>справедлив ли он;</li>
+      <li>уверен ли он;</li>
+      <li>умеет ли держать границы;</li>
+      <li>не играет ли он роль;</li>
+      <li>соответствует ли он тому, что говорит.</li>
+    </ul>
+    <p>Поэтому имидж напрямую влияет на:</p>
+    <ol>
+      <li><b>Доверие.</b> Если вожатый выглядит собранным, говорит спокойно, действует последовательно, к нему легче обратиться.</li>
+      <li><b>Дисциплину.</b> Дисциплина держится не только на строгости, а на авторитете. Авторитет появляется там, где есть справедливость, уверенность и предсказуемость.</li>
+      <li><b>Атмосферу в отряде.</b> Если вожатый хаотичен, отряд быстро становится хаотичным. Если он спокоен, включен и последователен, это стабилизирует группу.</li>
+      <li><b>Воспитательное воздействие.</b> Нельзя говорить детям об ответственности, если сам опаздываешь, срываешься, нарушаешь договоренности или ведешь себя неуважительно.</li>
+    </ol>
+    <h2>2. Из чего складывается имидж</h2>
+    <p>Имидж комиссара складывается из нескольких элементов.</p>
+    <h3>2.1. Внешний вид</h3>
+    <p>Опрятный внешний вид – это не про моду и не про дорогую одежду. Это про сигнал.</p>
+    <p>Внешний вид показывает:</p>
+    <ul>
+      <li>насколько человек собран;</li>
+      <li>уважает ли он пространство и людей вокруг;</li>
+      <li>понимает ли он свою роль;</li>
+      <li>можно ли воспринимать его как ответственного взрослого.</li>
+    </ul>
+    <p>Неряшливость часто считывается как неорганизованность. Чрезмерная демонстративность – как желание привлечь внимание к себе, а не к делу. Поэтому задача комиссара – выглядеть уместно, аккуратно и профессионально.</p>
+    <h3>2.2. Культура устной речи</h3>
+    <p>Речь – один из главных инструментов вожатого.</p>
+    <p>По речи видно:</p>
+    <ul>
+      <li>уровень культуры;</li>
+      <li>отношение к детям;</li>
+      <li>способность держать себя;</li>
+      <li>умение объяснять;</li>
+      <li>степень уважения к собеседнику.</li>
+    </ul>
+    <p>Речь комиссара – это не личное дело. Это модель общения, которую дети копируют.</p>
+    <p>Если в речи есть грубость, унижение, постоянный сарказм, обесценивание, дети начинают воспринимать это как норму. Поэтому речь должна быть понятной, уважительной, живой и собранной.</p>
+    <h3>2.3. Культура поведения</h3>
+    <p>Имидж подтверждается не словами, а поступками.</p>
+    <p>Особенно внимательно дети смотрят на вожатого:</p>
+    <ul>
+      <li>в конфликте;</li>
+      <li>в усталости;</li>
+      <li>при срыве плана;</li>
+      <li>в ситуации ответственности;</li>
+      <li>когда нужно принять непопулярное решение.</li>
+    </ul>
+    <p>Именно там становится понятно, кто перед ними: устойчивый взрослый или человек, который держится только пока все удобно.</p>
+    <h3>2.4. Эмоциональная устойчивость</h3>
+    <p>Вожатый может быть ярким, веселым, громким, творческим – это нормально. Но он не должен быть эмоционально опасным.</p>
+    <p>Если дети не знают, в каком настроении сегодня вожатый и как он отреагирует, рядом с ним небезопасно.</p>
+    <p>Сильный имидж строится на сочетании:</p>
+    <ul>
+      <li>доброжелательности;</li>
+      <li>энергии;</li>
+      <li>спокойствия;</li>
+      <li>чувства меры;</li>
+      <li>внутренней устойчивости.</li>
+    </ul>
+    <h3>2.5. Культура социальных сетей</h3>
+    <p>Имидж существует не только в лагере. Социальные сети – это продолжение публичного образа.</p>
+    <p>То, что человек публикует, лайкает, комментирует и демонстрирует, формирует представление о нем.</p>
+    <p>Если комиссар в социальных сетях транслирует агрессию, унижение, безответственность или провокационное поведение, это влияет не только на его личный образ, но и на восприятие всей команды.</p>
+    <p>Поэтому цифровое поведение – это часть профессионального имиджа.</p>
+    <h3>2.6. Мерч и символика</h3>
+    <p>Мерч – это тоже часть имиджа.</p>
+    <p>Футболка, худи, значок, браслет, форма, символика лагеря или отряда – это не просто одежда. Это знак принадлежности к группе.</p>
+    <p>Мерч выполняет две функции:</p>
+    <ul>
+      <li><b>Внутреннюю</b> — объединяет своих.</li>
+      <li><b>Внешнюю</b> — показывает окружающим, кого человек представляет.</li>
+    </ul>
+    <p>Если ты надеваешь мерч, ты становишься видимым представителем сообщества. Значит, ты должен отражать его ценности.</p>
+    <p>Если на человеке написано «волонтер», к нему можно обратиться за помощью.</p>
+    <p>Если внешний образ транслирует агрессию, закрытость или хаос, к человеку подходить не хочется.</p>
+    <p>Поэтому важно понимать:</p>
+    <ul>
+      <li>где мерч уместен;</li>
+      <li>в каком состоянии его можно носить;</li>
+      <li>какое поведение допустимо в мерче;</li>
+      <li>какие действия могут бросить тень на всю группу.</li>
+    </ul>
+    <h2>3. Главный принцип: имидж — это система сигналов</h2>
+    <p>Каждый элемент что-то сообщает окружающим.</p>
+    <p>Одежда сообщает: «я собран» или «мне все равно». Речь сообщает: «я уважаю» или «я подавляю». Поведение сообщает: «я надежен» или «на меня нельзя опереться».</p>
+    <p>Соцсети сообщают: «я понимаю публичную ответственность» или «я не контролирую свой образ». Мерч сообщает: «я часть сообщества и отвечаю за его ценности».</p>
+    <p>Поэтому имидж – это не маска. Это система сигналов, которые должны совпадать между собой.</p>
+    <p>Если человек говорит о ценностях, но ведет себя противоположно, имидж разрушается. Если человек носит символику отряда, но ведет себя так, что за него стыдно, страдает образ всей команды.</p>
+    <h2>4. Типичные ошибки</h2>
+    <h3>Панибратство</h3>
+    <p>Когда вожатый пытается стать детям «своим любой ценой», он теряет роль взрослого. Близость важна, но она не должна уничтожать границы.</p>
+    <h3>Излишняя жесткость</h3>
+    <p>Страх может дать краткосрочную дисциплину, но не создает уважения. Авторитет строится не на давлении, а на справедливости и устойчивости.</p>
+    <h3>Демонстративность</h3>
+    <p>Когда человек слишком старается быть ярким, необычным и главным, фокус смещается с детей и дела на него самого.</p>
+    <h3>Непоследовательность</h3>
+    <p>Сегодня разрешил, завтра наказал. Одному можно, другому нельзя. В таких условиях доверие быстро разрушается.</p>
+    <h3>Разрыв между словами и делами</h3>
+    <p>Самая опасная ошибка. Если вожатый говорит о культуре, но сам грубит; говорит об ответственности, но сам не выполняет обещания – дети перестают верить.</p>
+    <h2>5. Каким должен быть зрелый образ комиссара</h2>
+    <p>Профессионально зрелый комиссар:</p>
+    <ul>
+      <li>открыт, но не фамильярен;</li>
+      <li>доброжелателен, но не слаб;</li>
+      <li>требователен, но не унижает;</li>
+      <li>яркий, но не демонстративный;</li>
+      <li>уверенный, но не высокомерный;</li>
+      <li>современный, но не пытается любой ценой «казаться своим»;</li>
+      <li>эмоциональный, но устойчивый;</li>
+      <li>принадлежит группе и понимает ответственность за ее образ.</li>
+    </ul>
+    <p>Сильный имидж – это когда рядом с человеком есть ощущение порядка, уважения, доверия и смысла.</p>
+    <h2>6. Итог</h2>
+    <p>Имидж комиссара – это не внешняя оболочка и не набор формальных требований.</p>
+    <p>Это способ показать окружающим: кто мы, какие у нас ценности, как мы относимся к людям и насколько нам можно доверять.</p>
+    <p>Имидж складывается из мелочей, но работает целиком.</p>
+    <p>Опрятность, речь, поведение, соцсети, мерч, реакция на трудности – все это части одного образа.</p>
+    <p>Если эти части согласованы, комиссарский отряд выглядит как единый организм.</p>
+    <p>Если нет – образ распадается, а вместе с ним теряются доверие, авторитет и уважение.</p>
+    <p>Главная мысль простая имидж комиссара – это не то, что мы надеваем на себя.</p>
+    <p>Это то, как через нас считываются ценности всего сообщества.</p>
+
+      <section class="imidj-section">
+ 
+        <div class="imidj-deck" data-imidj-deck>
+          <div class="imidj-deck__viewport">
+
+            <article class="imidj-card">
+              <div class="imidj-card__media">
+                <div class="imidj-card__frame">
+                  <img
+                    src="../assets/cards/parf_card.jpg"
+                    alt="Виктор Парфенюк"
+                    loading="lazy"
+                  >
+                </div>
+              </div>
+
+              <div class="imidj-card__text">
+                <p class="imidj-card__label imidj-card__label--name">Виктор Парфенюк</p>
+
+                <div class="imidj-card__copy-wrap">
+                  <div class="imidj-card__copy" data-fit-text data-max-font="24" data-min-font="11">
+                    <p>Для меня имидж — это целостное представление обо мне как о личности и профессионале (в каком-либо смысле слова), которое складывается у окружающих на основе моего поведения, речи, внешнего вида и поступков. Это не то, каким я хочу казаться, а то, как меня реально воспринимают, причем не только как отдельного человека, но и как представителя сообщества.</p>
+                    <p>Я рассматриваю имидж как систему осознанных требований к себе, обеспечивающую согласованность между словами и действиями, формирующую доверие и отражающую уровень моей ответственности за себя, коллектив и детей, а также внутреннюю культуру.</p>
+                    <p>Некая уникальность, полагаю, присутствует в умении жонглировать образом. В один деть ты - главный редфлаг всех (почти) представителей прекрасного пола в смене, в другой, например, - любимый человек в пресс-центре. Умение жонглировать своими состояниями и подходами - в этом я вижу силу и успех.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="imidj-card">
+              <div class="imidj-card__media">
+                <div class="imidj-card__frame">
+                  <img
+                    src="../assets/cards/ganin_card.jpg"
+                    alt="Татьяна Ганина"
+                    loading="lazy"
+                  >
+                </div>
+              </div>
+
+              <div class="imidj-card__text">
+                <p class="imidj-card__label imidj-card__label--name">Татьяна Ганина</p>
+
+                <div class="imidj-card__copy-wrap">
+                  <div class="imidj-card__copy" data-fit-text data-max-font="24" data-min-font="11">
+                    <p>Тема, над которой действительно приходится задуматься...</p>
+                    <p>Не буду многословна.</p>
+                    <p>Мне кажется, что в качестве своего имиджа и порой отличия, могла бы быть моя ЭМПАТИЯ.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="imidj-card">
+              <div class="imidj-card__media">
+                <div class="imidj-card__frame">
+                  <img
+                    src="../assets/cards/vinok_card.jpg"
+                    alt="Андрей Винокуров"
+                    loading="lazy"
+                  >
+                </div>
+              </div>
+
+              <div class="imidj-card__text">
+                <p class="imidj-card__label imidj-card__label--name">Андрей Винокуров</p>
+
+                <div class="imidj-card__copy-wrap">
+                  <div class="imidj-card__copy" data-fit-text data-max-font="24" data-min-font="11">
+                    <p>Во-первых, парень-комиссар - это мужчина. Он глава семьи - берет на себя всю ответственность, любые сложные решения в итоге принимает он. Это человек, на которого можно опереться в организационных и эмоционально напряжённых ситуациях. Также обязанностью комиссара-парня является защита и поддержка своей напарницы и их отряда. Он должен быть тем, кто держит свое слово и доводит дело до конца.</p>
+                    <p>Довольно важным аспектом является отношение к напарнице как к равной: нельзя пытаться руководить в одиночку.</p>
+                    <p>Хорошая комиссарская пара — это не про «кто главный», а про совместную работу. Комиссар-парень поддерживает свою напарницу и не подрывает её авторитет при других комиссарах и тем более при детях.</p>
+                    <p>Говоря об уникальности, стараюсь соответствовать тому, что сказал про имидж комиссара-парня. Моя уникальность в том, что я стараюсь быть на одной волне с детьми. Мы организуем лагерь «РУБИН» для детей, поэтому их нужно чувствовать и понимать, чего они хотят. Моя позиция как комиссара — старший брат. Это человек, который может и посмеяться с детьми, и поругать, когда это необходимо.</p>
+                    <p>Мне важно, чтобы дети меня не боялись как взрослого, а уважали и брали пример. И, когда ты правильно ставишь себя перед детьми, они сами чувствуют эту грань: что можно, а что нельзя.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="imidj-card">
+              <div class="imidj-card__media">
+                <div class="imidj-card__frame">
+                  <img
+                    src="../assets/cards/lednev_card.jpg"
+                    alt="Серафим Леднев"
+                    loading="lazy"
+                  >
+                </div>
+              </div>
+
+              <div class="imidj-card__text">
+                <p class="imidj-card__label imidj-card__label--name">Серафим Леднев</p>
+
+                <div class="imidj-card__copy-wrap">
+                  <div class="imidj-card__copy" data-fit-text data-max-font="24" data-min-font="11">
+                    <p>Ответственность, высокие требования к себе и своей работе, но при этом толерантность к окружающим - наверное в этом мой подход.</p>
+                    <p>Стремлюсь к идеалу, стараясь выполнять все задачи на отлично.</p>
+                    <p>Эмппатия + умение слушать + конструктивная оценка + глубокие анализ = залог успеха.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="imidj-card">
+              <div class="imidj-card__media">
+                <div class="imidj-card__frame">
+                  <img
+                    src="../assets/cards/manz_card.jpg"
+                    alt="Мария Манзурова"
+                    loading="lazy"
+                  >
+                </div>
+              </div>
+
+              <div class="imidj-card__text">
+                <p class="imidj-card__label imidj-card__label--name">Мария Манзурова</p>
+
+                <div class="imidj-card__copy-wrap">
+                  <div class="imidj-card__copy" data-fit-text data-max-font="24" data-min-font="11">
+                    <p>Себя как комиссара я вижу ответственным, исполнительным и отдающим человеком. Прохождение рубиновского пути от ребёнка до наставника дало мне понимание, что человек, ставший комиссаром, определенно должен уметь многое: организовать работу коллектива, как детского, так и педагогического, быть тем, кто может поделиться знаниями и личным опытом - во время проведения графиков, клубов, лекций, сделать это не по первой ссылке и абы как, а действительно дать понимание и знание, быть артистичным, эмпатичным и, безусловно, коммуникабельным, ведь «РУБИН» и все что существует внутри него не может существовать без постоянного общения. Кроме прочего комиссар должен уметь обратить на себя внимание и запомниться именно личностью, тем, что отличает от других и создаёт свой бренд и настроение. У каждого комиссара в «РУБИНе» есть свой характер - уникальный, своеобразный, присущий только ему.</p>
+                    <p>То, что вдохновляет и вызывает желание быть похожим. Комиссар должен быть идейным и отдающим - уметь дать совет ребятам и провести элемент отрядной или общелагерной работы с отдачей, так, чтобы оставить положительные впечатления.</p>
+                    <p>Кроме того, имидж комиссара не должен включать в себя нецензурной брани и пропаганды запрещённых веществ. Думаю, что это и есть мой имидж комиссара, не всему я соответствую сейчас полноценно, но стремлюсь.</p>
+                    <p>Свою уникальность как комиссара, в том числе начинающего, вижу в богатом опыте работы с детьми и взрослыми. Мой путь развил такие качества как: гиперответственность, стойкость характера, строгое следование правилам, эмпатия к детям, умение поддержать их. Эти качества позволяют мне формировать авторитет и располагать к себе.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="imidj-card">
+              <div class="imidj-card__media">
+                <div class="imidj-card__frame">
+                  <img
+                    src="../assets/cards/medved_card.jpg"
+                    alt="Елизавета Медведева"
+                    loading="lazy"
+                  >
+                </div>
+              </div>
+
+              <div class="imidj-card__text">
+                <p class="imidj-card__label imidj-card__label--name">Елизавета Медведева</p>
+
+                <div class="imidj-card__copy-wrap">
+                  <div class="imidj-card__copy" data-fit-text data-max-font="24" data-min-font="11">
+                    <p>За большое количество смен «РУБИНа», я выстроила себе модель поведения комиссара из которой я хочу выделить несколько важных, по моему мнению, аспектов.</p>
+                    <p>Неотъемлемая часть — атмосфера отряда. То с чего в целом можно сделать вывод о смене, ведь если в отряде царил негатив, ни одно мероприятие не изменит впечатление о смене в лучшую сторону. Конечно в первую очередь ребенок смотрит на своих комиссаров. Соответственно, для меня важно, чувствовать своего напарника, проявлять заботу, поддержку в его сторону, быть понимающей. В общем, напарник для напарница (и наоборот)— это главный человек смены. Не менее важной частью является твое отношение к детям. Я, абсолютно для каждого, хочу стать другом, который всегда прийдет на помощь и за пределами лагеря. В моем понимании важно быть эмпатичным человеком, понимать эмоции, откликнуться на переживания.</p>
+                    <p>Говоря об уникальности, я сразу подумала об эмпатии. Я очень чувственный человек, поэтому тут же реагирую на обстановку в коллективе, на общение с человеком и понимаю, когда что-то идет не так. Эта черта помогает мне в нужную минуту предпринять какие-то меры и выровнять обстановку, если это требуется сделать.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+              <article class="imidj-card">
+              <div class="imidj-card__media">
+                <div class="imidj-card__frame">
+                  <img
+                    src="../assets/cards/avr_card.jpg"
+                    alt="Светлана Авраменко"
+                    loading="lazy"
+                  >
+                </div>
+              </div>
+
+              <div class="imidj-card__text">
+                <p class="imidj-card__label imidj-card__label--name">Светлана Авраменко</p>
+
+                <div class="imidj-card__copy-wrap">
+                  <div class="imidj-card__copy" data-fit-text data-max-font="24" data-min-font="11">
+                    <p>Мой имидж комиссара в ответственности. Ответственность за свое поведение, за свои слова, за свои действия, за свои решения, за свой внешний вид.</p>
+                    <p>Ответственность перед детьми, перед комиссарским отрядом, и конечно перед собой, как в рамках лагеря, так и вне его.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+
+            <article class="imidj-card">
+              <div class="imidj-card__media">
+                <div class="imidj-card__frame">
+                  <img
+                    src="../assets/cards/redos_card.jpg"
+                    alt="Арсений Редькин"
+                    loading="lazy"
+                  >
+                </div>
+              </div>
+
+              <div class="imidj-card__text">
+                <p class="imidj-card__label imidj-card__label--name">Арсений Редькин</p>
+
+                <div class="imidj-card__copy-wrap">
+                  <div class="imidj-card__copy" data-fit-text data-max-font="24" data-min-font="11">
+                    <p>Имидж комиссара - одна из самых важных частей работы. Это то, как ты себя ведешь по отношению к напарнице, детям, своим мыслям и к жизни в целом. Все как в жизни, как дети берут пример со своих родителей, так и в отряде работают правила, по которым следуют комиссары..</p>
+                    <p>Поэтому имидж - это свои принципы, отвественность, а что важнее всего - искренность.</p>
+                    <p>Именно в искренности я считаю и кроется моя уникальность (искренность не только в словах, а также полная отдача делу, эмоциям). Когда дети видят, что ты проживаешь этот момент вместе с ними, понимая их сложности, их радости и несчастья, то начинают открываться в ответ. Ведь когда вы налаживаете контакт без секретов, тайн и с полной гормонией, именно тогда начинается настоящий «РУБИН».</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+          </div>
+          <div class="imidj-deck__controls">
+            <button class="btn imidj-nav" type="button" data-direction="-1">← Предыдущая</button>
+            <div class="imidj-dots" aria-label="Навигация по карточкам"></div>
+            <button class="btn imidj-nav" type="button" data-direction="1">Следующая →</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="lecture-footer">
+        <a class="btn" href="../index.html">← Назад к лекциям</a>
+      </div>
+    </div>
+  </article>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const deck = document.querySelector('[data-imidj-deck]');
+      if (!deck) return;
+
+      const cards = Array.from(deck.querySelectorAll('.imidj-card'));
+      const dotsRoot = deck.querySelector('.imidj-dots');
+      const navButtons = Array.from(deck.querySelectorAll('[data-direction]'));
+      const fitTargets = Array.from(deck.querySelectorAll('[data-fit-text]'));
+      const viewport = deck.querySelector('.imidj-deck__viewport');
+      const deckImages = Array.from(deck.querySelectorAll('img'));
+
+      if (!cards.length) return;
+
+      if (cards.length < 2) {
+        deck.classList.add('imidj-deck--single');
+      }
+
+      let activeIndex = 0;
+      let resizeTimer = null;
+      let startX = null;
+
+      function normalizeOffset(index) {
+        let offset = index - activeIndex;
+        const half = cards.length / 2;
+
+        if (offset > half) offset -= cards.length;
+        if (offset < -half) offset += cards.length;
+
+        return offset;
+      }
+
+      function fitText(target) {
+        const min = Number(target.dataset.minFont || 12);
+        const max = Number(target.dataset.maxFont || 24);
+        let size = max;
+
+        target.style.fontSize = max + 'px';
+
+        while (
+          size > min &&
+          (target.scrollHeight > target.clientHeight || target.scrollWidth > target.clientWidth)
+        ) {
+          size -= 1;
+          target.style.fontSize = size + 'px';
+        }
+      }
+
+      function fitAllText() {
+        fitTargets.forEach(fitText);
+      }
+
+      function relayoutDeck() {
+        const baseHeight = window.innerWidth <= 760 ? 860 : 620;
+        const maxHeight = window.innerWidth <= 760 ? 1520 : 1240;
+        const step = window.innerWidth <= 760 ? 56 : 48;
+        const activeCard = cards[activeIndex];
+
+        if (!activeCard) return;
+
+        let nextHeight = baseHeight;
+        let attempts = 0;
+
+        while (attempts < 18) {
+          viewport.style.height = nextHeight + 'px';
+
+          fitTargets.forEach(function (target) {
+            const max = Number(target.dataset.maxFont || 24);
+            target.style.fontSize = max + 'px';
+          });
+
+          fitAllText();
+
+          if (activeCard.scrollHeight <= activeCard.clientHeight + 2 || nextHeight >= maxHeight) {
+            break;
+          }
+
+          nextHeight += step;
+          attempts += 1;
+        }
+
+        viewport.style.height = nextHeight + 'px';
+      }
+
+      function renderDots() {
+        dotsRoot.innerHTML = '';
+
+        cards.forEach(function (_, index) {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = 'imidj-dot';
+          dot.setAttribute('aria-label', 'Карточка ' + (index + 1));
+          dot.addEventListener('click', function () {
+            goTo(index);
+          });
+          dotsRoot.appendChild(dot);
+        });
+      }
+
+      function applyState() {
+        const dots = Array.from(dotsRoot.children);
+
+        cards.forEach(function (card, index) {
+          const offset = normalizeOffset(index);
+          const absOffset = Math.min(Math.abs(offset), 3);
+          const isActive = offset === 0;
+          const isVisible = Math.abs(offset) <= 1;
+
+          card.style.setProperty('--offset', String(offset));
+          card.style.setProperty('--abs-offset', String(absOffset));
+          card.style.zIndex = String(30 - absOffset);
+          card.classList.toggle('is-active', isActive);
+          card.classList.toggle('is-visible', isVisible);
+          card.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+
+          if (!isVisible && !isActive) {
+            card.style.opacity = '0';
+          } else {
+            card.style.opacity = '';
+          }
+        });
+
+        dots.forEach(function (dot, index) {
+          dot.classList.toggle('is-active', index === activeIndex);
+        });
+
+        window.requestAnimationFrame(relayoutDeck);
+      }
+
+      function goTo(index) {
+        activeIndex = (index + cards.length) % cards.length;
+        applyState();
+      }
+
+      navButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          goTo(activeIndex + Number(button.dataset.direction));
+        });
+      });
+
+      viewport.addEventListener('pointerdown', function (event) {
+        startX = event.clientX;
+      });
+
+      viewport.addEventListener('pointerup', function (event) {
+        if (startX === null) return;
+
+        const diff = event.clientX - startX;
+        startX = null;
+
+        if (Math.abs(diff) < 40) return;
+
+        if (diff < 0) goTo(activeIndex + 1);
+        if (diff > 0) goTo(activeIndex - 1);
+      });
+
+      viewport.addEventListener('pointerleave', function () {
+        startX = null;
+      });
+
+      window.addEventListener('resize', function () {
+        window.clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(relayoutDeck, 120);
+      });
+
+      deckImages.forEach(function (image) {
+        if (image.complete) return;
+        image.addEventListener('load', relayoutDeck, { once: true });
+      });
+
+      window.addEventListener('load', relayoutDeck, { once: true });
+
+      renderDots();
+      applyState();
+    });
+  </script>
+
+  <script src="../protect-local.js?v=7" data-lecture-id="imidj"></script>
+</body>
+</html>
