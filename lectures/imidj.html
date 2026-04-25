@@ -330,34 +330,50 @@
 
     @media (max-width: 760px) {
       .imidj-deck__viewport {
-        min-height: 860px;
-        height: 860px;
+        min-height: 720px;
+        height: 720px;
       }
 
       .imidj-card {
         grid-template-columns: 1fr;
-        gap: 18px;
-        padding: 20px;
+        gap: 14px;
+        padding: 16px;
         transform:
           translateX(calc(var(--offset) * 8%))
-          translateY(calc(var(--abs-offset) * 8px))
+          translateY(calc(var(--abs-offset) * 6px))
           scale(calc(1 - (var(--abs-offset) * 0.04)))
           rotateY(calc(var(--offset) * -14deg))
           rotate(calc(var(--offset) * -1deg));
       }
 
       .imidj-card__media {
-        width: min(100%, 220px);
+        width: min(100%, 170px);
         margin: 0 auto;
       }
 
+      .imidj-card__label--name {
+        font-size: clamp(18px, 7vw, 24px);
+      }
+
       .imidj-card__title {
-        font-size: 24px !important;
+        font-size: 21px !important;
+      }
+
+      .imidj-card__copy-wrap {
+        overflow: visible;
+      }
+
+      .imidj-card__copy {
+        max-height: min(36svh, 320px);
+        padding: 14px 16px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
       }
 
       .imidj-deck__controls {
         flex-direction: column;
         align-items: stretch;
+        margin-top: 12px;
       }
 
       .imidj-nav {
@@ -762,9 +778,19 @@
         return offset;
       }
 
+      function isMobileLayout() {
+        return window.innerWidth <= 760;
+      }
+
       function fitText(target) {
         const min = Number(target.dataset.minFont || 12);
         const max = Number(target.dataset.maxFont || 24);
+        if (isMobileLayout()) {
+          const mobileSize = Math.min(max, 18);
+          target.style.fontSize = mobileSize + 'px';
+          return;
+        }
+
         let size = max;
 
         target.style.fontSize = max + 'px';
@@ -783,9 +809,9 @@
       }
 
       function relayoutDeck() {
-        const baseHeight = window.innerWidth <= 760 ? 860 : 620;
-        const maxHeight = window.innerWidth <= 760 ? 1520 : 1240;
-        const step = window.innerWidth <= 760 ? 56 : 48;
+        const baseHeight = isMobileLayout() ? 720 : 620;
+        const maxHeight = isMobileLayout() ? 860 : 1240;
+        const step = isMobileLayout() ? 28 : 48;
         const activeCard = cards[activeIndex];
 
         if (!activeCard) return;
