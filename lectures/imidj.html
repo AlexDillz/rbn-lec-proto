@@ -338,6 +338,7 @@
       .imidj-deck__viewport {
         min-height: 720px;
         height: 720px;
+        transition: none;
       }
 
       .imidj-card {
@@ -345,11 +346,19 @@
         gap: 14px;
         padding: 16px;
         transform:
-          translateX(calc(var(--offset) * 8%))
-          translateY(calc(var(--abs-offset) * 6px))
-          scale(calc(1 - (var(--abs-offset) * 0.04)))
-          rotateY(calc(var(--offset) * -14deg))
-          rotate(calc(var(--offset) * -1deg));
+          translateX(calc(var(--offset) * 4%))
+          translateY(calc(var(--abs-offset) * 4px))
+          scale(calc(1 - (var(--abs-offset) * 0.02)))
+          rotateY(0deg)
+          rotate(0deg);
+        transition: transform 0.24s ease, opacity 0.2s ease;
+      }
+
+      .imidj-card,
+      .imidj-card.is-active,
+      body.dark .imidj-card,
+      body.dark .imidj-card.is-active {
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.16);
       }
 
       .imidj-card__media {
@@ -751,6 +760,11 @@
 
       <div class="lecture-footer">
         <a class="btn" href="../index.html">← Назад к лекциям</a>
+        <a
+          class="btn btn-download"
+          href="../assets/lecs/imidj/мяу-мяу-муя.pptx"
+          download
+        >⬇ Скачать материалы</a>
       </div>
     </div>
   </article>
@@ -866,12 +880,15 @@
 
       function applyState() {
         const dots = Array.from(dotsRoot.children);
+        const mobileLayout = isMobileLayout();
 
         cards.forEach(function (card, index) {
           const offset = normalizeOffset(index);
-          const absOffset = Math.min(Math.abs(offset), 3);
+          const absOffset = mobileLayout
+            ? Math.min(Math.abs(offset), 1)
+            : Math.min(Math.abs(offset), 3);
           const isActive = offset === 0;
-          const isVisible = Math.abs(offset) <= 1;
+          const isVisible = mobileLayout ? isActive : Math.abs(offset) <= 1;
 
           card.style.setProperty('--offset', String(offset));
           card.style.setProperty('--abs-offset', String(absOffset));
