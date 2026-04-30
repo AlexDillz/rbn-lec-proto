@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Экзаменационные билеты</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <script src="theme.js" defer></script>
+  <style>
+    body.exam-page {
+      max-width: 1240px;
+      padding: 24px;
+      background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.08), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(249, 115, 22, 0.08), transparent 24%),
+        #f8fafc;
+    }
+
+    body.dark.exam-page {
+      background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(249, 115, 22, 0.12), transparent 24%),
+        #0f172a;
+    }
+
+    .exam-card {
+      padding: 18px 28px 24px;
+      overflow: hidden;
+    }
+
+    body.exam-page > .exam-card {
+      margin-top: 28px;
+    }
+
+    .exam-intro {
+      max-width: 820px;
+      margin: 0 auto 14px;
+      text-align: center;
+    }
+
+    .exam-intro h1 {
+      margin: 8px 0 0;
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1.05;
+    }
+
+    .exam-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      background: rgba(255, 255, 255, 0.72);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #334155;
+    }
+
+    body.dark .exam-kicker {
+      background: rgba(15, 23, 42, 0.76);
+      border-color: rgba(148, 163, 184, 0.24);
+      color: #cbd5e1;
+    }
+
+    .exam-book-shell {
+      position: relative;
+      padding: 18px 18px 24px;
+      border-radius: 30px;
+      overflow: hidden;
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(241, 245, 249, 0.96));
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      box-shadow: 0 26px 80px rgba(15, 23, 42, 0.12);
+    }
+
+    .exam-book-shell::before {
+      display: none;
+    }
+
+    body.dark .exam-book-shell {
+      background: linear-gradient(160deg, rgba(17, 24, 39, 0.94), rgba(15, 23, 42, 0.98));
+      border-color: rgba(71, 85, 105, 0.44);
+      box-shadow: 0 26px 90px rgba(2, 6, 23, 0.5);
+    }
+
+    .exam-book {
+      position: relative;
+      min-height: 680px;
+      perspective: 2600px;
+      cursor: grab;
+      touch-action: pan-y;
+    }
+
+    .exam-book:active {
+      cursor: grabbing;
+    }
+
+    .exam-book__stack {
+      position: relative;
+      min-height: 680px;
+      overflow: hidden;
+      transform-style: preserve-3d;
+    }
+
+    .ticket-sheet {
+      position: absolute;
+      inset: 0;
+      transform-origin: left center;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      transition:
+        transform 0.56s cubic-bezier(0.22, 0.7, 0.2, 1),
+        opacity 0.24s ease;
+      will-change: transform;
+    }
+
+    .ticket-sheet__paper {
+      position: relative;
+      height: 100%;
+      padding: 38px 34px 34px 42px;
+      border-radius: 26px 18px 18px 26px;
+      background: linear-gradient(180deg, #fffef8 0%, #fffdfa 52%, #f8f5ec 100%);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      box-shadow: 0 16px 42px rgba(15, 23, 42, 0.12);
+      backface-visibility: hidden;
+      overflow: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(148, 163, 184, 0.7) transparent;
+      transition: border-color 0.24s ease, box-shadow 0.24s ease, opacity 0.24s ease;
+    }
+
+    .ticket-sheet__paper::before {
+      content: "";
+      position: absolute;
+      top: 24px;
+      bottom: 24px;
+      left: 18px;
+      width: 2px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(59, 130, 246, 0.28), rgba(59, 130, 246, 0.04));
+      pointer-events: none;
+    }
+
+    .ticket-sheet__paper::after {
+      display: none;
+    }
+
+    body.dark .ticket-sheet__paper {
+      background: linear-gradient(180deg, #162033 0%, #111827 100%);
+      border-color: rgba(148, 163, 184, 0.22);
+      box-shadow: 0 18px 52px rgba(2, 6, 23, 0.42);
+    }
+
+    body.dark .ticket-sheet__paper::before {
+      background: linear-gradient(180deg, rgba(96, 165, 250, 0.36), rgba(96, 165, 250, 0.06));
+    }
+
+    .ticket-sheet:not(.ticket-sheet--active) .ticket-sheet__paper {
+      border-color: transparent;
+      box-shadow: none;
+    }
+
+    .ticket-sheet:not(.ticket-sheet--active) .ticket-sheet__paper::before {
+      display: none;
+    }
+
+    .ticket-sheet__eyebrow {
+      margin: 0 0 14px;
+      text-indent: 0;
+      text-align: left;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #64748b;
+    }
+
+    body.dark .ticket-sheet__eyebrow {
+      color: #94a3b8;
+    }
+
+    .ticket-sheet h2 {
+      margin: 0 0 18px;
+      padding-left: 24px;
+      text-align: left;
+      text-indent: 0;
+      font-size: clamp(28px, 3vw, 42px);
+      line-height: 1.05;
+    }
+
+    .ticket-sheet__list {
+      margin: 0;
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .ticket-sheet__list li {
+      font-size: clamp(18px, 1.5vw, 24px);
+      line-height: 1.62;
+      color: #0f172a;
+    }
+
+    body.dark .ticket-sheet__list li {
+      color: #e5e7eb;
+    }
+
+    .exam-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .exam-nav {
+      min-height: 50px;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .exam-nav--next {
+      justify-self: end;
+    }
+
+    .exam-nav[disabled] {
+      opacity: 0.45;
+      cursor: default;
+    }
+
+    body.dark .exam-nav {
+      background: rgba(15, 23, 42, 0.68);
+      border-color: #475569;
+      color: #f8fafc;
+    }
+
+    @media (max-width: 900px) {
+      .exam-card {
+        padding: 24px 16px 24px;
+      }
+
+      .exam-book-shell {
+        padding: 12px 12px 18px;
+        border-radius: 24px;
+      }
+
+      .exam-book,
+      .exam-book__stack {
+        min-height: 640px;
+      }
+
+      .ticket-sheet__paper {
+        padding: 32px 24px 28px 30px;
+      }
+
+      .exam-controls {
+        grid-template-columns: 1fr;
+      }
+
+      .exam-nav,
+      .exam-nav--next {
+        justify-self: stretch;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body.exam-page {
+        padding: 12px;
+      }
+
+      .exam-intro {
+        margin-bottom: 18px;
+      }
+
+      .exam-intro p {
+        font-size: 16px;
+      }
+
+      .exam-book,
+      .exam-book__stack {
+        min-height: 70vh;
+      }
+
+      .ticket-sheet__paper {
+        padding: 24px 18px 24px 22px;
+        border-radius: 22px 16px 16px 22px;
+      }
+
+      .ticket-sheet h2 {
+        padding-left: 20px;
+        margin-bottom: 14px;
+      }
+
+      .ticket-sheet__list {
+        padding-left: 20px;
+        gap: 14px;
+      }
+
+      .ticket-sheet__list li {
+        font-size: 16px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ticket-sheet {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body class="exam-page">
+  <button id="theme-toggle" aria-label="Переключить тему">🌙 Тёмная тема</button>
+
+  <article class="card lecture-card exam-card">
+    <a href="index.html" class="close-card-btn" aria-label="Назад на главную">
+      <svg class="close-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+      </svg>
+    </a>
+
+    <div class="content exam-content">
+      <section class="exam-intro">
+        <span class="exam-kicker">ШВМ • РУБИН • 15 билетов</span>
+        <h1>Экзаменационные билеты</h1>
+      </section>
+
+      <section class="exam-book-shell">
+        <div class="exam-book" data-book tabindex="0" aria-label="Экзаменационные билеты">
+          <div class="exam-book__stack">
+            <!-- ticket 1 -->
+            <article class="ticket-sheet" data-ticket-sheet>
+              <div class="ticket-sheet__paper">
+                <p class="ticket-sheet__eyebrow">Школа вожатского мастерства • Рязанский Областной Лагерь Актива Старшеклассников «РУБИН»</p>
+                <h2>Билет № 1</h2>
+                <ol class="ticket-sheet__list">
+                  <li>Права и должностные обязанности вожатого.</li>
+                  <li>Самоуправление в лагере. Работа по формированию самоуправления в отряде и в лагере. Выявление уровня самоуправления в детском коллективе.</li>
+                  <li>Практическое задание. Методика проведения огонька знакомства.</li>
+                </ol>
+              </div>
+            </article>
+
+            <!-- ticket 2 -->
+            <article class="ticket-sheet" data-ticket-sheet>
+              <div class="ticket-sheet__paper">
+                <p class="ticket-sheet__eyebrow">Школа вожатского мастерства • Рязанский Областной Лагерь Актива Старшеклассников «РУБИН»</p>
+                <h2>Билет № 2</h2>
+                <ol class="ticket-sheet__list">
+                  <li>Цели и задачи работы вожатого в лагере. Личностные качества вожатого, необходимые для работы с детьми.</li>
+                  <li>Возрастные особенности детей и подростков.</li>
+                  <li>Практическое задание. Методика проведения утреннего сбора.</li>
+                </ol>
+              </div>
+            </article>
+
+            <!-- ticket 3 -->
+            <article class="ticket-sheet" data-ticket-sheet>
+              <div class="ticket-sheet__paper">
+                <p class="ticket-sheet__eyebrow">Школа вожатского мастерства • Рязанский ОЛАС «РУБИН»</p>
+                <h2>Билет № 3</h2>
+                <ol class="ticket-sheet__list">
+                  <li>Правовые основы деятельности вожатого.</li>
+                  <li>Особенности работы в отрядах младшего, среднего, старшего возраста и в разновозрастных отрядах.</li>
+                  <li>Практическое задание. Чем занять детей в автобусе? Какие проблемы можно решить в поездке?</li>
+                </ol>
+              </div>
+            </article>
+
+            <!-- ticket 4 -->
+            <article class="ticket-sheet" data-ticket-sheet>
+              <div class="ticket-sheet__paper">
+                <p class="ticket-sheet__eyebrow">Школа вожатского мастерства • Рязанский Областной Лагерь Актива Старшеклассников «РУБИН»</p>
+                <h2>Билет № 4</h2>
+                <ol class="ticket-sheet__list">
+                  <li>Санитарно-гигиенические требования к состоянию жилых помещений; санузлов; отрядных мест; игровых комнат; водоёмов и бассейнов.</li>
+                  <li>Особенности межличностных отношений детей, детей и вожатых, вожатых и родителей.</li>
+                  <li>Практическое задание. Методы и формы работы вожатого в условиях плохой погоды.</li>
+                </ol>
+              </div>
+            </article>
+
+            <!-- ticket 5 -->
+            <article class="ticket-sheet" data-ticket-sheet>
+              <div class="ticket-sheet__paper">
+                <p class="ticket-sheet__eyebrow">Школа вожатского мастерства • Рязанский Областной Лагерь Актива Старшеклассников «РУБИН»</p>
+                <h2>Билет № 5</h2>
+                <ol class="ticket-sheet__list">
+                  <li>Санитарно-гигиенические требования к организации спортивных, туристических, культурно-массовых мероприятий и игр.</li>
+                  <li>Работа вожатого с напарником. Методы этической защиты. Способы разрешения конфликтов.</li>
+                  <li>Практическое задание. Методика проведения рефлексии.</li>
+                </ol>
+              </div>
+            </article>
+
+            <!-- ticket 6 -->
+            <article class="ticket-sheet" data-ticket-sheet>
+              <div class="ticket-sheet__paper">
+                <p class="ticket-sheet__eyebrow">Школа вожатского мастерства • Рязанский Областной Лагерь Актива Старшеклассников «РУБИН»</p>
+                <h2>Билет № 6</h2>
+                <ol class="ticket-sheet__list">
+                  <li>Правила оказания доврачебной помощи.</li>
+                  <li>Что должен уметь и знать вожатый.</li>
+                  <li>Практическое задание. Игры на знакомство.</li>
+                </ol>
+              </div>
+            </article>
+
+            <!-- ticket 7 -->
+            <article class="ticket-sheet" data-ticket-sheet>
+              <div class="ticket-sheet__paper">
+                <p class="ticket-sheet__eyebrow">Школа вожатского мастерства • Рязанский Областной Лагерь Актива Старшеклассников «РУБИН»</p>
+                <h2>Билет № 7</h2>
+                <ol class="ticket-sheet__list">
+                  <li>ТБ при проведении массовых мероприятий, спортивных игр.</li>
+                  <li>Организация основных режимных моментов (подъём; зарядка; санитарно-гигиенические процедуры; линейка; организация питания; тихий час; отрядные, межотрядные и общелагерные мероприятия; отбой).</li>
+                  <li>Практическое задание. Игры - разбивки</li>
+                </ol>
+              </div>
+            </article>
+
+            <!-- ticket 8 -->
+            <article class="ticket-sheet" data-ticket-sheet>
+              <div class="ticket-sheet__paper">
+                <p class="ticket-sheet__eyebrow">Школа вожатского мастерства • Рязанский Областной Лагерь Актива Старшеклассников «РУБИН»</p>
+                <h2>Билет № 8</h2>
+                <ol class="ticket-sheet__list">
+                  <li>ТБ при перевозке детей в автобусе, поезде, самолете.</li>
+                  <li>Логика развития смены: организационный основной и заключительный период. Задачи, которые необходимо решать в каждый период. Мероприятия каждого периода.</li>
+                  <li>Практическое задание. Игры с залом.</li>
+                </ol>
+              </div>
+            </article>
+
+            <!-- ticket 9 -->
+            <article class="ticket-sheet" data-ticket-sheet>
+              <div class="ticket-sheet__paper">
+                <p class="ticket-sheet__eyebrow">Школа вожатского мастерства • Рязанский Областной Лагерь Актива Старшеклассников «РУБИН»</p>
+                <h2>Билет № 9</h2>
+                <ol class="ticket-sheet__list">
+                  <li>ТБ при нахождении в корпусе.</li>
+                  <li>Система отрядных и общелагерных дел. Методика организации и проведения тематических дней.</li>
+                  <li>Практическое задание. Игры на сплочение.</li>
+                </ol>
+              </div>
+            </article>
+
+            <!-- ticket 10 -->
+            <article class="ticket-sheet" data-ticket-sheet>
+              <div class="ticket-sheet__paper">
+                <p class="ticket-sheet__eyebrow">Школа вожатского мастерства • Рязанский Областной Лагерь Актива Старшеклассников «РУБИН»</p>
+                <h2>Билет № 10</h2>
+                <ol class="ticket-sheet__list">
+                  <li>ТБ при нахождении на улице.</li>
+                  <li>Коллективные творческие дела (КТД). Виды КТД. Методика подготовки, организации и проведения КТД. Подведение итогов КТД.</li>
+                  <li>Практическое задание. Интеллектуальная игра.</li>
+                </ol>
+              </div>
+            </article>
+
+            <!-- ticket 11 -->
+            <article class="ticket-sheet" data-ticket-sheet>
+              <div class="ticket-sheet__paper">
+                <p class="ticket-sheet__eyebrow">Школа вожатского мастерства • Рязанский Областной Лагерь Актива Старшеклассников «РУБИН»</p>
+                <h2>Билет № 11</h2>
+                <ol class="ticket-sheet__list">
+                  <li>ТБ при выходе за территорию лагеря (походы, экскурсии).</li>
+                  <li>Организация и проведение творческого мероприятия. Разработка сценарного плана.</li>
+                  <li>Практическое задание. КТД оргпериода.</li>
+                </ol>
+              </div>
+            </article>
+
+            <!-- ticket 12 -->
+            <article class="ticket-sheet" data-ticket-sheet>
+              <div class="ticket-sheet__paper">
+                <p class="ticket-sheet__eyebrow">Школа вожатского мастерства • Рязанский Областной Лагерь Актива Старшеклассников «РУБИН»</p>
+                <h2>Билет № 12</h2>
+                <ol class="ticket-sheet__list">
+                  <li>Техника пожарной безопасности.</li>
+                  <li>Игра как основной вид деятельности и средство обучения, развития и воспитания личности ребенка. Правила и требования к организации игр.</li>
+                  <li>Практическое задание. КТД основного периода.</li>
+                </ol>
+              </div>
+            </article>
+
+            <!-- ticket 13 -->
+            <article class="ticket-sheet" data-ticket-sheet>
+              <div class="ticket-sheet__paper">
+                <p class="ticket-sheet__eyebrow">Школа вожатского мастерства • Рязанский Областной Лагерь Актива Старшеклассников «РУБИН»</p>
+                <h2>Билет № 13</h2>
+                <ol class="ticket-sheet__list">
+                  <li>ТБ при нахождении близ водоема и купании.</li>
+                  <li>Виды игр и особенности их проведения.</li>
+                  <li>Практическое задание. Проведение отрядного мероприятия в заключительный период.</li>
+                </ol>
+              </div>
+            </article>
+
+            <!-- ticket 14 -->
+            <article class="ticket-sheet" data-ticket-sheet>
+              <div class="ticket-sheet__paper">
+                <p class="ticket-sheet__eyebrow">Школа вожатского мастерства • Рязанский Областной Лагерь Актива Старшеклассников «РУБИН»</p>
+                <h2>Билет № 14</h2>
+                <ol class="ticket-sheet__list">
+                  <li>Виды экстремальных ситуаций (пожар, гроза, ураган, ДТП, ЧП во время купания, потеря ребенка во время прогулки, несанкционированное отсутствие ребёнка в отряде, конфликт с местной молодёжью и т.д.). Особенности действий вожатого в экстремальной ситуации.</li>
+                  <li>Документация вожатого: план-сетка, планирование в течение дня, дневник.</li>
+                  <li>Практическое задание. План тематического дня.</li>
+                </ol>
+              </div>
+            </article>
+
+            <!-- ticket 15 -->
+            <article class="ticket-sheet" data-ticket-sheet>
+              <div class="ticket-sheet__paper">
+                <p class="ticket-sheet__eyebrow">Школа вожатского мастерства • Рязанский Областной Лагерь Актива Старшеклассников «РУБИН»</p>
+                <h2>Билет № 15</h2>
+                <ol class="ticket-sheet__list">
+                  <li>Имидж вожатого. Что надо знать и уметь.</li>
+                  <li>Возрастные особенности детей и подростков.</li>
+                  <li>Практическое задание. Подвижные игры.</li>
+                </ol>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="exam-controls">
+          <button class="btn exam-nav exam-nav--prev" type="button" data-prev-ticket>
+            ← Предыдущий билет
+          </button>
+
+          <button class="btn exam-nav exam-nav--next" type="button" data-next-ticket>
+            Следующий билет →
+          </button>
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <script>
+    (function () {
+      const book = document.querySelector('[data-book]');
+      const sheets = Array.from(document.querySelectorAll('[data-ticket-sheet]'));
+      const prevBtn = document.querySelector('[data-prev-ticket]');
+      const nextBtn = document.querySelector('[data-next-ticket]');
+
+      if (!book || !sheets.length || !prevBtn || !nextBtn) return;
+
+      let currentIndex = 0;
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      function normalize(index) {
+        const total = sheets.length;
+        return ((index % total) + total) % total;
+      }
+
+      function setState(index) {
+        currentIndex = normalize(index);
+
+        sheets.forEach((sheet, sheetIndex) => {
+          const offset = sheetIndex - currentIndex;
+          const depth = Math.abs(offset);
+          let transform = 'translate3d(0px, 0px, 0px) rotateY(0deg) rotateZ(0deg) scale(1)';
+          let opacity = '1';
+          let zIndex = String(sheets.length * 2 - sheetIndex);
+
+          sheet.style.pointerEvents = offset === 0 ? 'auto' : 'none';
+          sheet.setAttribute('aria-hidden', offset === 0 ? 'false' : 'true');
+          sheet.classList.toggle('ticket-sheet--active', offset === 0);
+          sheet.classList.toggle('ticket-sheet--past', offset < 0);
+          sheet.classList.toggle('ticket-sheet--future', offset > 0);
+
+          if (offset < 0) {
+            const shiftX = Math.min(depth * 3, 10);
+            transform = 'translate3d(' + (-8 + shiftX) + 'px, 0px, 0px) rotateY(-176deg)';
+            opacity = '0';
+            zIndex = String(sheetIndex + 1);
+          } else if (offset > 0) {
+            const shiftY = Math.min(offset * 3, 10);
+            transform = 'translate3d(0px, ' + shiftY + 'px, 0px) rotateY(0deg)';
+            opacity = offset > 2 ? '0' : String(Math.max(0.12 - offset * 0.03, 0.04));
+          }
+
+          sheet.style.transform = transform;
+          sheet.style.opacity = opacity;
+          sheet.style.zIndex = zIndex;
+        });
+      }
+
+      function goPrev() {
+        setState(currentIndex - 1);
+      }
+
+      function goNext() {
+        setState(currentIndex + 1);
+      }
+
+      prevBtn.addEventListener('click', goPrev);
+      nextBtn.addEventListener('click', goNext);
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft') goPrev();
+        if (event.key === 'ArrowRight') goNext();
+      });
+
+      book.addEventListener('touchstart', (event) => {
+        const touch = event.changedTouches[0];
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+      }, { passive: true });
+
+      book.addEventListener('touchend', (event) => {
+        const touch = event.changedTouches[0];
+        const deltaX = touch.clientX - touchStartX;
+        const deltaY = touch.clientY - touchStartY;
+
+        if (Math.abs(deltaX) < 42 || Math.abs(deltaX) < Math.abs(deltaY)) return;
+        if (deltaX < 0) goNext();
+        else goPrev();
+      }, { passive: true });
+
+      setState(0);
+    }());
+  </script>
+</body>
+</html>

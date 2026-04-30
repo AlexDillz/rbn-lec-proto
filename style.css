@@ -43,6 +43,23 @@ h1{
   gap:12px;
 }
 
+/* карточки лекций на главной: ровная высота и кнопка внизу */
+#list > .card{
+  display:flex;
+  flex-direction:column;
+  min-height:100%;
+}
+
+#list > .card .btn{
+  width:100%;
+  justify-content:center;
+  margin-top:auto;
+}
+
+#list > .card .locked-footer{
+  margin-top:auto;
+}
+
 /* блок с кнопкой "Команда и лекторы" в шапке */
 .header-actions{
   margin-top: 12px;
@@ -339,12 +356,26 @@ body.dark {
   align-items: flex-start;
 }
 
-.person-photo{
-  width: 72px;
-  height: 72px;
+.content .person-photo{
+  width: 88px;
+  height: 88px;
+  min-width: 88px;
+  max-width: none;
+  margin: 0;
+  display: block;
   border-radius: 9999px;
+  background: #cbd5e1;
+  border: 2px solid rgba(148,163,184,0.22);
+  box-shadow: 0 6px 18px rgba(15,23,42,0.08);
+  aspect-ratio: 1 / 1;
+  object-position: center 20%;
   object-fit: cover;
   flex-shrink: 0;
+}
+
+body.dark .content .person-photo{
+  background: #334155;
+  border-color: #475569;
 }
 
 .person-main{
