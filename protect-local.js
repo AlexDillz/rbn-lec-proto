@@ -1,6 +1,6 @@
 (async function () {
 
-  const DEV_MODE = true; // временно можно поставить true для локальной отладки
+  const DEV_MODE = false; // временно можно поставить true для локальной отладки
 
   // определение темы (тёмная/светлая)
   function detectTheme() {
