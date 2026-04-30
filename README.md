@@ -7,7 +7,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/GitHub%20Pages-ready-111827?style=for-the-badge" alt="GitHub Pages Ready">
   <img src="https://img.shields.io/badge/HTML%20%2F%20CSS%20%2F%20JS-vanilla-1f2937?style=for-the-badge" alt="Vanilla Stack">
-  <img src="https://img.shields.io/badge/status-active-374151?style=for-the-badge" alt="Project Status">
+  <img src="https://img.shields.io/badge/status-inactive-374151?style=for-the-badge" alt="Project Status">
 </p>
 
 ---
